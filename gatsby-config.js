@@ -7,6 +7,7 @@ module.exports = {
     "gatsby-plugin-image",
     "gatsby-plugin-react-helmet",
     "gatsby-plugin-sitemap",
+    `gatsby-plugin-smoothscroll`,
     {
       resolve: "gatsby-plugin-manifest",
       options: {
@@ -24,4 +25,4 @@ module.exports = {
       __key: "images",
     },
   ],
-};
+}

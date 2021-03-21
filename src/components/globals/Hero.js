@@ -1,13 +1,41 @@
 import React from "react"
 import styled from "styled-components"
 import { StaticImage } from "gatsby-plugin-image"
+import { setColor } from "../../styles"
+import { GiArrowDunk } from "react-icons/gi"
+import scrollTo from "gatsby-plugin-smoothscroll"
 
 const HeroContainer = styled.header`
   position: relative;
-  min-height: 100vh;
+  min-height: 80vh;
   display: flex;
   justify-content: center;
   align-items: center;
+  border-bottom: 1.25rem solid ${setColor.border};
+  h1 {
+    color: ${setColor.mainWhite};
+  }
+`
+
+const Circle = styled.button`
+  svg {
+    position: absolute;
+    color: ${setColor.light};
+    background: ${setColor.border};
+    border-top-left-radius: 50%;
+    border-top-right-radius: 50%;
+    z-index: 0;
+    height: 4rem;
+    width: 4rem;
+    padding: 1.5rem;
+    padding-bottom: 0;
+    margin: 0;
+    bottom: -0rem;
+    left: 50%;
+    transform: translate(-50%);
+    box-sizing: content-box;
+    cursor: pointer;
+  }
 `
 
 const Hero = ({ children }) => {
@@ -18,13 +46,21 @@ const Hero = ({ children }) => {
           position: "absolute",
           height: "100%",
           width: "100%",
-          zIndex: -1,
+          zIndex: -2,
+          filter: "brightness(55%)",
         }}
-        src="../../images/icon.png"
+        src="../../images/hero.jpg"
         alt="xx"
         placeholder="blurred"
         layout="fullWidth"
       />
+      <Circle>
+        <GiArrowDunk
+          onClick={() => {
+            scrollTo("#skills")
+          }}
+        />
+      </Circle>
       {children}
     </HeroContainer>
   )
