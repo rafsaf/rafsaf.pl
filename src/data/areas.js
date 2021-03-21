@@ -9,7 +9,8 @@ const areas = [
 \r
 hello_there("Dzień dobry, Python jest cudowny.")\r
 \r
-hello_there("It is just awesome!!!")`,
+hello_there("It is just awesome!!!")
+\r`,
     language: "python",
     icon: icons.python,
   },

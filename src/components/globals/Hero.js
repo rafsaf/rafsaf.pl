@@ -9,11 +9,14 @@ const HeroContainer = styled.header`
   position: relative;
   min-height: 80vh;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+
   border-bottom: 1.25rem solid ${setColor.border};
   h1 {
+    text-align: center;
     color: ${setColor.mainWhite};
+    display: block;
   }
 `
 
