@@ -1,13 +1,13 @@
-import React from "react"
-import styled from "styled-components"
-import { StaticImage } from "gatsby-plugin-image"
-import { setColor } from "../../styles"
-import { GiArrowDunk } from "react-icons/gi"
-import scrollTo from "gatsby-plugin-smoothscroll"
+import React from "react";
+import styled from "styled-components";
+import { StaticImage } from "gatsby-plugin-image";
+import { setColor } from "../../styles";
+import { GiArrowDunk } from "react-icons/gi";
+import scrollTo from "gatsby-plugin-smoothscroll";
 
 const HeroContainer = styled.header`
   position: relative;
-  min-height: 80vh;
+  min-height: 85vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -18,7 +18,7 @@ const HeroContainer = styled.header`
     color: ${setColor.mainWhite};
     display: block;
   }
-`
+`;
 
 const Circle = styled.button`
   svg {
@@ -39,7 +39,14 @@ const Circle = styled.button`
     box-sizing: content-box;
     cursor: pointer;
   }
-`
+  &:hover {
+    svg {
+      height: 4.2rem;
+      width: 4.2rem;
+      transition: 0.1s linear;
+    }
+  }
+`;
 
 const Hero = ({ children }) => {
   return (
@@ -50,23 +57,23 @@ const Hero = ({ children }) => {
           height: "100%",
           width: "100%",
           zIndex: -2,
-          filter: "brightness(55%)",
+          filter: "brightness(95%)",
         }}
         src="../../images/hero.jpg"
-        alt="xx"
+        alt=""
         placeholder="blurred"
         layout="fullWidth"
       />
       <Circle>
         <GiArrowDunk
           onClick={() => {
-            scrollTo("#skills")
+            scrollTo("#skills");
           }}
         />
       </Circle>
       {children}
     </HeroContainer>
-  )
-}
+  );
+};
 
-export default Hero
+export default Hero;

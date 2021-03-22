@@ -1,6 +1,13 @@
-import React from "react"
-import { Global } from "./globals/GlobalStyle"
-import { Helmet } from "react-helmet"
+import React from "react";
+import { Global } from "./globals/GlobalStyle";
+import styled from "styled-components";
+import Navbar from "./globals/Navbar";
+import Footer from "./globals/Footer";
+import { Helmet } from "react-helmet";
+
+const Wrapper = styled.div`
+  min-height: 100vh;
+`;
 
 const layout = ({ children }) => {
   return (
@@ -13,9 +20,11 @@ const layout = ({ children }) => {
         />
       </Helmet>
       <Global />
-      {children}
+      <Navbar />
+      <Wrapper>{children}</Wrapper>
+      <Footer />
     </main>
-  )
-}
+  );
+};
 
-export default layout
+export default layout;

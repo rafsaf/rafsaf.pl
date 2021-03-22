@@ -177,7 +177,7 @@ const Skills = () => {
   return (
     <>
       <GridArea id="skills">
-        <TechArea>
+         <TechArea>
           <CodeWrapper>
             <p>Technologie</p>
             <MyCodeBlock code={text} language={language} />

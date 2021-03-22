@@ -1,4 +1,4 @@
-import styled from "styled-components"
+import styled from "styled-components";
 
 const Button = styled.button`
   display: inline-block;
@@ -18,6 +18,6 @@ const Button = styled.button`
     background: transparent;
     border-color: white;
   }
-`
+`;
 
-export default Button
+export default Buttons;
