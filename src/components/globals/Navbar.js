@@ -8,33 +8,6 @@ import { BiDownArrow } from "react-icons/bi";
 import { StaticImage } from "gatsby-plugin-image";
 import { Link } from "gatsby";
 
-const Icons = [
-  {
-    icon: <FaGithub />,
-    url: "https://github.com/rafsaf",
-  },
-];
-
-const NavLink = styled(Link)`
-  color: ${setColor.mainWhite};
-  svg {
-    display: none;
-  }
-  &:hover {
-    color: ${setColor.lightBlue};
-  }
-  &.active {
-    color: ${setColor.lightBlue};
-    @media (max-width: 992px) {
-      svg {
-        display: inline;
-        font-size: 1.8rem;
-        margin-right: 0.5rem;
-      }
-    }
-  }
-`;
-
 const Links = () => {
   return (
     <ul>
@@ -60,6 +33,33 @@ const Links = () => {
   );
 };
 
+const Icons = [
+  {
+    icon: <FaGithub />,
+    url: "https://github.com/rafsaf",
+  },
+];
+
+const NavLink = styled(Link)`
+  color: ${setColor.mainWhite};
+  svg {
+    display: none;
+  }
+  &:hover {
+    color: ${setColor.primaryColor};
+  }
+  &.active {
+    color: ${setColor.primaryColor};
+    @media (max-width: 992px) {
+      svg {
+        display: inline;
+        font-size: 1.8rem;
+        margin-right: 0.5rem;
+      }
+    }
+  }
+`;
+
 const Nav = styled.nav`
   position: fixed;
   z-index: 200;
@@ -67,7 +67,7 @@ const Nav = styled.nav`
   color: ${setColor.mainWhite};
   width: 100%;
   padding: 0.8rem 1.5rem;
-  border-bottom: 1px solid ${setColor.darkerArea};
+  border-bottom: 1px solid ${setColor.primaryColor3};
   /* box-shadow: 0 1px 2px ; */
   @media (min-width: 992px) {
     padding: 0 1.5rem;
@@ -94,8 +94,7 @@ const NavLogo = styled.div`
   }
   button svg {
     font-size: 2.7rem;
-    color: ${(props) =>
-      props.redToggle ? setColor.darkOrange : setColor.light};
+    color: ${(props) => (props.redToggle ? setColor.orange : setColor.light)};
   }
   @media (min-width: 992px) {
     button {

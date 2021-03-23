@@ -11,8 +11,8 @@ const HeroContainer = styled.header`
   display: flex;
   align-items: center;
   justify-content: center;
-
-  border-bottom: 1.25rem solid ${setColor.border};
+  text-align: center;
+  border-bottom: 1rem solid ${setColor.mainGrey};
   h1 {
     text-align: center;
     color: ${setColor.mainWhite};
@@ -24,7 +24,7 @@ const Circle = styled.button`
   svg {
     position: absolute;
     color: ${setColor.light};
-    background: ${setColor.border};
+    background: ${setColor.mainGrey};
     border-top-left-radius: 50%;
     border-top-right-radius: 50%;
     z-index: 0;
@@ -57,7 +57,7 @@ const Hero = ({ children }) => {
           height: "100%",
           width: "100%",
           zIndex: -2,
-          filter: "brightness(95%)",
+          filter: "brightness(80%)",
         }}
         src="../../images/hero.jpg"
         alt=""

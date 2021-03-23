@@ -1,8 +1,8 @@
-import React, { useState } from "react"
-import styled from "styled-components"
-import { setColor, setFont } from "../../styles"
-import areas from "../../data/areas"
-import { CodeBlock, tomorrowNight } from "react-code-blocks"
+import React, { useState } from "react";
+import styled from "styled-components";
+import { setColor, setFont } from "../../styles";
+import areas from "../../data/areas";
+import { CodeBlock, tomorrowNight } from "react-code-blocks";
 
 function MyCodeBlock({ code, language, showLineNumbers }) {
   return (
@@ -13,13 +13,13 @@ function MyCodeBlock({ code, language, showLineNumbers }) {
       theme={tomorrowNight}
       wrapLines
     />
-  )
+  );
 }
 
 const GridArea = styled.div`
   width: 100%;
   min-height: 90vh;
-  border-bottom: 1.25rem solid ${setColor.border};
+  border-bottom: 1.25rem solid ${setColor.mainGrey};
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: repeat(8, 1fr);
@@ -88,16 +88,16 @@ const GridArea = styled.div`
       "a n o p q"
       "a t u v w";
   }
-`
+`;
 
 const AreaButton = styled.button`
   min-height: 10rem;
   position: relative;
   grid-area: ${(props) => props.area};
-  background: ${setColor.darkerArea};
+  background: ${setColor.primaryColor3};
   color: ${setColor.mainWhite};
-  border-bottom: 1px solid ${setColor.borderOrange};
-  border-left: 1px solid ${setColor.borderOrange};
+  border-bottom: 1px solid ${setColor.mainGrey};
+  border-left: 1px solid ${setColor.mainGrey};
   font-size: 1.3rem;
   font-weight: 400;
   letter-spacing: 0.25rem;
@@ -106,13 +106,13 @@ const AreaButton = styled.button`
 
   @media (min-width: 768px) {
     background: ${(props) =>
-      props.clicked ? setColor.darkArea : setColor.darkerArea};
+      props.clicked ? setColor.primaryColor2 : setColor.primaryColor3};
     cursor: pointer;
     span svg {
       ${(props) => (props.clicked ? "transform: scale(1.35);" : "")}
     }
     &:hover {
-      background: ${setColor.darkArea};
+      background: ${setColor.primaryColor2};
       transition: 0.4s linear;
 
       span svg {
@@ -123,23 +123,22 @@ const AreaButton = styled.button`
       }
     }
   }
-`
+`;
 const TechArea = styled.div`
-  background: ${setColor.darkArea};
+  background: ${setColor.primaryColor2};
   color: ${setColor.mainWhite};
   position: relative;
   display: none;
-  border-right: 1px solid ${setColor.borderOrange};
 
   @media (min-width: 768px) {
     display: block;
     grid-area: a;
   }
-`
+`;
 
 const AreaDescription = styled.article`
   height: 50vh;
-`
+`;
 const CodeWrapper = styled.div`
   position: sticky;
   position: -webkit-sticky;
@@ -167,17 +166,17 @@ const CodeWrapper = styled.div`
   @media (min-width: 1368px) {
     font-size: 1.8rem;
   }
-`
+`;
 
 const Skills = () => {
-  const [area, setArea] = useState("b")
-  const [language, setLanguage] = useState("python")
-  const [text, setText] = useState(areas[0].text)
+  const [area, setArea] = useState("b");
+  const [language, setLanguage] = useState("python");
+  const [text, setText] = useState(areas[0].text);
 
   return (
     <>
       <GridArea id="skills">
-         <TechArea>
+        <TechArea>
           <CodeWrapper>
             <p>Technologie</p>
             <MyCodeBlock code={text} language={language} />
@@ -189,9 +188,9 @@ const Skills = () => {
             area={item.area}
             clicked={area === item.area}
             onClick={() => {
-              setArea(item.area)
-              setText(item.text)
-              setLanguage(item.language)
+              setArea(item.area);
+              setText(item.text);
+              setLanguage(item.language);
             }}
           >
             <p>{item.title}</p> {item.icon}
@@ -200,7 +199,7 @@ const Skills = () => {
       </GridArea>
       <AreaDescription></AreaDescription>
     </>
-  )
-}
+  );
+};
 
-export default Skills
+export default Skills;

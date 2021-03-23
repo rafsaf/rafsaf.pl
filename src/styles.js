@@ -1,17 +1,12 @@
 export const setColor = {
-  primaryColor: "#af9a7d",
+  primaryColor: "#0fe1fa",
+  primaryColor2: "#2793a0",
+  primaryColor3: "#0b7380",
   mainWhite: "#fff",
+  light: "rgb(218, 216, 216)",
   mainBlack: "#272727",
-  mainGrey: "#ececec",
-  lightGrey: "#f7f7f7",
-  darkOrange: "#D74C2F",
-  darkerOrange: "#A53820",
-  borderOrange: "#428890",
-  lightBlue: "#0FE1FA",
-  darkArea: "#2793A0",
-  darkerArea: "#0B7380",
-  light: "#DBDBDB",
-  border: "#719DA0",
+  orange: "#d74c2f",
+  mainGrey: "#719da0",
 };
 
 export const setFont = {

@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { setColor, setFont } from "../../styles";
+import { setColor } from "../../styles";
 
 const FooterContainer = styled.footer`
   background: ${setColor.mainBlack};
