@@ -170,7 +170,7 @@ const CodeWrapper = styled.div`
 `;
 
 const query = graphql`
-  query AllPrismicSkill {
+  {
     allPrismicSkill(sort: { fields: data___area, order: ASC }) {
       nodes {
         data {
