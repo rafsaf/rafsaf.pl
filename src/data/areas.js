@@ -1,4 +1,4 @@
-import icons from "./icons"
+import icons from "./icons";
 
 const areas = [
   {
@@ -12,7 +12,7 @@ hello_there("Dzień dobry, Python jest cudowny.")\r
 hello_there("It is just awesome!!!")
 \r`,
     language: "python",
-    icon: icons.python,
+    icon: icons["Python".toLowerCase()],
   },
   {
     area: "u",
@@ -116,6 +116,6 @@ AND quality=100`,
     icon: icons.apache,
     large: false,
   },
-]
+];
 
-export default areas
+export default areas;

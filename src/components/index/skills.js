@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { setColor, setFont } from "../../styles";
-import areas from "../../data/areas";
+import icons from "../../data/icons";
 import { CodeBlock, tomorrowNight } from "react-code-blocks";
+import { useStaticQuery, graphql } from "gatsby";
 
 function MyCodeBlock({ code, language, showLineNumbers }) {
   return (
@@ -168,10 +169,27 @@ const CodeWrapper = styled.div`
   }
 `;
 
+const query = graphql`
+  {
+    allPrismicSkill {
+      nodes {
+        data {
+          code
+          area
+          icon
+          language
+          title
+        }
+      }
+    }
+  }
+`;
+
 const Skills = () => {
   const [area, setArea] = useState("b");
   const [language, setLanguage] = useState("python");
-  const [text, setText] = useState(areas[0].text);
+  const data = useStaticQuery(query);
+  const [text, setText] = useState(data.allPrismicSkill.nodes[0].data.code);
 
   return (
     <>
@@ -182,18 +200,17 @@ const Skills = () => {
             <MyCodeBlock code={text} language={language} />
           </CodeWrapper>
         </TechArea>
-        {areas.map((item) => (
+        {data.allPrismicSkill.nodes.map((item) => (
           <AreaButton
-            large={item.large}
-            area={item.area}
-            clicked={area === item.area}
+            area={item.data.area}
+            clicked={area === item.data.area}
             onClick={() => {
-              setArea(item.area);
-              setText(item.text);
-              setLanguage(item.language);
+              setArea(item.data.area);
+              setText(item.data.code);
+              setLanguage(item.data.language);
             }}
           >
-            <p>{item.title}</p> {item.icon}
+            <p>{item.data.title}</p> {icons[`${item.data.icon}`]}
           </AreaButton>
         ))}
       </GridArea>

@@ -25,5 +25,19 @@ module.exports = {
       },
       __key: "images",
     },
+    {
+      resolve: "gatsby-source-prismic",
+      options: {
+        repositoryName: "rafsaf-portfolio",
+        accessToken:
+          "MC5ZRm9jY3hJQUFDRUFHV3NO.T1zvv70MKe-_ve-_ve-_ve-_vU4HLxTvv73vv70777-977-9NwTvv71Dc0UhEu-_vXjvv70577-977-9",
+        linkResolver: ({ node, key, value }) => (doc) => {
+          return "/";
+        },
+        schemas: {
+          Skill: require("./custom_types/Skill.json"),
+        },
+      },
+    },
   ],
 };
