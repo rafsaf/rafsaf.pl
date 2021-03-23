@@ -19,7 +19,7 @@ function MyCodeBlock({ code, language, showLineNumbers }) {
 const GridArea = styled.div`
   width: 100%;
   min-height: 90vh;
-  border-bottom: 1.25rem solid ${setColor.mainGrey};
+  border-bottom: 1rem solid ${setColor.mainGrey};
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: repeat(8, 1fr);
