@@ -145,27 +145,27 @@ const CodeWrapper = styled.div`
   position: -webkit-sticky;
   top: 0.5rem;
   margin: 1rem;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   text-align: left;
   p {
     ${setFont.roboto}
     text-align: center;
     text-transform: uppercase;
-    padding-top: 1.4rem;
+    padding-top: 1.2rem;
     font-size: 2.5rem;
     font-weight: 400;
     letter-spacing: 0.2rem;
   }
 
   @media (min-width: 992px) {
-    font-size: 1.4rem;
+    font-size: 1.3rem;
   }
   @media (min-width: 1178px) {
-    font-size: 1.6rem;
+    font-size: 1.4rem;
     position: static;
   }
   @media (min-width: 1368px) {
-    font-size: 1.8rem;
+    font-size: 1.5rem;
   }
 `;
 
