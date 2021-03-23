@@ -2,30 +2,6 @@ import icons from "./icons";
 
 const areas = [
   {
-    area: "b",
-    title: "Python",
-    text: `def hello_there(greeting: str) -> None: \r
-    print(greeting)\r
-\r
-hello_there("Dzień dobry, Python jest cudowny.")\r
-\r
-hello_there("It is just awesome!!!")
-\r`,
-    language: "python",
-    icon: icons["Python".toLowerCase()],
-  },
-  {
-    area: "u",
-    title: "SQl",
-    text: `SELECT Django_REST AS Backend,\r
-React AS Frontend\r
-FROM All_Frameworks\r
-WHERE satisfaction=100\r
-AND quality=100`,
-    icon: icons.sql,
-    language: "sql",
-  },
-  {
     area: "p",
     title: "git",
     text: "xxxx",

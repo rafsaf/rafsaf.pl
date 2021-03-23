@@ -157,12 +157,15 @@ const Navbar = () => {
     <Nav>
       <NavCenter>
         <NavLogo redToggle={toggle}>
-          <StaticImage
-            src="../../images/rafsaf4.svg"
-            placeholder="tracedSVG"
-            height={48}
-            alt="logo"
-          />
+          <Link to="/">
+            <StaticImage
+              src="../../images/rafsaf4.svg"
+              placeholder="tracedSVG"
+              height={45}
+              alt="logo"
+            />
+          </Link>
+
           <button onClick={() => setToggle(!toggle)}>
             {toggle === false ? <GiHamburgerMenu /> : <BsX />}
           </button>
