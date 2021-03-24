@@ -6,7 +6,7 @@ import { AiOutlineMail } from "react-icons/ai";
 const FooterContainer = styled.footer`
   background: ${setColor.mainBlack};
   position: relative;
-  min-height: 20rem;
+  min-height: 25rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -20,6 +20,7 @@ const FooterContainer = styled.footer`
   }
   h3 {
     padding-bottom: 1.5rem;
+    padding-top: 2rem;
     font-weight: 400;
     text-transform: lowercase;
   }
@@ -37,6 +38,7 @@ const Footer = () => {
   return (
     <FooterContainer>
       <div>
+        <h2>Rafał Safin</h2>
         <h3>
           <AiOutlineMail /> rafal.safin12@gmail.com
         </h3>
