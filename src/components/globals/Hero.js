@@ -28,9 +28,9 @@ const Circle = styled.button`
     border-top-left-radius: 50%;
     border-top-right-radius: 50%;
     z-index: 0;
-    height: 4rem;
-    width: 4rem;
-    padding: 1.5rem;
+    height: 3rem;
+    width: 3rem;
+    padding: 1rem;
     padding-bottom: 0;
     margin: 0;
     bottom: -0rem;
@@ -39,11 +39,19 @@ const Circle = styled.button`
     box-sizing: content-box;
     cursor: pointer;
   }
-  &:hover {
+  @media (min-width: 992px) {
     svg {
-      height: 4.2rem;
-      width: 4.2rem;
-      transition: 0.1s linear;
+      height: 4rem;
+      width: 4rem;
+      padding: 1.5rem;
+      padding-bottom: 0;
+    }
+    &:hover {
+      svg {
+        height: 4.2rem;
+        width: 4.2rem;
+        transition: 0.1s linear;
+      }
     }
   }
 `;

@@ -22,6 +22,10 @@ const FooterContainer = styled.footer`
     padding-bottom: 1.5rem;
     padding-top: 2rem;
     font-weight: 400;
+
+    @media (max-width: 578px) {
+      font-size: 1rem;
+    }
     text-transform: lowercase;
   }
   div {
