@@ -7,7 +7,7 @@ const Card = styled.a`
   display: block;
   min-height: 20rem;
   width: 100%;
-  margin: 0 auto;
+  margin: 2rem auto;
   background: ${setColor.primaryColor3};
   color: ${setColor.mainWhite};
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
@@ -16,6 +16,9 @@ const Card = styled.a`
   &:hover {
     transform: scale(1.02);
     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+  }
+  @media (min-width: 768px) {
+    margin: 0 auto;
   }
 `;
 const ImageWrapper = styled.div`
@@ -53,7 +56,7 @@ const Content = styled.section`
 
 const Project = ({ img, title, href, text, desc }) => {
   return (
-    <Card href={href} target="_blank" rel="noopener">
+    <Card href={href} target="_blank" rel="noreferrer">
       <ImageWrapper>
         <Img fluid={img.fluid} alt="" />
         <section>{desc}</section>

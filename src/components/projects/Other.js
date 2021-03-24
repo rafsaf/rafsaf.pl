@@ -33,7 +33,7 @@ const Others = ({ items }) => {
       <h2>Some older stuff:</h2>
       {items.map((item, index) => (
         <h4 key={index}>
-          <a href={item.data.href} target="_blank" rel="noopener">
+          <a href={item.data.href} target="_blank" rel="noreferrer">
             {item.data.name}
           </a>
         </h4>

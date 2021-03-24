@@ -3,7 +3,6 @@ import { useStaticQuery, graphql } from "gatsby";
 import styled, { css } from "styled-components";
 import { setColor } from "../../styles";
 import { HiOutlineArrowCircleUp } from "react-icons/hi";
-import { CgArrowLongUp } from "react-icons/cg";
 
 const TimeLineWrapper = styled.article`
   min-height: 60vh;
