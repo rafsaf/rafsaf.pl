@@ -50,6 +50,7 @@ export const query = graphql`
     projects: allPrismicArticle {
       nodes {
         data {
+          desc
           href
           text
           title
