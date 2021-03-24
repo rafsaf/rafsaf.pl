@@ -44,10 +44,10 @@ const Content = styled.section`
     height: 25rem;
   }
   @media (min-width: 992px) {
-    height: 22rem;
+    height: 21rem;
   }
   @media (min-width: 1178px) {
-    height: 18rem;
+    height: 17rem;
   }
 `;
 
@@ -59,14 +59,8 @@ const Project = ({ img, title, href, text, desc }) => {
         <section>{desc}</section>
       </ImageWrapper>
       <Content>
-        <h3>PLEMIONA PLANER</h3>
-        <p>
-          A project of increasing popularity used by small community of players
-          playing a browser game Tribal Wars. It gathers several hundred people
-          a day and thousands per month. There is a dedicated Discord channel
-          for more engaged users and payments to take advantage of all the
-          features of the site.
-        </p>
+        <h3>{title}</h3>
+        <p>{text}</p>
       </Content>
     </Card>
   );
