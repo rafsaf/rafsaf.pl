@@ -14,19 +14,13 @@ const Links = () => {
       <li>
         <NavLink to="/" activeClassName="active">
           <BiDownArrow />
-          Strona główna
+          Home Page
         </NavLink>
       </li>
       <li>
         <NavLink to="/projects" activeClassName="active">
           <BiDownArrow />
-          Projekty
-        </NavLink>
-      </li>
-      <li>
-        <NavLink to="/partnership" activeClassName="active">
-          <BiDownArrow />
-          Współpraca
+          Projects
         </NavLink>
       </li>
     </ul>

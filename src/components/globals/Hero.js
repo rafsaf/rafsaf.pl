@@ -50,7 +50,7 @@ const Circle = styled.button`
 
 const Hero = ({ children }) => {
   return (
-    <HeroContainer>
+    <HeroContainer id="hero">
       <StaticImage
         style={{
           position: "absolute",
@@ -67,7 +67,7 @@ const Hero = ({ children }) => {
       <Circle>
         <GiArrowDunk
           onClick={() => {
-            scrollTo("#skills");
+            scrollTo("#skills", "end");
           }}
         />
       </Circle>

@@ -137,9 +137,6 @@ const TechArea = styled.div`
   }
 `;
 
-const AreaDescription = styled.article`
-  height: 50vh;
-`;
 const CodeWrapper = styled.div`
   position: sticky;
   position: -webkit-sticky;
@@ -151,7 +148,7 @@ const CodeWrapper = styled.div`
     ${setFont.roboto}
     text-align: center;
     text-transform: uppercase;
-    padding-top: 1.2rem;
+    padding-top: 4.5rem;
     font-size: 2.5rem;
     font-weight: 400;
     letter-spacing: 0.2rem;
@@ -163,6 +160,9 @@ const CodeWrapper = styled.div`
   @media (min-width: 1178px) {
     font-size: 1.4rem;
     position: static;
+    p {
+      padding-top: 1rem;
+    }
   }
   @media (min-width: 1368px) {
     font-size: 1.5rem;
@@ -196,7 +196,7 @@ const Skills = () => {
       <GridArea id="skills">
         <TechArea>
           <CodeWrapper>
-            <p>Technologie</p>
+            <p>Technologies</p>
             <MyCodeBlock code={text} language={language} />
           </CodeWrapper>
         </TechArea>
@@ -205,16 +205,15 @@ const Skills = () => {
             area={item.data.area}
             clicked={area === item.data.area}
             onClick={() => {
+              setLanguage(item.data.language);
               setArea(item.data.area);
               setText(item.data.code);
-              setLanguage(item.data.language);
             }}
           >
             <p>{item.data.title}</p> {icons[`${item.data.icon}`]}
           </AreaButton>
         ))}
       </GridArea>
-      <AreaDescription></AreaDescription>
     </>
   );
 };

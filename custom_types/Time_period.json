@@ -1,0 +1,16 @@
+{
+    "Main" : {
+      "year" : {
+        "type" : "Number",
+        "config" : {
+          "label" : "Year"
+        }
+      },
+      "text" : {
+        "type" : "Text",
+        "config" : {
+          "label" : "text"
+        }
+      }
+    }
+  }

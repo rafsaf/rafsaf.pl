@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { setColor } from "../../styles";
+import { AiOutlineMail } from "react-icons/ai";
 
 const FooterContainer = styled.footer`
   background: ${setColor.mainBlack};
@@ -17,6 +18,11 @@ const FooterContainer = styled.footer`
     font-weight: 300;
     text-transform: uppercase;
   }
+  h3 {
+    padding-bottom: 1.5rem;
+    font-weight: 400;
+    text-transform: lowercase;
+  }
   div {
     width: 95vw;
   }
@@ -31,7 +37,10 @@ const Footer = () => {
   return (
     <FooterContainer>
       <div>
-        <h4>Site created with Gatsby.js</h4>
+        <h3>
+          <AiOutlineMail /> rafal.safin12@gmail.com
+        </h3>
+        <h4>Powered by Gatsby.js with Headless cms Prismic.io</h4>
         <h4>2020 &#169; rafsaf.pl</h4>
       </div>
     </FooterContainer>

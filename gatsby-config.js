@@ -36,6 +36,11 @@ module.exports = {
         },
         schemas: {
           Skill: require("./custom_types/Skill.json"),
+          Time_period: require("./custom_types/Time_period.json"),
+          Article: require("./custom_types/Article.json"),
+        },
+        shouldDownloadImage: ({ node, key, value }) => {
+          return true;
         },
       },
     },
