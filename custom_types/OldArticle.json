@@ -1,0 +1,18 @@
+{
+    "Main" : {
+      "href" : {
+        "type" : "Text",
+        "config" : {
+          "label" : "href",
+          "placeholder" : "e.g. to repo"
+        }
+      },
+      "name" : {
+        "type" : "Text",
+        "config" : {
+          "label" : "name",
+          "placeholder" : "exact reg"
+        }
+      }
+    }
+  }

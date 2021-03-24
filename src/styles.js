@@ -7,6 +7,7 @@ export const setColor = {
   mainBlack: "#272727",
   orange: "#d74c2f",
   mainGrey: "#719da0",
+  blue: "rgb(60, 107, 170)",
 };
 
 export const setFont = {

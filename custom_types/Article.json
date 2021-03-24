@@ -1,30 +1,37 @@
 {
-    "Main" : {
-      "title" : {
-        "type" : "Text",
-        "config" : {
-          "label" : "title"
-        }
-      },
-      "text" : {
-        "type" : "Text",
-        "config" : {
-          "label" : "text"
-        }
-      },
-      "href" : {
-        "type" : "Text",
-        "config" : {
-          "label" : "href"
-        }
-      },
-      "avatar" : {
-        "type" : "Image",
-        "config" : {
-          "constraint" : { },
-          "thumbnails" : [ ],
-          "label" : "avatar"
-        }
+  "Main": {
+    "title": {
+      "type": "Text",
+      "config": {
+        "label": "title"
+      }
+    },
+    "text": {
+      "type": "Text",
+      "config": {
+        "label": "text"
+      }
+    },
+    "href": {
+      "type": "Text",
+      "config": {
+        "label": "href"
+      }
+    },
+    "desc": {
+      "type": "Text",
+      "config": {
+        "label": "desc",
+        "placeholder": "e.g. commercial/fun"
+      }
+    },
+    "avatar": {
+      "type": "Image",
+      "config": {
+        "constraint": {},
+        "thumbnails": [],
+        "label": "avatar"
       }
     }
   }
+}

@@ -41,7 +41,7 @@ const Footer = () => {
           <AiOutlineMail /> rafal.safin12@gmail.com
         </h3>
         <h4>Powered by Gatsby.js with Headless cms Prismic.io</h4>
-        <h4>2020 &#169; rafsaf.pl</h4>
+        <h4>2021 &#169; rafsaf.pl</h4>
       </div>
     </FooterContainer>
   );

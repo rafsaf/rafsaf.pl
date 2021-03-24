@@ -8,6 +8,7 @@ import { CgArrowLongUp } from "react-icons/cg";
 const TimeLineWrapper = styled.article`
   min-height: 60vh;
   color: ${setColor.mainBlack};
+  padding-bottom: 5rem;
 `;
 
 const Container = styled.div`

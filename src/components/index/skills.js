@@ -200,8 +200,9 @@ const Skills = () => {
             <MyCodeBlock code={text} language={language} />
           </CodeWrapper>
         </TechArea>
-        {data.allPrismicSkill.nodes.map((item) => (
+        {data.allPrismicSkill.nodes.map((item, index) => (
           <AreaButton
+            key={index}
             area={item.data.area}
             clicked={area === item.data.area}
             onClick={() => {

@@ -170,8 +170,8 @@ const Navbar = () => {
           <Links></Links>
         </NavDesktopLinks>
         <NavDesktopIcons>
-          {Icons.map((item) => (
-            <a href={item.url} target="_blank" rel="noreferrer">
+          {Icons.map((item, index) => (
+            <a key={index} href={item.url} target="_blank" rel="noreferrer">
               {item.icon}
             </a>
           ))}
