@@ -9,10 +9,12 @@ import { graphql } from "gatsby";
 const Wrapper = styled.div`
   width: 85vw;
   margin: 0 auto;
-  padding: 4rem 0;
+  padding: 2rem 0;
+  padding-top: 0.3rem;
   max-width: 1278px;
   @media (min-width: 768px) {
     display: grid;
+    padding-top: 2.5rem;
     grid-template-columns: 1fr 1fr;
     gap: 1.5rem;
     row-gap: 2.5rem;
