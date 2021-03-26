@@ -19,10 +19,6 @@ const layout = ({ children }) => {
     <main>
       <Helmet>
         <meta charSet="utf-8" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Courgette&family=Lato&family=Roboto+Mono:ital,wght@1,200&display=swap"
-          rel="stylesheet"
-        />
       </Helmet>
       <Global />
       <Navbar />

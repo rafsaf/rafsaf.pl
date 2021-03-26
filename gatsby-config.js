@@ -10,6 +10,25 @@ module.exports = {
     "gatsby-plugin-sitemap",
     `gatsby-plugin-smoothscroll`,
     {
+      resolve: `gatsby-plugin-webfonts`,
+      options: {
+        fonts: {
+          google: [
+            {
+              family: "Roboto Mono",
+              variants: ["200i", "300i"],
+            },
+            {
+              family: "Lato",
+            },
+            {
+              family: "Courgette",
+            },
+          ],
+        },
+      },
+    },
+    {
       resolve: "gatsby-plugin-manifest",
       options: {
         icon: "src/images/ico.png",
