@@ -1,7 +1,7 @@
 module.exports = {
   siteMetadata: {
     title: "gatsby-styled-components",
-    siteUrl: "https://rafsaf-gatsby-portfolio.netlify.app/",
+    siteUrl: "https://rafsaf.pl/",
   },
   plugins: [
     "gatsby-plugin-styled-components",
