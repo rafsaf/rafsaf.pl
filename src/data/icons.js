@@ -16,7 +16,13 @@ import {
   DiPostgresql,
   DiVisualstudio,
 } from "react-icons/di";
-import { SiDjango, SiGatsby, SiApache, SiPypi } from "react-icons/si";
+import {
+  SiDjango,
+  SiGatsby,
+  SiApache,
+  SiPypi,
+  SiTypescript,
+} from "react-icons/si";
 import styled from "styled-components";
 import React from "react";
 import { setColor } from "../styles";
@@ -32,6 +38,11 @@ const Icon = styled.span`
 `;
 
 const icons = {
+  typescript: (
+    <Icon>
+      <SiTypescript />
+    </Icon>
+  ),
   docker: (
     <Icon>
       <FaDocker />
