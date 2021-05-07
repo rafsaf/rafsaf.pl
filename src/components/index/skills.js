@@ -19,11 +19,11 @@ function MyCodeBlock({ code, language, showLineNumbers }) {
 
 const GridArea = styled.div`
   width: 100%;
-  min-height: 90vh;
+  min-height: 110vh;
   border-bottom: 1rem solid ${setColor.mainGrey};
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: repeat(8, 1fr);
+  grid-template-rows: repeat(10, 1fr);
   grid-template-areas:
     "b c"
     "d e"
@@ -32,11 +32,13 @@ const GridArea = styled.div`
     "n o"
     "p q"
     "t u"
-    "v w";
+    "v w"
+    "m x"
+    "y z";
 
   @media (min-width: 768px) {
     grid-template-columns: 3fr 2fr;
-    grid-template-rows: repeat(16, 1fr);
+    grid-template-rows: repeat(20, 1fr);
     grid-template-areas:
       "a b"
       "a c"
@@ -53,12 +55,16 @@ const GridArea = styled.div`
       "a t"
       "a u"
       "a v"
-      "a w";
+      "a w"
+      "a m"
+      "a x"
+      "a y"
+      "a z";
   }
 
   @media (min-width: 992px) {
     grid-template-columns: 5fr 2fr 2fr;
-    grid-template-rows: repeat(8, 1fr);
+    grid-template-rows: repeat(10, 1fr);
     grid-template-areas:
       "a b c"
       "a d e"
@@ -67,27 +73,32 @@ const GridArea = styled.div`
       "a n o"
       "a p q"
       "a t u"
-      "a v w";
+      "a v w"
+      "a m x"
+      "a y z";
   }
   @media (min-width: 1178px) {
     grid-template-columns: 5fr 2fr 2fr 2fr;
-    grid-template-rows: repeat(6, 1fr);
+    grid-template-rows: repeat(7, 1fr);
     grid-template-areas:
       "a b c d"
       "a h i j"
       "a n o p"
       "a t u v"
-      "a e k w"
-      "a q k w";
+      "a m x y"
+      "a e k q"
+      "a w z q"
+
   }
   @media (min-width: 1368px) {
     grid-template-columns: 6fr 3fr 2fr 2fr 2fr;
-    grid-template-rows: repeat(4, 1fr);
+    grid-template-rows: repeat(5, 1fr);
     grid-template-areas:
       "a b c d e"
       "a h i j k"
       "a n o p q"
-      "a t u v w";
+      "a t u v w"
+      "a m x y z";
   }
 `;
 
@@ -145,6 +156,7 @@ const CodeWrapper = styled.div`
   margin: 1rem;
   font-size: 1.1rem;
   text-align: left;
+  
   p {
     ${setFont.roboto}
     text-align: center;
@@ -159,13 +171,14 @@ const CodeWrapper = styled.div`
     font-size: 1.3rem;
   }
   @media (min-width: 1178px) {
+    margin-bottom: 5rem;
     font-size: 1.4rem;
-    position: static;
     p {
-      padding-top: 1rem;
+      padding-top: 4rem;
     }
   }
   @media (min-width: 1368px) {
+    margin-bottom: 8rem;
     font-size: 1.5rem;
   }
 `;

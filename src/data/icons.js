@@ -6,19 +6,20 @@ import {
   FaHtml5,
   FaLinux,
   FaGithub,
-} from "react-icons/fa"
-import { AiOutlineConsoleSql } from "react-icons/ai"
+  FaDocker,
+} from "react-icons/fa";
+import { AiOutlineConsoleSql } from "react-icons/ai";
 import {
   DiGit,
   DiDjango,
   DiJavascript1,
   DiPostgresql,
   DiVisualstudio,
-} from "react-icons/di"
-import { SiDjango, SiGatsby, SiApache } from "react-icons/si"
-import styled from "styled-components"
-import React from "react"
-import { setColor } from "../styles"
+} from "react-icons/di";
+import { SiDjango, SiGatsby, SiApache, SiPypi } from "react-icons/si";
+import styled from "styled-components";
+import React from "react";
+import { setColor } from "../styles";
 
 const Icon = styled.span`
   position: absolute;
@@ -28,9 +29,19 @@ const Icon = styled.span`
   font-size: ${(props) => (props.large ? "2.8rem" : "2.3rem")};
   ${(props) => (props.small ? "font-size:1.7rem" : "")};
   color: ${setColor.mainWhite};
-`
+`;
 
 const icons = {
+  docker: (
+    <Icon>
+      <FaDocker />
+    </Icon>
+  ),
+  pypi: (
+    <Icon>
+      <SiPypi />
+    </Icon>
+  ),
   python: (
     <Icon>
       <FaPython />
@@ -111,6 +122,6 @@ const icons = {
       <SiApache />
     </Icon>
   ),
-}
+};
 
-export default icons
+export default icons;
