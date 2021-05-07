@@ -50,7 +50,7 @@ export default projects;
 
 export const query = graphql`
   {
-    projects: allPrismicArticle {
+    projects: allPrismicArticle(sort: {order: DESC, fields: first_publication_date}) {
       nodes {
         data {
           desc

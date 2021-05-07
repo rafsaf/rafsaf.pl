@@ -8,7 +8,7 @@ import { Helmet } from "react-helmet";
 const Wrapper = styled.div`
   min-height: 100vh;
   position: relative;
-  top: calc(45px + 1.6rem);
+  top: calc(45px + 0.6rem);
   @media (min-width: 992px) {
     top: 45px;
   }

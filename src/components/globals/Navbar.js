@@ -60,7 +60,7 @@ const Nav = styled.nav`
   background: ${setColor.mainBlack};
   color: ${setColor.mainWhite};
   width: 100%;
-  padding: 0.8rem 1.5rem;
+  padding: 0.3rem 1.5rem;
   border-bottom: 1px solid ${setColor.primaryColor3};
   /* box-shadow: 0 1px 2px ; */
   @media (min-width: 992px) {
@@ -127,7 +127,7 @@ const NavDesktopLinks = styled.div`
     text-transform: uppercase;
     ${setFont.roboto};
     letter-spacing: 0.15rem;
-    font-weight: 500;
+    font-weight: 300;
   }
   @media (min-width: 992px) {
     display: block;
