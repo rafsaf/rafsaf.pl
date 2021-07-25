@@ -1,11 +1,85 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { setColor, setFont } from "../../styles";
-import icons from "../../data/icons";
+import returnIcon from "../../data/icons";
 import { CodeBlock, tomorrowNight } from "react-code-blocks";
 import { useStaticQuery, graphql } from "gatsby";
 
-function MyCodeBlock({ code, language, showLineNumbers }) {
+const query = graphql`
+  {
+    allPrismicSkill(sort: { fields: data___area, order: ASC }) {
+      nodes {
+        data {
+          code
+          area
+          icon
+          language
+          title
+        }
+      }
+    }
+  }
+`;
+
+interface CodeBlockData {
+  data: {
+    code: string;
+    area: string;
+    icon: string;
+    language: string;
+    title: string;
+  };
+}
+
+interface Data {
+  allPrismicSkill: {
+    nodes: CodeBlockData[];
+  };
+}
+
+const Skills = () => {
+  const [area, setArea] = useState("b");
+  const [language, setLanguage] = useState("python");
+  const data: Data = useStaticQuery(query);
+  const [text, setText] = useState<string>(
+    data.allPrismicSkill.nodes[0].data.code
+  );
+
+  return (
+    <>
+      <GridArea id="skills">
+        <TechArea>
+          <CodeWrapper>
+            <p>Technologies</p>
+            <MyCodeBlock code={text} language={language} />
+          </CodeWrapper>
+        </TechArea>
+        {data.allPrismicSkill.nodes.map((item, index) => (
+          <AreaButton
+            key={index}
+            area={item.data.area}
+            clicked={area === item.data.area}
+            onClick={() => {
+              setLanguage(item.data.language);
+              setArea(item.data.area);
+              setText(item.data.code);
+            }}
+          >
+            <p>{item.data.title}</p> {returnIcon(`${item.data.icon}`)}
+          </AreaButton>
+        ))}
+      </GridArea>
+    </>
+  );
+};
+
+export default Skills;
+
+const MyCodeBlock: React.FC<{
+  code: string;
+  language: string;
+  showLineNumbers?: boolean;
+}> = ({ code, language, showLineNumbers }) => {
   return (
     <CodeBlock
       text={code}
@@ -15,7 +89,7 @@ function MyCodeBlock({ code, language, showLineNumbers }) {
       wrapLines
     />
   );
-}
+};
 
 const GridArea = styled.div`
   width: 100%;
@@ -87,8 +161,7 @@ const GridArea = styled.div`
       "a t u v"
       "a m x y"
       "a e k q"
-      "a w z q"
-
+      "a w z q";
   }
   @media (min-width: 1368px) {
     grid-template-columns: 6fr 3fr 2fr 2fr 2fr;
@@ -102,7 +175,7 @@ const GridArea = styled.div`
   }
 `;
 
-const AreaButton = styled.button`
+const AreaButton = styled.button<{ area: string; clicked?: boolean }>`
   min-height: 10rem;
   position: relative;
   grid-area: ${(props) => props.area};
@@ -156,7 +229,7 @@ const CodeWrapper = styled.div`
   margin: 1rem;
   font-size: 1.1rem;
   text-align: left;
-  
+
   p {
     ${setFont.roboto}
     text-align: center;
@@ -182,55 +255,3 @@ const CodeWrapper = styled.div`
     font-size: 1.5rem;
   }
 `;
-
-const query = graphql`
-  {
-    allPrismicSkill(sort: { fields: data___area, order: ASC }) {
-      nodes {
-        data {
-          code
-          area
-          icon
-          language
-          title
-        }
-      }
-    }
-  }
-`;
-
-const Skills = () => {
-  const [area, setArea] = useState("b");
-  const [language, setLanguage] = useState("python");
-  const data = useStaticQuery(query);
-  const [text, setText] = useState(data.allPrismicSkill.nodes[0].data.code);
-
-  return (
-    <>
-      <GridArea id="skills">
-        <TechArea>
-          <CodeWrapper>
-            <p>Technologies</p>
-            <MyCodeBlock code={text} language={language} />
-          </CodeWrapper>
-        </TechArea>
-        {data.allPrismicSkill.nodes.map((item, index) => (
-          <AreaButton
-            key={index}
-            area={item.data.area}
-            clicked={area === item.data.area}
-            onClick={() => {
-              setLanguage(item.data.language);
-              setArea(item.data.area);
-              setText(item.data.code);
-            }}
-          >
-            <p>{item.data.title}</p> {icons[`${item.data.icon}`]}
-          </AreaButton>
-        ))}
-      </GridArea>
-    </>
-  );
-};
-
-export default Skills;

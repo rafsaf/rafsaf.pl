@@ -1,6 +1,24 @@
 import React from "react";
 import styled from "styled-components";
+import { SingleOldProject } from "../../pages/projects";
 import { setColor, setFont } from "../../styles";
+
+const Others: React.FC<{ items: SingleOldProject[] }> = ({ items }) => {
+  return (
+    <OtherWrapper>
+      <h2>Some older stuff:</h2>
+      {items.map((item, index) => (
+        <h4 key={index}>
+          <a href={item.data.href} target="_blank" rel="noreferrer">
+            {item.data.name}
+          </a>
+        </h4>
+      ))}
+    </OtherWrapper>
+  );
+};
+
+export default Others;
 
 const OtherWrapper = styled.article`
   width: 90vw;
@@ -26,20 +44,3 @@ const OtherWrapper = styled.article`
     color: ${setColor.mainGrey};
   }
 `;
-
-const Others = ({ items }) => {
-  return (
-    <OtherWrapper>
-      <h2>Some older stuff:</h2>
-      {items.map((item, index) => (
-        <h4 key={index}>
-          <a href={item.data.href} target="_blank" rel="noreferrer">
-            {item.data.name}
-          </a>
-        </h4>
-      ))}
-    </OtherWrapper>
-  );
-};
-
-export default Others;

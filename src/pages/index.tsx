@@ -13,7 +13,7 @@ const index = () => {
         <title>Rafał Safin | Home Page</title>
         <meta name="description" content="Rafał Safin portfolio home page" />
       </Helmet>
-      <Hero src="../images/tour-1.jpeg">
+      <Hero>
         <div>
           <h1>Fullstack Developer</h1>
           <ButtonLink big to="/projects">

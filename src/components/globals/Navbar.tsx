@@ -1,12 +1,50 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { setColor, setFont } from "../../styles";
-import { FaGithub } from "react-icons/fa";
+import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { BsX } from "react-icons/bs";
 import { BiDownArrow } from "react-icons/bi";
 import { StaticImage } from "gatsby-plugin-image";
 import { Link } from "gatsby";
+
+const Navbar = () => {
+  const [toggle, setToggle] = useState(false);
+  return (
+    <Nav>
+      <NavCenter>
+        <NavLogo redToggle={toggle}>
+          <Link to="/">
+            <StaticImage
+              src="../../images/rafsaf4.svg"
+              placeholder="tracedSVG"
+              height={45}
+              alt="logo"
+            />
+          </Link>
+
+          <button onClick={() => setToggle(!toggle)}>
+            {toggle === false ? <GiHamburgerMenu /> : <BsX />}
+          </button>
+        </NavLogo>
+        <NavPhoneLinks>{toggle ? <Links /> : null}</NavPhoneLinks>
+
+        <NavDesktopLinks>
+          <Links></Links>
+        </NavDesktopLinks>
+        <NavDesktopIcons>
+          {Icons.map((item, index) => (
+            <a key={index} href={item.url} target="_blank" rel="noreferrer">
+              {item.icon}
+            </a>
+          ))}
+        </NavDesktopIcons>
+      </NavCenter>
+    </Nav>
+  );
+};
+
+export default Navbar;
 
 const Links = () => {
   return (
@@ -27,10 +65,14 @@ const Links = () => {
   );
 };
 
-const Icons = [
+export const Icons = [
   {
     icon: <FaGithub />,
     url: "https://github.com/rafsaf",
+  },
+  {
+    icon: <FaLinkedin />,
+    url: "Https://www.linkedin.com/in/rafal-safin",
   },
 ];
 
@@ -79,7 +121,7 @@ const NavCenter = styled.div`
   }
 `;
 
-const NavLogo = styled.div`
+const NavLogo = styled.div<{ redToggle: boolean }>`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -140,45 +182,8 @@ const NavDesktopIcons = styled.div`
     display: block;
     a svg {
       color: ${setColor.mainWhite};
-      font-size: 1.8rem;
+      font-size: 2.1rem;
+      margin: 0.3rem 0.5rem 0 0.5rem;
     }
   }
 `;
-
-const Navbar = () => {
-  const [toggle, setToggle] = useState(false);
-  return (
-    <Nav>
-      <NavCenter>
-        <NavLogo redToggle={toggle}>
-          <Link to="/">
-            <StaticImage
-              src="../../images/rafsaf4.svg"
-              placeholder="tracedSVG"
-              height={45}
-              alt="logo"
-            />
-          </Link>
-
-          <button onClick={() => setToggle(!toggle)}>
-            {toggle === false ? <GiHamburgerMenu /> : <BsX />}
-          </button>
-        </NavLogo>
-        <NavPhoneLinks>{toggle ? <Links /> : null}</NavPhoneLinks>
-
-        <NavDesktopLinks>
-          <Links></Links>
-        </NavDesktopLinks>
-        <NavDesktopIcons>
-          {Icons.map((item, index) => (
-            <a key={index} href={item.url} target="_blank" rel="noreferrer">
-              {item.icon}
-            </a>
-          ))}
-        </NavDesktopIcons>
-      </NavCenter>
-    </Nav>
-  );
-};
-
-export default Navbar;

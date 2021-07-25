@@ -4,6 +4,55 @@ import styled, { css } from "styled-components";
 import { setColor } from "../../styles";
 import { HiOutlineArrowCircleUp } from "react-icons/hi";
 
+const query = graphql`
+  {
+    items: allPrismicTimePeriod(sort: { fields: data___year, order: DESC }) {
+      nodes {
+        data {
+          text
+          year
+        }
+      }
+    }
+  }
+`;
+
+interface YearInfo {
+  data: {
+    text: string;
+    year: number;
+  };
+}
+
+interface Data {
+  items: {
+    nodes: YearInfo[];
+  };
+}
+
+const ComponentName = () => {
+  const data: Data = useStaticQuery(query);
+  return (
+    <TimeLineWrapper>
+      <Container>
+        {data.items.nodes.map((node, index) => (
+          <GridCard left={index % 2 === 0} key={index}>
+            <div>
+              <h2>{node.data.year}</h2>
+            </div>
+            <div>
+              <p dangerouslySetInnerHTML={{ __html: node.data.text }}></p>
+              <HiOutlineArrowCircleUp />
+            </div>
+          </GridCard>
+        ))}
+      </Container>
+    </TimeLineWrapper>
+  );
+};
+
+export default ComponentName;
+
 const TimeLineWrapper = styled.article`
   min-height: 60vh;
   color: ${setColor.mainBlack};
@@ -80,7 +129,7 @@ const rightDashed = css`
   }
 `;
 
-const GridCard = styled.div`
+const GridCard = styled.div<{ left?: boolean }>`
   position: relative;
   p {
     position: relative;
@@ -116,46 +165,10 @@ const GridCard = styled.div`
     }
   }
   @media (max-width: 767px) {
-    p, h2 {    
+    p,
+    h2 {
       border-left: 3px transparent;
       border-right: 3px transparent;
     }
-
   }
 `;
-
-const ComponentName = () => {
-  const data = useStaticQuery(graphql`
-    {
-      items: allPrismicTimePeriod(sort: { fields: data___year, order: DESC }) {
-        nodes {
-          data {
-            text
-            year
-          }
-        }
-      }
-    }
-  `)
-  return (
-    <TimeLineWrapper>
-      <Container>
-        {data.items.nodes.map((node, index) => (
-          <GridCard left={index % 2 === 0} key={index}>
-            <div>
-              <h2>{node.data.year}</h2>
-            </div>
-            <div>
-              <p dangerouslySetInnerHTML={{__html: node.data.text}}>
-                
-              </p>
-              <HiOutlineArrowCircleUp />
-            </div>
-          </GridCard>
-        ))}
-      </Container>
-    </TimeLineWrapper>
-  );
-};
-
-export default ComponentName;

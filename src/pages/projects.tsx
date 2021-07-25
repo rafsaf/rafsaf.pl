@@ -21,7 +21,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const projects = ({ data }) => {
+const projects: React.FC<{ data: Data }> = ({ data }) => {
   console.log(data);
   return (
     <Layout>
@@ -31,14 +31,7 @@ const projects = ({ data }) => {
       </Helmet>
       <Wrapper>
         {data.projects.nodes.map((item, index) => (
-          <Project
-            key={index}
-            href={item.data.href}
-            text={item.data.text}
-            title={item.data.title}
-            img={item.data.avatar}
-            desc={item.data.desc}
-          />
+          <Project item={item} />
         ))}
       </Wrapper>
       <Others items={data.olds.nodes} />
@@ -48,9 +41,39 @@ const projects = ({ data }) => {
 
 export default projects;
 
+export interface SingleOldProject {
+  data: {
+    href: string;
+    name: string;
+  };
+}
+
+export interface SingleProject {
+  data: {
+    desc: string;
+    href: string;
+    text: string;
+    title: string;
+    avatar: {
+      fluid: any;
+    };
+  };
+}
+
+interface Data {
+  projects: {
+    nodes: SingleProject[];
+  };
+  olds: {
+    nodes: SingleOldProject[];
+  };
+}
+
 export const query = graphql`
   {
-    projects: allPrismicArticle(sort: {order: DESC, fields: first_publication_date}) {
+    projects: allPrismicArticle(
+      sort: { order: DESC, fields: first_publication_date }
+    ) {
       nodes {
         data {
           desc

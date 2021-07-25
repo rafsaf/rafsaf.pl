@@ -5,16 +5,7 @@ import Navbar from "./globals/Navbar";
 import Footer from "./globals/Footer";
 import { Helmet } from "react-helmet";
 
-const Wrapper = styled.div`
-  min-height: 100vh;
-  position: relative;
-  top: calc(45px + 0.6rem);
-  @media (min-width: 992px) {
-    top: 45px;
-  }
-`;
-
-const layout = ({ children }) => {
+const layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
     <main>
       <Helmet>
@@ -29,3 +20,12 @@ const layout = ({ children }) => {
 };
 
 export default layout;
+
+const Wrapper = styled.div`
+  min-height: 100vh;
+  position: relative;
+  top: calc(45px + 0.6rem);
+  @media (min-width: 992px) {
+    top: 45px;
+  }
+`;

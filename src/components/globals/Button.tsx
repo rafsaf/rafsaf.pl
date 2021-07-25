@@ -2,7 +2,7 @@ import styled, { css } from "styled-components";
 import { setColor } from "../../styles";
 import { Link } from "gatsby";
 
-const ButtonStyle = css`
+const ButtonStyle = css<{ big?: boolean }>`
   display: inline-block;
   text-transform: uppercase;
   background: white;

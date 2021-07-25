@@ -56,7 +56,7 @@ const Circle = styled.button`
   }
 `;
 
-const Hero = ({ children }) => {
+const Hero: React.FC<{children: React.ReactNode}> = ({ children }) => {
   return (
     <HeroContainer id="hero">
       <StaticImage

@@ -8,7 +8,7 @@ import {
   FaGithub,
   FaDocker,
 } from "react-icons/fa";
-import { AiOutlineConsoleSql } from "react-icons/ai";
+import { AiOutlineMinus, AiOutlineConsoleSql } from "react-icons/ai";
 import {
   DiGit,
   DiDjango,
@@ -27,7 +27,20 @@ import styled from "styled-components";
 import React from "react";
 import { setColor } from "../styles";
 
-const Icon = styled.span`
+const returnIcon = (iconName: string): JSX.Element => {
+  if (iconName in icons) {
+    return icons[iconName];
+  }
+  return icons["notFound"];
+};
+
+export default returnIcon;
+
+interface IconsI {
+  [key: string]: JSX.Element;
+}
+
+const Icon = styled.span<{ large?: boolean; small?: boolean }>`
   position: absolute;
   bottom: 5px;
   left: 50%;
@@ -37,7 +50,12 @@ const Icon = styled.span`
   color: ${setColor.mainWhite};
 `;
 
-const icons = {
+const icons: IconsI = {
+  notFound: (
+    <Icon>
+      <AiOutlineMinus />
+    </Icon>
+  ),
   typescript: (
     <Icon>
       <SiTypescript />
@@ -134,5 +152,3 @@ const icons = {
     </Icon>
   ),
 };
-
-export default icons;

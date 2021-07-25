@@ -2,6 +2,24 @@ import React from "react";
 import styled from "styled-components";
 import Img from "gatsby-image";
 import { setColor } from "../../styles";
+import { SingleProject } from "../../pages/projects";
+
+const Project: React.FC<{ item: SingleProject }> = ({ item }) => {
+  return (
+    <Card href={item.data.href} target="_blank" rel="noreferrer">
+      <ImageWrapper>
+        <Img fluid={item.data.avatar.fluid} alt="" />
+        <section>{item.data.desc}</section>
+      </ImageWrapper>
+      <Content>
+        <h3>{item.data.title}</h3>
+        <p>{item.data.text}</p>
+      </Content>
+    </Card>
+  );
+};
+
+export default Project;
 
 const Card = styled.a`
   display: block;
@@ -53,20 +71,3 @@ const Content = styled.section`
     height: 17rem;
   }
 `;
-
-const Project = ({ img, title, href, text, desc }) => {
-  return (
-    <Card href={href} target="_blank" rel="noreferrer">
-      <ImageWrapper>
-        <Img fluid={img.fluid} alt="" />
-        <section>{desc}</section>
-      </ImageWrapper>
-      <Content>
-        <h3>{title}</h3>
-        <p>{text}</p>
-      </Content>
-    </Card>
-  );
-};
-
-export default Project;
