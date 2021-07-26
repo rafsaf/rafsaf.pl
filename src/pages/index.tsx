@@ -15,7 +15,7 @@ const index = () => {
       </Helmet>
       <Hero>
         <div>
-          <h1>Fullstack Developer</h1>
+          <h1>Full-stack Developer</h1>
           <ButtonLink big to="/projects">
             See Projects
           </ButtonLink>

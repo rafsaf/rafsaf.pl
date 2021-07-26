@@ -1,6 +1,6 @@
 module.exports = {
   siteMetadata: {
-    title: "gatsby-styled-components",
+    title: "gatsby-rafsaf-portfolio",
     siteUrl: "https://rafsaf.pl/",
   },
   plugins: [
@@ -47,9 +47,8 @@ module.exports = {
     {
       resolve: "gatsby-source-prismic",
       options: {
-        repositoryName: "rafsaf-portfolio",
-        accessToken:
-          "MC5ZRm9jY3hJQUFDRUFHV3NO.T1zvv70MKe-_ve-_ve-_ve-_vU4HLxTvv73vv70777-977-9NwTvv71Dc0UhEu-_vXjvv70577-977-9",
+        repositoryName: `${process.env.GATSBY_PORTFOLIO_REPOSITORY_NAME}`,
+        accessToken: `${process.env.GATSBY_PORTFOLIO_ACCESS_TOKEN}`,
         linkResolver: ({ node, key, value }) => (doc) => {
           return "/";
         },

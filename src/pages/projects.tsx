@@ -31,7 +31,7 @@ const projects: React.FC<{ data: Data }> = ({ data }) => {
       </Helmet>
       <Wrapper>
         {data.projects.nodes.map((item, index) => (
-          <Project item={item} />
+          <Project key={index} item={item} />
         ))}
       </Wrapper>
       <Others items={data.olds.nodes} />
