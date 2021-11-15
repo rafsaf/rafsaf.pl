@@ -1,4 +1,1 @@
-node_modules/
-.cache/
-public
-src/images/signal-desktop-win-1.40.1.exe
+node_modules

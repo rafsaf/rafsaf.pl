@@ -3,23 +3,7 @@ import styled from "styled-components";
 import { setColor, setFont } from "../../styles";
 import returnIcon from "../../data/icons";
 import { CodeBlock, tomorrowNight } from "react-code-blocks";
-import { useStaticQuery, graphql } from "gatsby";
-
-const query = graphql`
-  {
-    allPrismicSkill(sort: { fields: data___area, order: ASC }) {
-      nodes {
-        data {
-          code
-          area
-          icon
-          language
-          title
-        }
-      }
-    }
-  }
-`;
+import JSONData from "../../data/Skills.json";
 
 interface CodeBlockData {
   data: {
@@ -31,19 +15,11 @@ interface CodeBlockData {
   };
 }
 
-interface Data {
-  allPrismicSkill: {
-    nodes: CodeBlockData[];
-  };
-}
-
 const Skills = () => {
   const [area, setArea] = useState("b");
   const [language, setLanguage] = useState("python");
-  const data: Data = useStaticQuery(query);
-  const [text, setText] = useState<string>(
-    data.allPrismicSkill.nodes[0].data.code
-  );
+  const data: CodeBlockData[] = JSONData;
+  const [text, setText] = useState<string>(data[0].data.code);
 
   return (
     <>
@@ -54,7 +30,7 @@ const Skills = () => {
             <MyCodeBlock code={text} language={language} />
           </CodeWrapper>
         </TechArea>
-        {data.allPrismicSkill.nodes.map((item, index) => (
+        {data.map((item, index) => (
           <AreaButton
             key={index}
             area={item.data.area}

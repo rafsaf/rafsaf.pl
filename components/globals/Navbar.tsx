@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { setColor, setFont } from "../../styles";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { BsX } from "react-icons/bs";
 import { BiDownArrow } from "react-icons/bi";
-import { StaticImage } from "gatsby-plugin-image";
-import { Link } from "gatsby";
+import StaticImage from "next/image";
+import Link from "next/link";
 
 const Navbar = () => {
   const [toggle, setToggle] = useState(false);
@@ -14,13 +14,15 @@ const Navbar = () => {
     <Nav>
       <NavCenter>
         <NavLogo redToggle={toggle}>
-          <Link to="/">
-            <StaticImage
-              src="../../images/rafsaf4.svg"
-              placeholder="tracedSVG"
-              height={45}
-              alt="logo"
-            />
+          <Link href="/">
+            <a>
+              <StaticImage
+                src="/rafsaf4.svg"
+                height={45}
+                width={200}
+                alt="logo"
+              />
+            </a>
           </Link>
 
           <button onClick={() => setToggle(!toggle)}>
@@ -50,16 +52,20 @@ const Links = () => {
   return (
     <ul>
       <li>
-        <NavLink to="/" activeClassName="active">
-          <BiDownArrow />
-          Home Page
-        </NavLink>
+        <Link href="/" passHref>
+          <NavLink>
+            <BiDownArrow />
+            Home Page
+          </NavLink>
+        </Link>
       </li>
       <li>
-        <NavLink to="/projects" activeClassName="active">
-          <BiDownArrow />
-          Projects
-        </NavLink>
+        <Link href="/projects" passHref>
+          <NavLink>
+            <BiDownArrow />
+            Projects
+          </NavLink>
+        </Link>
       </li>
     </ul>
   );
@@ -76,7 +82,18 @@ export const Icons = [
   },
 ];
 
-const NavLink = styled(Link)`
+const activeLink = css`
+  color: ${setColor.primaryColor};
+  @media (max-width: 992px) {
+    svg {
+      display: inline;
+      font-size: 1.8rem;
+      margin-right: 0.5rem;
+    }
+  }
+`;
+
+const NavLink = styled.a<{ isActive?: boolean }>`
   color: ${setColor.mainWhite};
   svg {
     display: none;
@@ -84,16 +101,7 @@ const NavLink = styled(Link)`
   &:hover {
     color: ${setColor.primaryColor};
   }
-  &.active {
-    color: ${setColor.primaryColor};
-    @media (max-width: 992px) {
-      svg {
-        display: inline;
-        font-size: 1.8rem;
-        margin-right: 0.5rem;
-      }
-    }
-  }
+  ${(props) => (props.isActive ? activeLink : null)}
 `;
 
 const Nav = styled.nav`

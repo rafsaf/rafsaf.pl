@@ -13,7 +13,7 @@ const Footer = () => {
             {item.icon}
           </a>
         ))}
-        <h4>Powered by Gatsby.js with Headless cms Prismic.io</h4>
+        <h4>Powered by Next.js</h4>
         <h4>2021 &#169; rafsaf.pl</h4>
       </div>
     </FooterContainer>
@@ -40,7 +40,6 @@ const FooterContainer = styled.footer`
   }
   h4 {
     font-size: 0.8rem;
-    font-weight: 300;
     text-transform: uppercase;
   }
   h3 {

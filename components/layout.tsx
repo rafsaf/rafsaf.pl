@@ -3,14 +3,10 @@ import { Global } from "./globals/GlobalStyle";
 import styled from "styled-components";
 import Navbar from "./globals/Navbar";
 import Footer from "./globals/Footer";
-import { Helmet } from "react-helmet";
 
 const layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
     <main>
-      <Helmet>
-        <meta charSet="utf-8" />
-      </Helmet>
       <Global />
       <Navbar />
       <Wrapper>{children}</Wrapper>

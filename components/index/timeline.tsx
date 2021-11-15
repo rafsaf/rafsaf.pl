@@ -1,21 +1,8 @@
 import React from "react";
-import { useStaticQuery, graphql } from "gatsby";
+import JSONData from "../../data/TimePeriods.json";
 import styled, { css } from "styled-components";
 import { setColor } from "../../styles";
 import { HiOutlineArrowCircleUp } from "react-icons/hi";
-
-const query = graphql`
-  {
-    items: allPrismicTimePeriod(sort: { fields: data___year, order: DESC }) {
-      nodes {
-        data {
-          text
-          year
-        }
-      }
-    }
-  }
-`;
 
 interface YearInfo {
   data: {
@@ -24,18 +11,12 @@ interface YearInfo {
   };
 }
 
-interface Data {
-  items: {
-    nodes: YearInfo[];
-  };
-}
-
 const ComponentName = () => {
-  const data: Data = useStaticQuery(query);
+  const data: YearInfo[] = JSONData;
   return (
     <TimeLineWrapper>
       <Container>
-        {data.items.nodes.map((node, index) => (
+        {data.map((node, index) => (
           <GridCard left={index % 2 === 0} key={index}>
             <div>
               <h2>{node.data.year}</h2>

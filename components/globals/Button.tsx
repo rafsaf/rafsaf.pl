@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { setColor } from "../../styles";
-import { Link } from "gatsby";
+import Link from "next/link";
 
 const ButtonStyle = css<{ big?: boolean }>`
   display: inline-block;
@@ -31,6 +31,6 @@ export const Button = styled.button`
   ${ButtonStyle}
 `;
 
-export const ButtonLink = styled(Link)`
+export const ButtonLink = styled.a`
   ${ButtonStyle}
 `;

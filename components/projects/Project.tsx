@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import Img from "gatsby-image";
+import Img from "next/image";
 import { setColor } from "../../styles";
 import { SingleProject } from "../../pages/projects";
 
@@ -8,7 +8,9 @@ const Project: React.FC<{ item: SingleProject }> = ({ item }) => {
   return (
     <Card href={item.data.href} target="_blank" rel="noreferrer">
       <ImageWrapper>
-        <Img fluid={item.data.avatar.fluid} alt="" />
+        <div>
+          <Img src={item.data.avatar} alt="" objectFit="cover" layout="fill" />
+        </div>
         <section>{item.data.desc}</section>
       </ImageWrapper>
       <Content>
@@ -43,6 +45,7 @@ const ImageWrapper = styled.div`
   position: relative;
   div {
     height: 17rem;
+    width: 100%;
   }
   section {
     position: absolute;

@@ -1,11 +1,25 @@
-import React from "react";
+import React, { useRef } from "react";
 import styled from "styled-components";
-import { StaticImage } from "gatsby-plugin-image";
+import StaticImage from "next/image";
 import { setColor } from "../../styles";
 import { GiArrowDunk } from "react-icons/gi";
-import scrollTo from "gatsby-plugin-smoothscroll";
+import HeroImage from "../../public/hero.jpeg";
 
 const HeroContainer = styled.header`
+  section {
+    position: "absolute";
+    height: "100%";
+    width: "100%";
+    z-index: -2;
+  }
+  .StaticImage {
+    filter: "brightness(80%)";
+  }
+  h1 {
+    text-align: center;
+    color: ${setColor.mainWhite};
+    display: block;
+  }
   position: relative;
   min-height: 85vh;
   display: flex;
@@ -13,11 +27,6 @@ const HeroContainer = styled.header`
   justify-content: center;
   text-align: center;
   border-bottom: 1rem solid ${setColor.mainGrey};
-  h1 {
-    text-align: center;
-    color: ${setColor.mainWhite};
-    display: block;
-  }
 `;
 
 const Circle = styled.button`
@@ -56,28 +65,26 @@ const Circle = styled.button`
   }
 `;
 
-const Hero: React.FC<{children: React.ReactNode}> = ({ children }) => {
+const Hero: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const scrollToSkills = () => {
+    const skillsElement = document.getElementById("skills");
+    skillsElement?.scrollIntoView();
+  };
   return (
     <HeroContainer id="hero">
-      <StaticImage
-        style={{
-          position: "absolute",
-          height: "100%",
-          width: "100%",
-          zIndex: -2,
-          filter: "brightness(80%)",
-        }}
-        src="../../images/hero.jpg"
-        alt=""
-        placeholder="blurred"
-        layout="fullWidth"
-      />
-      <Circle>
-        <GiArrowDunk
-          onClick={() => {
-            scrollTo("#skills", "end");
-          }}
+      <section>
+        <StaticImage
+          objectFit="cover"
+          className="StaticImage"
+          src={HeroImage}
+          alt="Hero image"
+          placeholder="blur"
+          layout="fill"
         />
+      </section>
+
+      <Circle>
+        <GiArrowDunk onClick={scrollToSkills} />
       </Circle>
       {children}
     </HeroContainer>

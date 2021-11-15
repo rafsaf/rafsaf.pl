@@ -1,5 +1,5 @@
-import { createGlobalStyle } from "styled-components"
-import { setColor, setFont } from "../../styles"
+import { createGlobalStyle } from "styled-components";
+import { setColor, setFont } from "../../styles";
 
 export const Global = createGlobalStyle`
 
@@ -81,4 +81,4 @@ ul {
     line-height: 1;
   }
 }
-`
+`;
