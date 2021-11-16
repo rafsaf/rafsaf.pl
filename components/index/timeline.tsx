@@ -32,8 +32,6 @@ const ComponentName = () => {
         const text = await getMarkdownTextByPath(value.data.path);
         newMdItems.push({ content: text });
       }
-      console.log("dupa123");
-      console.log(newMdItems);
       setMdItems(newMdItems);
     };
     fillMdItems();
