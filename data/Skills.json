@@ -1,11 +1,182 @@
 [
   {
     "data": {
-      "title": "",
-      "icon": "",
-      "language": "",
-      "area": "",
-      "code": ""
+      "title": "Python",
+      "icon": "python",
+      "language": "python",
+      "area": "b",
+      "code": "/skill/python.txt"
+    }
+  },
+  {
+    "data": {
+      "title": "sql",
+      "icon": "sql",
+      "language": "sql",
+      "area": "u",
+      "code": "/skill/sql.txt"
+    }
+  },
+  {
+    "data": {
+      "title": "postgresql",
+      "icon": "postgres",
+      "language": "sql",
+      "area": "v",
+      "code": "/skill/postgresql.txt"
+    }
+  },
+  {
+    "data": {
+      "title": "html",
+      "icon": "html",
+      "language": "html",
+      "area": "n",
+      "code": "/skill/html.txt"
+    }
+  },
+  {
+    "data": {
+      "title": "css",
+      "icon": "css",
+      "language": "css",
+      "area": "t",
+      "code": "/skill/css.txt"
+    }
+  },
+  {
+    "data": {
+      "title": "VS Code",
+      "icon": "vscode",
+      "language": "json",
+      "area": "w",
+      "code": "/skill/vscode.txt"
+    }
+  },
+  {
+    "data": {
+      "title": "django REST",
+      "icon": "djangoRest",
+      "language": "python",
+      "area": "d",
+      "code": "/skill/djangorest.txt"
+    }
+  },
+  {
+    "data": {
+      "title": "react",
+      "icon": "react",
+      "language": "javascript",
+      "area": "j",
+      "code": "/skill/react.txt"
+    }
+  },
+  {
+    "data": {
+      "title": "javascript",
+      "icon": "js",
+      "language": "javascript",
+      "area": "h",
+      "code": "/skill/js.txt"
+    }
+  },
+  {
+    "data": {
+      "title": "gatsby",
+      "icon": "gatsby",
+      "language": "javascript",
+      "area": "o",
+      "code": "/skill/gatsby.txt"
+    }
+  },
+  {
+    "data": {
+      "title": "django",
+      "icon": "django",
+      "language": "python",
+      "area": "i",
+      "code": "/skill/django.txt"
+    }
+  },
+  {
+    "data": {
+      "title": "git",
+      "icon": "git",
+      "language": "shell",
+      "area": "p",
+      "code": "/skill/git.txt"
+    }
+  },
+  {
+    "data": {
+      "title": "github",
+      "icon": "github",
+      "language": "shell",
+      "area": "q",
+      "code": "/skill/github.txt"
+    }
+  },
+  {
+    "data": {
+      "title": "linux",
+      "icon": "linux",
+      "language": "shell",
+      "area": "k",
+      "code": "/skill/linux.txt"
+    }
+  },
+  {
+    "data": {
+      "title": "aws",
+      "icon": "aws",
+      "language": "shell",
+      "area": "c",
+      "code": "/skill/aws.txt"
+    }
+  },
+  {
+    "data": {
+      "title": "apache2",
+      "icon": "apache",
+      "language": "shell",
+      "area": "e",
+      "code": "/skill/python.txt"
+    }
+  },
+  {
+    "data": {
+      "title": "typescript",
+      "icon": "typescript",
+      "language": "typescript",
+      "area": "m",
+      "code": "/skill/ts.txt"
+    }
+  },
+  {
+    "data": {
+      "title": "pypi",
+      "icon": "pypi",
+      "language": "yml",
+      "area": "z",
+      "code": "/skill/pypi.txt"
+    }
+  },
+  {
+    "data": {
+      "title": "fastapi",
+      "icon": "python",
+      "language": "python",
+      "area": "y",
+      "code": "/skill/fastapi.txt"
+    }
+  },
+  {
+    "data": {
+      "title": "docker",
+      "icon": "docker",
+      "language": "shell",
+      "area": "x",
+      "code": "/skill/python.txt"
     }
   }
 ]

@@ -1,0 +1,5 @@
+cd portfolio_folder
+rm -rf old_portfolio
+mkdir new_portfolio
+cd new_portfolio
+touch index.html

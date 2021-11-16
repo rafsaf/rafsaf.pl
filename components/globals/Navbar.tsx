@@ -7,9 +7,11 @@ import { BsX } from "react-icons/bs";
 import { BiDownArrow } from "react-icons/bi";
 import StaticImage from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 const Navbar = () => {
   const [toggle, setToggle] = useState(false);
+
   return (
     <Nav>
       <NavCenter>
@@ -49,11 +51,12 @@ const Navbar = () => {
 export default Navbar;
 
 const Links = () => {
+  const router = useRouter();
   return (
     <ul>
       <li>
         <Link href="/" passHref>
-          <NavLink>
+          <NavLink isActive={router.pathname === "/"}>
             <BiDownArrow />
             Home Page
           </NavLink>
@@ -61,7 +64,7 @@ const Links = () => {
       </li>
       <li>
         <Link href="/projects" passHref>
-          <NavLink>
+          <NavLink isActive={router.pathname === "/projects"}>
             <BiDownArrow />
             Projects
           </NavLink>

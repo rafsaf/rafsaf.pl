@@ -1,0 +1,8 @@
+DROP DATABASE Regular_CMS;
+CREATE DATABASE Headless_CMS OWNER Rafsaf;
+psql Headless_CMS;
+
+CREATE TABLE frontend (
+    id SERIAL
+    tech TEXT CHECK(tech in ('React', 'Gatsby'))
+);

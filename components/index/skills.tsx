@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { setColor, setFont } from "../../styles";
 import returnIcon from "../../data/icons";
@@ -19,7 +19,16 @@ const Skills = () => {
   const [area, setArea] = useState("b");
   const [language, setLanguage] = useState("python");
   const data: CodeBlockData[] = JSONData;
-  const [text, setText] = useState<string>(data[0].data.code);
+  const [codePath, setCodePath] = useState<string>(data[0].data.code);
+  const [text, setText] = useState<string>("");
+
+  useEffect(() => {
+    fetch(codePath)
+      .then((res) => res.text())
+      .then((codeText) => {
+        setText(codeText);
+      });
+  }, [codePath]);
 
   return (
     <>
@@ -38,7 +47,7 @@ const Skills = () => {
             onClick={() => {
               setLanguage(item.data.language);
               setArea(item.data.area);
-              setText(item.data.code);
+              setCodePath(item.data.code);
             }}
           >
             <p>{item.data.title}</p> {returnIcon(`${item.data.icon}`)}

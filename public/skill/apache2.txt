@@ -1,0 +1,5 @@
+sudo service apache2 restart
+
+This one is my favourite one
+need to use after git pull
+in production
