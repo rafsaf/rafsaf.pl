@@ -1,0 +1,6 @@
+git config --global user.name "Rafał Safin"
+git config --global user.email "rafal.safin12@gmail.com"
+
+cd My_Portfolio
+git init
+git commit -m 'Initial commit here'

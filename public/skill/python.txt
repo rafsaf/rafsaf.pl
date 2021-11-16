@@ -1,0 +1,6 @@
+def hello_there(greeting: str) -> None:
+    print(greeting)
+
+hello_there("Hi, I love Python.")
+
+hello_there("It is just awesome!!!")

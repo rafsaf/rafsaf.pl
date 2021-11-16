@@ -1,0 +1,8 @@
+from django.test import TestCase
+
+class DummyTest(TestCase):
+    def setUp(self) -> None:
+        self.message: str = "Hello"
+
+    def test_i_wish_every_test_pass_like_this(self) -> None:
+        pass
