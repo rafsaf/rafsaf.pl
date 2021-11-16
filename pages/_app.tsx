@@ -12,6 +12,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
           href="https://fonts.googleapis.com/css2?family=Courgette&family=Lato:ital,wght@0,300;0,400;1,300;1,400&family=Roboto+Mono:wght@200;300&display=swap"
           rel="stylesheet"
         />
+        <link rel="shortcut icon" href="/ico.png" />
       </Head>
       <Component {...pageProps} />
     </Layout>
