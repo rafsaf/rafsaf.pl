@@ -1,5 +1,4 @@
 import React from "react";
-import Layout from "../components/layout";
 import Head from "next/head";
 import Hero from "../components/globals/Hero";
 import { ButtonLink } from "../components/globals/Button";
