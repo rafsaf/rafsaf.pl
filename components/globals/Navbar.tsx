@@ -70,6 +70,14 @@ const Links = () => {
           </NavLink>
         </Link>
       </li>
+      <li>
+        <Link href="/services" passHref>
+          <NavLink isActive={router.pathname === "/services"}>
+            <BiDownArrow />
+            Services
+          </NavLink>
+        </Link>
+      </li>
     </ul>
   );
 };

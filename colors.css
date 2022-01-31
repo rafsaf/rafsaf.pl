@@ -3,9 +3,16 @@
   --primaryColor2: #2793a0;
   --primaryColor3: #0b7380;
   --mainWhite: #fff;
-  --light: rgb(218, 216, 216);
-  --blue: rgb(60, 107, 170);
+  --light: rgb(218; 216; 216);
+  --blue: rgb(60; 107; 170);
   --mainBlack: #272727;
   --orange: #d74c2f;
   --mainGrey: #719da0;
+  --mainGrey: #719da0;
+  --blue: rgb(60; 107; 170);
+  --mainGreen: #35eb44;
+  --serviceLiveBg: #dff2bf;
+  --serviceLiveText: #366800;
+  --serviceDeadBg: #ffd2d2;
+  --serviceDeadText: #d8000c;
 }

@@ -1,0 +1,104 @@
+[
+  {
+    "data": {
+      "url": "https://plemiona-planer.pl",
+      "name": "Plemiona Planer [AWS]"
+    }
+  },
+  {
+    "data": {
+      "url": "https://portainer.rafsaf.pl",
+      "name": "Portainer dashboard for cluster [K3s Cluster]"
+    }
+  },
+  {
+    "data": {
+      "url": "https://grafana.rafsaf.pl",
+      "name": "Grafana dashboard for cluster and other projects [K3s Cluster]"
+    }
+  },
+  {
+    "data": {
+      "url": "https://prometheus.rafsaf.pl",
+      "name": "Prometheus for cluster and other projects [K3s Cluster]"
+    }
+  },
+  {
+    "data": {
+      "url": "https://registry.rafsaf.pl",
+      "name": "Docker Registry [K3s Cluster]"
+    }
+  },
+  {
+    "data": {
+      "url": "https://pydio.rafsaf.pl",
+      "name": "Pydio Cells file sharing app [K3s Cluster]"
+    }
+  },
+  {
+    "data": {
+      "url": "https://stg.plemiona-planer.pl",
+      "name": "Plemiona Planer stage environment [GCP]"
+    }
+  },
+  {
+    "data": {
+      "url": "https://firefly.rafsaf.pl",
+      "name": "Firefly III personal finances manager [K3s Cluster]"
+    }
+  },
+  {
+    "data": {
+      "url": "https://gatsby-backroad.projects.rafsaf.pl",
+      "name": "Coursework static Gatsby app [K3s Cluster]"
+    }
+  },
+  {
+    "data": {
+      "url": "https://rafsaf-gatsby-tea-station.netlify.app",
+      "name": "Coursework static Gatsby app [Netlify]"
+    }
+  },
+  {
+    "data": {
+      "url": "https://new.ziemiomorze.pl",
+      "name": "Earthsea react app [K3s Cluster]"
+    }
+  },
+  {
+    "data": {
+      "url": "https://api.ziemiomorze.pl",
+      "name": "Earthsea app fastapi backend [K3s Cluster]"
+    }
+  },
+  {
+    "data": {
+      "url": "https://rafsaf.github.io/respo",
+      "name": "Respo open source docs [GH Pages]"
+    }
+  },
+  {
+    "data": {
+      "url": "https://docker-fastapi-projects.readthedocs.io",
+      "name": "FastAPI Plan docs [Readthedocs]"
+    }
+  },
+  {
+    "data": {
+      "url": "https://rafsaf.github.io/scripts_tribal_wars",
+      "name": "TW browser game scripts [GH Pages]"
+    }
+  },
+  {
+    "data": {
+      "url": "https://rafsaf.github.io/react-with-rest-api",
+      "name": "Rick & Morty react app [GH Pages]"
+    }
+  },
+  {
+    "data": {
+      "url": "https://rafsaf.github.io/calculator",
+      "name": "Very simple grades calculator [GH Pages]"
+    }
+  }
+]

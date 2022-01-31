@@ -8,6 +8,11 @@ export const setColor = {
   orange: "#d74c2f",
   mainGrey: "#719da0",
   blue: "rgb(60, 107, 170)",
+  mainGreen: "#35eb44",
+  serviceLiveBg: "#DFF2BF",
+  serviceLiveText: "#366800",
+  serviceDeadBg: "#FFD2D2",
+  serviceDeadText: "#D8000C",
 };
 
 export const setFont = {
