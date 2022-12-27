@@ -16,6 +16,8 @@ jobs:
         run: |
           npm install
           npm run export
+          touch out/.nojekyll
+          echo "rafsaf.pl" > out/CNAME
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
         with:
