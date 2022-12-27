@@ -1,9 +1,9 @@
 import React, { useRef } from "react";
 import styled from "styled-components";
-import StaticImage from "next/image";
+import Image from "next/image";
 import { setColor } from "../../styles";
 import { GiArrowDunk } from "react-icons/gi";
-import HeroImage from "../../public/hero.jpeg";
+import HeroImage from "../../public/hero.webp";
 
 const HeroContainer = styled.header`
   section {
@@ -73,13 +73,12 @@ const Hero: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
     <HeroContainer id="hero">
       <section>
-        <StaticImage
-          objectFit="cover"
-          className="StaticImage"
+        <Image
+          style={{ objectFit: "cover", filter: "brightness(80%)" }}
           src={HeroImage}
           alt="Hero image"
           placeholder="blur"
-          layout="fill"
+          fill
         />
       </section>
 

@@ -16,7 +16,7 @@ const index = () => {
       <Hero>
         <div>
           <h1>Full-stack Developer</h1>
-          <Link href="/projects" passHref>
+          <Link href="/projects" passHref legacyBehavior>
             <ButtonLink big>See Projects</ButtonLink>
           </Link>
         </div>

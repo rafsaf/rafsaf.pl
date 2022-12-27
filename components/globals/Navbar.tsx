@@ -17,14 +17,12 @@ const Navbar = () => {
       <NavCenter>
         <NavLogo redToggle={toggle}>
           <Link href="/">
-            <a>
-              <StaticImage
-                src="/rafsaf4.svg"
-                height={45}
-                width={200}
-                alt="logo"
-              />
-            </a>
+            <StaticImage
+              src="/rafsaf4.svg"
+              height={45}
+              width={200}
+              alt="logo"
+            />
           </Link>
 
           <button onClick={() => setToggle(!toggle)}>
@@ -55,7 +53,7 @@ const Links = () => {
   return (
     <ul>
       <li>
-        <Link href="/" passHref>
+        <Link href="/" passHref legacyBehavior>
           <NavLink isActive={router.pathname === "/"}>
             <BiDownArrow />
             Home Page
@@ -63,7 +61,7 @@ const Links = () => {
         </Link>
       </li>
       <li>
-        <Link href="/projects" passHref>
+        <Link href="/projects" passHref legacyBehavior>
           <NavLink isActive={router.pathname === "/projects"}>
             <BiDownArrow />
             Projects
@@ -71,7 +69,7 @@ const Links = () => {
         </Link>
       </li>
       <li>
-        <Link href="/services" passHref>
+        <Link href="/services" passHref legacyBehavior>
           <NavLink isActive={router.pathname === "/services"}>
             <BiDownArrow />
             Services
