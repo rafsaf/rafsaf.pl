@@ -14,7 +14,7 @@
       "text": "This is a minimal template for FastAPI backend + postgresql db as of 2021.11, async style for database sessions, endpoints and tests. It provides basic codebase that almost every application has, but nothing more.",
       "href": "https://github.com/rafsaf/minimal-fastapi-postgres-template",
       "desc": "open source",
-      "avatar": "/articles/minimal-fastapi-template.png"
+      "avatar": "/articles/minimal-fastapi-template.webp"
     }
   },
   {
@@ -50,7 +50,7 @@
       "text": "An unfinished blog / wiki project for the Earthsea universe by Ursula Le Guin, with the ability to add your own articles thanks to a simple API. This is an application written in React.js, it will be rewritten in the near future.",
       "href": "https://new.ziemiomorze.pl/",
       "desc": "personal",
-      "avatar": "/articles/ziemiomorze.png"
+      "avatar": "/articles/ziemiomorze.webp"
     }
   },
   {
