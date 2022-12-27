@@ -9,7 +9,12 @@ const Project: React.FC<{ item: SingleProject }> = ({ item }) => {
     <Card href={item.data.href} target="_blank" rel="noreferrer">
       <ImageWrapper>
         <div>
-          <Img src={item.data.avatar} alt="" objectFit="cover" layout="fill" />
+          <Img
+            src={item.data.avatar}
+            alt=""
+            style={{ objectFit: "cover" }}
+            fill
+          />
         </div>
         <section>{item.data.desc}</section>
       </ImageWrapper>
