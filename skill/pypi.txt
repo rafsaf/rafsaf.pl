@@ -1,0 +1,16 @@
+jobs:
+  publish:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Install and configure Poetry
+      - name: Install requirements
+        run: poetry install --no-dev
+      - name: Build dists
+        run: |
+          rm -fR dist/ 
+          poetry build
+      - name: Pypi Publish
+        uses: pypa/gh-action-pypi-publish@master
+        with:
+          user: __token__
+          password: ${{ secrets.pypi_password }}

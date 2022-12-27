@@ -1,0 +1,6 @@
+// So fast and powerful...
+import React from "react"
+import { graphql } from "gatsby"
+import Img from "gatsby-image"
+import { StaticImage } from "gatsby-plugin-image"
+import { GatsbyImage, getImage } from "gatsby-plugin-image"

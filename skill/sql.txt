@@ -1,0 +1,5 @@
+SELECT Django_REST AS Backend,
+React AS Frontend
+FROM All_Frameworks
+WHERE satisfaction=100
+AND quality=100`

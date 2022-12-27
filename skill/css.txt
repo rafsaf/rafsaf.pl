@@ -1,0 +1,8 @@
+.some-hero {
+  min-height: 85vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  /* actually i prefer CSS in JS */
+}
