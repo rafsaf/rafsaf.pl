@@ -168,7 +168,7 @@ const AreaButton = styled.button<{ area: string; clicked?: boolean }>`
   color: ${setColor.mainWhite};
   border-bottom: 1px solid ${setColor.mainGrey};
   border-left: 1px solid ${setColor.mainGrey};
-  font-size: 1.3rem;
+  font-size: 1rem;
   padding: 0 1rem;
   font-weight: 400;
   letter-spacing: 0.25rem;
@@ -176,6 +176,7 @@ const AreaButton = styled.button<{ area: string; clicked?: boolean }>`
   ${setFont.roboto}
 
   @media (min-width: 768px) {
+    font-size: 1.3rem;
     background: ${(props) =>
       props.clicked ? setColor.primaryColor2 : setColor.primaryColor3};
     cursor: pointer;
