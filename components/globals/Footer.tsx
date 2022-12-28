@@ -6,15 +6,24 @@ const Footer = () => {
   return (
     <FooterContainer>
       <div>
-        <h2>Rafał Safin</h2>
+        <h3>Rafał Safin</h3>
         <h3>rafal.safin@rafsaf.pl</h3>
         {Icons.map((item, index) => (
           <a key={index} href={item.url} target="_blank" rel="noreferrer">
             {item.icon}
           </a>
         ))}
-        <h4>Powered by Next.js</h4>
-        <h4>2021 &#169; rafsaf.pl</h4>
+        <p>
+          Source code{" "}
+          <a
+            href="https://github.com/rafsaf/rafsaf.pl"
+            target={"_blank"}
+            rel={"noreferrer noopener"}
+          >
+            can be found here
+          </a>
+        </p>
+        <p>2021-2023 &#169; rafsaf.pl</p>
       </div>
     </FooterContainer>
   );
@@ -38,9 +47,11 @@ const FooterContainer = styled.footer`
     margin-bottom: 1.5rem;
     color: ${setColor.mainWhite};
   }
-  h4 {
-    font-size: 0.8rem;
-    text-transform: uppercase;
+  p {
+    a {
+      color: ${setColor.mainWhite};
+      text-decoration: underline;
+    }
   }
   h3 {
     padding-bottom: 0.5rem;
@@ -50,7 +61,7 @@ const FooterContainer = styled.footer`
     @media (max-width: 578px) {
       font-size: 1rem;
     }
-    text-transform: lowercase;
+    text-transform: none;
   }
   div {
     width: 95vw;
