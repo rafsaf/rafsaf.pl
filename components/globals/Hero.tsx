@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React from "react";
 import styled from "styled-components";
 import Image from "next/image";
 import { setColor } from "../../styles";
@@ -6,27 +6,53 @@ import { GiArrowDunk } from "react-icons/gi";
 import HeroImage from "../../public/hero.webp";
 
 const HeroContainer = styled.header`
+  #profile-picture {
+    display: inline-block;
+    width: 15rem;
+    height: 15rem;
+  }
+  #hero-picture {
+    object-fit: cover;
+    filter: brightness(40%);
+  }
+
   section {
     position: "absolute";
     height: "100%";
     width: "100%";
     z-index: -2;
   }
-  .StaticImage {
-    filter: "brightness(80%)";
+  h2 {
+    text-transform: none;
+    text-align: center;
+    margin-top: 1rem;
+    color: ${setColor.mainWhite};
+    display: block;
+    span {
+      font-size: 0.9rem;
+    }
   }
-  h1 {
+  p {
+    font-size: 1.2rem;
+    margin-top: 2rem;
+    max-width: 85vw;
+    text-transform: none;
     text-align: center;
     color: ${setColor.mainWhite};
     display: block;
   }
   position: relative;
-  min-height: 85vh;
+  padding: 5rem 0 8rem 0;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
   border-bottom: 1rem solid ${setColor.mainGrey};
+  @media (min-width: 992px) {
+    p {
+      max-width: 50vw;
+    }
+  }
 `;
 
 const Circle = styled.button`
@@ -74,7 +100,7 @@ const Hero: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     <HeroContainer id="hero">
       <section>
         <Image
-          style={{ objectFit: "cover", filter: "brightness(80%)" }}
+          id="hero-picture"
           src={HeroImage}
           alt="Hero image"
           placeholder="blur"
