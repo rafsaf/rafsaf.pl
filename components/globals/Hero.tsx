@@ -52,6 +52,10 @@ const HeroContainer = styled.header`
     p {
       max-width: 50vw;
     }
+    #profile-picture {
+      width: 20rem;
+      height: 20rem;
+    }
   }
 `;
 
