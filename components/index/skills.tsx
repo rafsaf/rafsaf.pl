@@ -171,11 +171,12 @@ const AreaButton = styled.button<{ area: string; clicked?: boolean }>`
   font-size: 1rem;
   padding: 0 1rem;
   font-weight: 400;
-  letter-spacing: 0.25rem;
+  letter-spacing: 0.1rem;
   text-transform: uppercase;
   ${setFont.roboto}
 
   @media (min-width: 768px) {
+    letter-spacing: 0.25rem;
     font-size: 1.3rem;
     background: ${(props) =>
       props.clicked ? setColor.primaryColor2 : setColor.primaryColor3};
