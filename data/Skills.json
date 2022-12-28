@@ -82,11 +82,11 @@
   },
   {
     "data": {
-      "title": "gatsby",
-      "icon": "gatsby",
-      "language": "javascript",
+      "title": "grafana",
+      "icon": "grafana",
+      "language": "shell",
       "area": "o",
-      "code": "/skill/gatsby.txt"
+      "code": "/skill/grafana.txt"
     }
   },
   {
@@ -136,11 +136,11 @@
   },
   {
     "data": {
-      "title": "apache2",
-      "icon": "apache",
-      "language": "shell",
+      "title": "kubernetes",
+      "icon": "kubernetes",
+      "language": "yml",
       "area": "e",
-      "code": "/skill/python.txt"
+      "code": "/skill/kubernetes.txt"
     }
   },
   {

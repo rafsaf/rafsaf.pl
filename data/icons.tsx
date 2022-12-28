@@ -18,10 +18,10 @@ import {
 } from "react-icons/di";
 import {
   SiDjango,
-  SiGatsby,
-  SiApache,
   SiPypi,
   SiTypescript,
+  SiKubernetes,
+  SiGrafana,
 } from "react-icons/si";
 import styled from "styled-components";
 import React from "react";
@@ -131,9 +131,9 @@ const icons: IconsI = {
       <FaAws />
     </Icon>
   ),
-  gatsby: (
+  grafana: (
     <Icon small>
-      <SiGatsby />
+      <SiGrafana />
     </Icon>
   ),
   js: (
@@ -146,9 +146,9 @@ const icons: IconsI = {
       <FaReact />
     </Icon>
   ),
-  apache: (
+  kubernetes: (
     <Icon>
-      <SiApache />
+      <SiKubernetes />
     </Icon>
   ),
 };
