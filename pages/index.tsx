@@ -32,6 +32,11 @@ const index = () => {
             infrastrucures and CI/CD of all kinds, having an experience with
             virtually every provider out there.
           </p>
+          <p>
+            Why <b>rafsaf</b>? It's a combination of 3 letters of my first and
+            last name that I use since primary school, and it sounds a bit funny
+            in Polish.
+          </p>
         </div>
       </Hero>
       <Skills />
