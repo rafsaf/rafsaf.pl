@@ -29,7 +29,7 @@ const index = () => {
             I am professional Software Engineer living in Wrocław
             {" <3"}, the beautiful city in Poland. I mostly build things (web
             apps?) using the Python programming language and love cloud based
-            infrastrucures and CI/CD of all kinds, having an experience with
+            infrastructures and CI/CD of all kinds, having an experience with
             virtually every provider out there.
           </p>
           <p>
