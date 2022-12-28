@@ -1,8 +1,15 @@
-import * as React from "react";
-import Layout from "../components/layout";
+import React from "react";
+import styled from "styled-components";
+import { setColor } from "../styles";
+
+const NotFoundHeader = styled.h2`
+  color: ${setColor.mainBlack};
+  text-align: center;
+  padding-top: 1rem;
+`;
 
 const NotFoundPage = () => {
-  return <Layout>Page not Found</Layout>;
+  return <NotFoundHeader>Page not Found</NotFoundHeader>;
 };
 
 export default NotFoundPage;
