@@ -1,5 +1,4 @@
 import React from "react";
-import { Global } from "./globals/GlobalStyle";
 import styled from "styled-components";
 import Navbar from "./globals/Navbar";
 import Footer from "./globals/Footer";
@@ -7,7 +6,6 @@ import Footer from "./globals/Footer";
 const layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
     <main>
-      <Global />
       <Navbar />
       <Wrapper>{children}</Wrapper>
       <Footer />
