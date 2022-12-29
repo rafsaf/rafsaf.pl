@@ -13,7 +13,7 @@ const HeroContainer = styled.header`
   }
   #hero-picture {
     object-fit: cover;
-    filter: brightness(40%);
+    filter: brightness(20%);
   }
 
   section {
