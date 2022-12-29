@@ -13,7 +13,7 @@ const HeroContainer = styled.header`
   }
   #hero-picture {
     object-fit: cover;
-    filter: brightness(20%);
+    filter: brightness(18%);
   }
 
   section {
@@ -39,6 +39,7 @@ const HeroContainer = styled.header`
     text-transform: none;
     text-align: center;
     color: ${setColor.mainWhite};
+    letter-spacing: 0.08rem;
     display: block;
   }
   position: relative;
