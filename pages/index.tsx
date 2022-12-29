@@ -26,10 +26,10 @@ const index = () => {
             <span>(Polish: ['rafaw])</span>
           </h2>
           <p>
-            I am professional Software Engineer living in Wrocław
-            {" <3"}, the beautiful city in Poland. I mostly build things (web
+            I am a professional Software Engineer living in Wrocław
+            {" <3"}, a beautiful city in Poland. I mostly build things (web
             apps?) using the Python programming language and love cloud based
-            infrastructures and CI/CD of all kinds, having an experience with
+            infrastructures and CI/CD of all kinds, having experience with
             virtually every provider out there.
           </p>
           <p>
