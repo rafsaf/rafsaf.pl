@@ -2,7 +2,7 @@
   {
     "data": {
       "url": "https://plemiona-planer.pl",
-      "name": "Plemiona Planer [AWS]"
+      "name": "Plemiona Planer [Oracle Cloud/AWS]"
     }
   },
   {
@@ -38,7 +38,7 @@
   {
     "data": {
       "url": "https://stg.plemiona-planer.pl",
-      "name": "Plemiona Planer stage environment [GCP]"
+      "name": "Plemiona Planer stage environment [Oracle Cloud]"
     }
   },
   {
@@ -56,7 +56,7 @@
   {
     "data": {
       "url": "https://rafsaf-gatsby-tea-station.netlify.app",
-      "name": "Coursework static Gatsby app [Netlify]"
+      "name": "Coursework static Gatsby app [GH Pages]"
     }
   },
   {

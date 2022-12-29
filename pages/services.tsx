@@ -26,7 +26,7 @@ const Services = () => {
 
         <p>
           I host my projects on many different environments, including my own
-          self hosted Kubernetes K3s cluster, Amazon AWS, Google Cloud,
+          self hosted Kubernetes K3s cluster, Amazon AWS, Google Cloud, Oracle Cloud,
           GitHub-pages, Netlify, Readthedocs.
           <br />
           <br />
