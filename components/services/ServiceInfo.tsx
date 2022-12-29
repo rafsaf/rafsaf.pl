@@ -8,6 +8,7 @@ const BaseInformation = styled.a`
   display: block;
   margin: 1.8rem 0;
   width: 100%;
+  word-wrap: break-word;
   min-height: 3.2rem;
   background-color: ${setColor.light};
   font-size: 1.25rem;

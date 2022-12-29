@@ -11,7 +11,7 @@ const Project: React.FC<{ item: SingleProject }> = ({ item }) => {
         <div>
           <Img
             src={item.data.avatar}
-            alt=""
+            alt={item.data.title}
             style={{ objectFit: "cover" }}
             fill
           />
