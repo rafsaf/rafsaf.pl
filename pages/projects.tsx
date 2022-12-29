@@ -1,5 +1,4 @@
 import React from "react";
-import Layout from "../components/layout";
 import Project from "../components/projects/Project";
 import Others from "../components/projects/Other";
 import Head from "next/head";

@@ -1,6 +1,5 @@
 import styled, { css } from "styled-components";
 import { setColor } from "../../styles";
-import Link from "next/link";
 
 const ButtonStyle = css<{ big?: boolean }>`
   display: inline-block;
