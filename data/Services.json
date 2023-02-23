@@ -2,37 +2,31 @@
   {
     "data": {
       "url": "https://plemiona-planer.pl",
-      "name": "Plemiona Planer [Oracle Cloud/AWS]"
-    }
-  },
-  {
-    "data": {
-      "url": "https://portainer.rafsaf.pl",
-      "name": "Portainer dashboard for cluster [K3s Cluster]"
+      "name": "Plemiona Planer, professional tool for tribal wars game [Oracle Cloud/AWS]"
     }
   },
   {
     "data": {
       "url": "https://grafana.rafsaf.pl",
-      "name": "Grafana dashboard for cluster and other projects [K3s Cluster]"
+      "name": "Grafana instance for visualisation of data from k3s cluster and other projects [VM - self hosted proxmox]"
     }
   },
   {
     "data": {
       "url": "https://prometheus.rafsaf.pl",
-      "name": "Prometheus for cluster and other projects [K3s Cluster]"
+      "name": "Prometheus for metrics from proxmox, k3s cluster and other projects [VM - self hosted proxmox)]"
     }
   },
   {
     "data": {
-      "url": "https://registry.rafsaf.pl",
-      "name": "Docker Registry [K3s Cluster]"
+      "url": "https://keycloak.rafsaf.pl",
+      "name": "Keycloak auth provider to access few of my sites [VM - self hosted proxmox)]"
     }
   },
   {
     "data": {
-      "url": "https://pydio.rafsaf.pl",
-      "name": "Pydio Cells file sharing app [K3s Cluster]"
+      "url": "https://firefly.rafsaf.pl",
+      "name": "Firefly III personal finances manager behind oauth2 proxy [K3s Cluster - self hosted proxmox]"
     }
   },
   {
@@ -43,32 +37,26 @@
   },
   {
     "data": {
-      "url": "https://firefly.rafsaf.pl",
-      "name": "Firefly III personal finances manager [K3s Cluster]"
+      "url": "https://minimal-fastapi-postgres-template.rafsaf.pl/",
+      "name": "Showcase of minimal fastapi postgres template [K3s Cluster - self hosted proxmox]"
     }
   },
   {
     "data": {
-      "url": "https://gatsby-backroad.projects.rafsaf.pl",
-      "name": "Coursework static Gatsby app [K3s Cluster]"
+      "url": "https://whoami.rafsaf.pl",
+      "name": "Simple app behind oauth2 proxy [K3s Cluster - self hosted proxmox]"
     }
   },
   {
     "data": {
       "url": "https://rafsaf-gatsby-tea-station.netlify.app",
-      "name": "Coursework static Gatsby app [GH Pages]"
+      "name": "Coursework static Gatsby app [Netlify]"
     }
   },
   {
     "data": {
-      "url": "https://new.ziemiomorze.pl",
-      "name": "Earthsea react app [K3s Cluster]"
-    }
-  },
-  {
-    "data": {
-      "url": "https://api.ziemiomorze.pl",
-      "name": "Earthsea app fastapi backend [K3s Cluster]"
+      "url": "https://rafsaf.pl",
+      "name": "The site that you read now [GH Pages]"
     }
   },
   {
