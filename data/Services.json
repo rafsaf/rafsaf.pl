@@ -13,6 +13,18 @@
   },
   {
     "data": {
+      "url": "https://pydio.rafsaf.pl",
+      "name": "Pydio Cells app for images hosting [K3s Cluster - self hosted proxmox]"
+    }
+  },
+  {
+    "data": {
+      "url": "https://backuper.rafsaf.pl",
+      "name": "Backuper documentation [Github Pages]"
+    }
+  },
+  {
+    "data": {
       "url": "https://prometheus.rafsaf.pl",
       "name": "Prometheus for metrics from proxmox, k3s cluster and other projects [VM - self hosted proxmox)]"
     }
