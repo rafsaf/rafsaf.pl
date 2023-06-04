@@ -8,8 +8,8 @@ import HeroImage from "../../public/hero.webp";
 const HeroContainer = styled.header`
   #profile-picture {
     display: inline-block;
-    width: 15rem;
-    height: 15rem;
+    width: 18rem;
+    height: 18rem;
   }
   #hero-picture {
     object-fit: cover;
@@ -25,7 +25,7 @@ const HeroContainer = styled.header`
   h2 {
     text-transform: none;
     text-align: center;
-    margin-top: 1rem;
+    margin-top: 2rem;
     color: ${setColor.mainWhite};
     display: block;
     span {
@@ -43,7 +43,7 @@ const HeroContainer = styled.header`
     display: block;
   }
   position: relative;
-  padding: 5rem 0 8rem 0;
+  padding: 3rem 0 8rem 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -54,8 +54,8 @@ const HeroContainer = styled.header`
       max-width: 50vw;
     }
     #profile-picture {
-      width: 20rem;
-      height: 20rem;
+      width: 25rem;
+      height: 25rem;
     }
   }
 `;
