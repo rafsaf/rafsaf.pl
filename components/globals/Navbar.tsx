@@ -15,7 +15,7 @@ const Navbar = () => {
   return (
     <Nav>
       <NavCenter>
-        <NavLogo redToggle={toggle}>
+        <NavLogo $redToggle={toggle}>
           <Link href="/">
             <StaticImage
               src="/rafsaf4.svg"
@@ -54,7 +54,7 @@ const Links = () => {
     <ul>
       <li>
         <Link href="/" passHref legacyBehavior>
-          <NavLink isActive={router.pathname === "/"}>
+          <NavLink $isActive={router.pathname === "/"}>
             <BiDownArrow />
             Home Page
           </NavLink>
@@ -62,7 +62,7 @@ const Links = () => {
       </li>
       <li>
         <Link href="/projects" passHref legacyBehavior>
-          <NavLink isActive={router.pathname === "/projects"}>
+          <NavLink $isActive={router.pathname === "/projects"}>
             <BiDownArrow />
             Projects
           </NavLink>
@@ -70,7 +70,7 @@ const Links = () => {
       </li>
       <li>
         <Link href="/services" passHref legacyBehavior>
-          <NavLink isActive={router.pathname === "/services"}>
+          <NavLink $isActive={router.pathname === "/services"}>
             <BiDownArrow />
             Services
           </NavLink>
@@ -102,7 +102,7 @@ const activeLink = css`
   }
 `;
 
-const NavLink = styled.a<{ isActive?: boolean }>`
+const NavLink = styled.a<{ $isActive?: boolean }>`
   color: ${setColor.mainWhite};
   svg {
     display: none;
@@ -110,7 +110,7 @@ const NavLink = styled.a<{ isActive?: boolean }>`
   &:hover {
     color: ${setColor.primaryColor};
   }
-  ${(props) => (props.isActive ? activeLink : null)}
+  ${(props) => (props.$isActive ? activeLink : null)}
 `;
 
 const Nav = styled.nav`
@@ -138,7 +138,7 @@ const NavCenter = styled.div`
   }
 `;
 
-const NavLogo = styled.div<{ redToggle: boolean }>`
+const NavLogo = styled.div<{ $redToggle: boolean }>`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -147,7 +147,7 @@ const NavLogo = styled.div<{ redToggle: boolean }>`
   }
   button svg {
     font-size: 2.7rem;
-    color: ${(props) => (props.redToggle ? setColor.orange : setColor.light)};
+    color: ${(props) => (props.$redToggle ? setColor.orange : setColor.light)};
   }
   @media (min-width: 992px) {
     button {

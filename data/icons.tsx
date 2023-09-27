@@ -40,13 +40,13 @@ interface IconsI {
   [key: string]: JSX.Element;
 }
 
-const Icon = styled.span<{ large?: boolean; small?: boolean }>`
+const Icon = styled.span<{ $large?: boolean; $small?: boolean }>`
   position: absolute;
   bottom: 5px;
   left: 50%;
   transform: translate(-50%);
-  font-size: ${(props) => (props.large ? "2.8rem" : "2.3rem")};
-  ${(props) => (props.small ? "font-size:1.7rem" : "")};
+  font-size: ${(props) => (props.$large ? "2.8rem" : "2.3rem")};
+  ${(props) => (props.$small ? "font-size:1.7rem" : "")};
   color: ${setColor.mainWhite};
 `;
 
@@ -117,12 +117,12 @@ const icons: IconsI = {
     </Icon>
   ),
   django: (
-    <Icon large>
+    <Icon $large>
       <DiDjango />
     </Icon>
   ),
   djangoRest: (
-    <Icon small>
+    <Icon $small>
       <SiDjango />
     </Icon>
   ),
@@ -132,7 +132,7 @@ const icons: IconsI = {
     </Icon>
   ),
   grafana: (
-    <Icon small>
+    <Icon $small>
       <SiGrafana />
     </Icon>
   ),

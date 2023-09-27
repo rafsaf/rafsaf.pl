@@ -42,8 +42,8 @@ const Skills = () => {
         {data.map((item, index) => (
           <AreaButton
             key={index}
-            area={item.data.area}
-            clicked={area === item.data.area}
+            $area={item.data.area}
+            $clicked={area === item.data.area}
             onClick={() => {
               setLanguage(item.data.language);
               setArea(item.data.area);
@@ -71,7 +71,7 @@ const MyCodeBlock: React.FC<{
       language={language}
       showLineNumbers={showLineNumbers}
       theme={tomorrowNight}
-      wrapLines
+      wrapLongLines
     />
   );
 };
@@ -160,10 +160,10 @@ const GridArea = styled.div`
   }
 `;
 
-const AreaButton = styled.button<{ area: string; clicked?: boolean }>`
+const AreaButton = styled.button<{ $area: string; $clicked?: boolean }>`
   min-height: 10rem;
   position: relative;
-  grid-area: ${(props) => props.area};
+  grid-area: ${(props) => props.$area};
   background: ${setColor.primaryColor3};
   color: ${setColor.mainWhite};
   border-bottom: 1px solid ${setColor.mainGrey};
@@ -179,10 +179,10 @@ const AreaButton = styled.button<{ area: string; clicked?: boolean }>`
     letter-spacing: 0.25rem;
     font-size: 1.3rem;
     background: ${(props) =>
-      props.clicked ? setColor.primaryColor2 : setColor.primaryColor3};
+      props.$clicked ? setColor.primaryColor2 : setColor.primaryColor3};
     cursor: pointer;
     span svg {
-      ${(props) => (props.clicked ? "transform: scale(1.35);" : "")}
+      ${(props) => (props.$clicked ? "transform: scale(1.35);" : "")}
     }
     &:hover {
       background: ${setColor.primaryColor2};
@@ -190,7 +190,7 @@ const AreaButton = styled.button<{ area: string; clicked?: boolean }>`
 
       span svg {
         ${(props) =>
-          !props.clicked
+          !props.$clicked
             ? "transform: scale(1.35);transition: 0.3s linear;"
             : ""}
       }
