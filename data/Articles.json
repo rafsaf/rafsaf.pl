@@ -75,7 +75,7 @@
     "data": {
       "title": "backroad",
       "text": "Backroad site project based on the CSS and HTML course, build with Gatsby.js and hosted on netlify. In the design, the main focus is on css flex.",
-      "href": "https://gatsby-backroad.projects.rafsaf.pl",
+      "href": "https://rafsaf-gatsby-backroad.netlify.app/",
       "desc": "css course",
       "avatar": "/articles/backroad.webp"
     }
