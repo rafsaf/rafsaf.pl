@@ -28,20 +28,20 @@
   },
   {
     "data": {
-      "title": "html",
+      "title": "html+css",
       "icon": "html",
-      "language": "html",
+      "language": "txt",
       "area": "n",
-      "code": "/skill/html.txt"
+      "code": "/skill/html_css.txt"
     }
   },
   {
     "data": {
-      "title": "css",
-      "icon": "css",
-      "language": "css",
+      "title": "jira",
+      "icon": "jira",
+      "language": "txt",
       "area": "t",
-      "code": "/skill/css.txt"
+      "code": "/skill/jira.txt"
     }
   },
   {
@@ -55,11 +55,11 @@
   },
   {
     "data": {
-      "title": "django REST",
-      "icon": "djangoRest",
-      "language": "python",
+      "title": "go",
+      "icon": "go",
+      "language": "txt",
       "area": "d",
-      "code": "/skill/djangorest.txt"
+      "code": "/skill/go.txt"
     }
   },
   {
@@ -73,11 +73,11 @@
   },
   {
     "data": {
-      "title": "javascript",
-      "icon": "js",
-      "language": "javascript",
+      "title": "typescript",
+      "icon": "typescript",
+      "language": "typescript",
       "area": "h",
-      "code": "/skill/js.txt"
+      "code": "/skill/ts.txt"
     }
   },
   {
@@ -111,7 +111,7 @@
     "data": {
       "title": "github",
       "icon": "github",
-      "language": "shell",
+      "language": "txt",
       "area": "q",
       "code": "/skill/github.txt"
     }
@@ -127,11 +127,11 @@
   },
   {
     "data": {
-      "title": "aws",
-      "icon": "aws",
-      "language": "shell",
+      "title": "cloud providers",
+      "icon": "cloud_providers",
+      "language": "md",
       "area": "c",
-      "code": "/skill/aws.txt"
+      "code": "/skill/cloud_providers.txt"
     }
   },
   {
@@ -145,11 +145,11 @@
   },
   {
     "data": {
-      "title": "typescript",
-      "icon": "typescript",
-      "language": "typescript",
+      "title": "prometheus",
+      "icon": "prometheus",
+      "language": "txt",
       "area": "m",
-      "code": "/skill/ts.txt"
+      "code": "/skill/prometheus.txt"
     }
   },
   {

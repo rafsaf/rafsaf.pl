@@ -36,7 +36,7 @@ const Skills = () => {
         <TechArea>
           <CodeWrapper>
             <p>Technologies</p>
-            <MyCodeBlock code={text} language={language} />
+            <MyCodeBlock code={text} language={language}/>
           </CodeWrapper>
         </TechArea>
         {data.map((item, index) => (
@@ -63,15 +63,15 @@ export default Skills;
 const MyCodeBlock: React.FC<{
   code: string;
   language: string;
-  showLineNumbers?: boolean;
-}> = ({ code, language, showLineNumbers }) => {
+}> = ({ code, language }) => {
   return (
     <CodeBlock
       text={code}
       language={language}
-      showLineNumbers={showLineNumbers}
+      showLineNumbers={false}
       theme={tomorrowNight}
-      wrapLongLines
+      customStyle={{padding: "0 0 0 8px"}}
+      wrapLongLines={false}
     />
   );
 };

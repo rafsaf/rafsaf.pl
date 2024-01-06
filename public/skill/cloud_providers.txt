@@ -1,0 +1,9 @@
+Both via consoles and IaaC, descending by work time:
+
+- GCP 
+- Oracle Cloud
+- AWS
+- Proxmox VE (homelab)
+- OVH
+- Azure
+- Open Stack

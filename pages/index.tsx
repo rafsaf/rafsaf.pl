@@ -4,7 +4,7 @@ import Hero from "../components/globals/Hero";
 import Skills from "../components/index/skills";
 import TimeLine from "../components/index/timeline";
 import Image from "next/image";
-import MeImg from "../public/me_2023.webp";
+import MeImg from "../public/me_2023_600x600.webp";
 
 const index = () => {
   return (

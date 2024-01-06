@@ -1,4 +1,0 @@
-EC2, RDS,  SES, SQS
-Autoscaling Groups also...
-
-(:
