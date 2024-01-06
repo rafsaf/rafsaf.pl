@@ -12,7 +12,7 @@
     "data": {
       "title": "sql",
       "icon": "sql",
-      "language": "sql",
+      "language": "txt",
       "area": "u",
       "code": "/skill/sql.txt"
     }
@@ -21,7 +21,7 @@
     "data": {
       "title": "postgresql",
       "icon": "postgres",
-      "language": "sql",
+      "language": "txt",
       "area": "v",
       "code": "/skill/postgresql.txt"
     }
@@ -48,7 +48,7 @@
     "data": {
       "title": "VS Code",
       "icon": "vscode",
-      "language": "json",
+      "language": "txt",
       "area": "w",
       "code": "/skill/vscode.txt"
     }
@@ -66,7 +66,7 @@
     "data": {
       "title": "react",
       "icon": "react",
-      "language": "javascript",
+      "language": "txt",
       "area": "j",
       "code": "/skill/react.txt"
     }
@@ -75,7 +75,7 @@
     "data": {
       "title": "typescript",
       "icon": "typescript",
-      "language": "typescript",
+      "language": "txt",
       "area": "h",
       "code": "/skill/ts.txt"
     }
@@ -84,7 +84,7 @@
     "data": {
       "title": "grafana",
       "icon": "grafana",
-      "language": "shell",
+      "language": "txt",
       "area": "o",
       "code": "/skill/grafana.txt"
     }
@@ -93,7 +93,7 @@
     "data": {
       "title": "django",
       "icon": "django",
-      "language": "python",
+      "language": "txt",
       "area": "i",
       "code": "/skill/django.txt"
     }
@@ -102,7 +102,7 @@
     "data": {
       "title": "git",
       "icon": "git",
-      "language": "shell",
+      "language": "txt",
       "area": "p",
       "code": "/skill/git.txt"
     }
@@ -120,7 +120,7 @@
     "data": {
       "title": "linux",
       "icon": "linux",
-      "language": "shell",
+      "language": "txt",
       "area": "k",
       "code": "/skill/linux.txt"
     }
@@ -129,7 +129,7 @@
     "data": {
       "title": "cloud providers",
       "icon": "cloud_providers",
-      "language": "md",
+      "language": "txt",
       "area": "c",
       "code": "/skill/cloud_providers.txt"
     }
@@ -138,7 +138,7 @@
     "data": {
       "title": "kubernetes",
       "icon": "kubernetes",
-      "language": "yml",
+      "language": "txt",
       "area": "e",
       "code": "/skill/kubernetes.txt"
     }
@@ -154,18 +154,18 @@
   },
   {
     "data": {
-      "title": "pypi",
-      "icon": "pypi",
-      "language": "yml",
+      "title": "opentofu+ ansible",
+      "icon": "iaac",
+      "language": "txt",
       "area": "z",
-      "code": "/skill/pypi.txt"
+      "code": "/skill/iaac.txt"
     }
   },
   {
     "data": {
       "title": "fastapi",
       "icon": "python",
-      "language": "python",
+      "language": "txt",
       "area": "y",
       "code": "/skill/fastapi.txt"
     }
@@ -174,9 +174,9 @@
     "data": {
       "title": "docker",
       "icon": "docker",
-      "language": "shell",
+      "language": "txt",
       "area": "x",
-      "code": "/skill/python.txt"
+      "code": "/skill/docker.txt"
     }
   }
 ]

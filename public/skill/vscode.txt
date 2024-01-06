@@ -1,8 +1,4 @@
-{
-    "window.zoomLevel": 2,
-    "[javascript]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
-    },
-    "editor.formatOnSave": true,
-    "git.enableSmartCommit": true
-}
+VS Code is currently my favourite editor.
+I had incidents with others like Visual Studio,
+Pycharm or others from JetBrains umberella, but
+end up something I know best.

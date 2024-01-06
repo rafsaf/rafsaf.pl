@@ -1,5 +1,3 @@
-SELECT Django_REST AS Backend,
-React AS Frontend
-FROM All_Frameworks
-WHERE satisfaction=100
-AND quality=100`
+I know and use SQL for years, mostly with ORMs
+like Django or SQLAlchemy, but with many raws
+queries at my account (and very impressive one ;p)

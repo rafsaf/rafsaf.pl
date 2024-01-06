@@ -8,5 +8,5 @@ hello_there(
 )
 hello_there(
     "Click on tabs to see my "
-    "experience with technologies."
+    "notes about technologies."
 )

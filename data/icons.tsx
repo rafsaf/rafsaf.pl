@@ -24,6 +24,7 @@ import {
   SiGrafana,
   SiPrometheus,
   SiJira,
+  SiAnsible,
 } from "react-icons/si";
 import styled from "styled-components";
 import React from "react";
@@ -72,6 +73,11 @@ const icons: IconsI = {
   pypi: (
     <Icon>
       <SiPypi />
+    </Icon>
+  ),
+  iaac: (
+    <Icon>
+      <SiAnsible />
     </Icon>
   ),
   cloud_providers: (

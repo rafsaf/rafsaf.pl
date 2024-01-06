@@ -1,10 +1,2 @@
-const ITEM_NAME = "authToken";
-
-export const getToken = (): string | null => {
-  const token = localStorage.getItem(ITEM_NAME);
-  return token ? token : null;
-};
-
-export const removeToken = (): void => {
-  localStorage.removeItem(ITEM_NAME);
-};
+I use TypeScript for 3+ years to build frontend, with JavaScript
+also for some older codes/scripts/pure html pages.
