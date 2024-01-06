@@ -22,6 +22,12 @@ const HeroContainer = styled.header`
     width: "100%";
     z-index: -2;
   }
+  small {
+    margin-top: 0;
+    display: block;
+    font-size: 0.6rem;
+    color: ${setColor.mainWhite};
+  }
   h2 {
     text-transform: none;
     text-align: center;

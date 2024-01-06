@@ -22,6 +22,7 @@ const index = () => {
             style={{border: "1px solid black"}}
             placeholder="blur"
           />
+          <small>Photo by Bogdan Tymoszyk</small>
           <h2>
             Hi, I'm Rafał <br />
             <span>(Polish: ['rafaw])</span>
