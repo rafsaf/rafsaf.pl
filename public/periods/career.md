@@ -11,3 +11,7 @@
 #### Nokia
 
 2021-07-01 - 2021-10-29 (4m) &nbsp; – &nbsp; _Working Student at Nokia_
+
+&nbsp;
+
+_Below are my notes from the last years since the beginning of my programming career. The rules are that I create it every year and never update the old descriptions (even if my priorities, style or personality have changed, the texts remain)._

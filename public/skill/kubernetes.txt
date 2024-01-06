@@ -1,18 +1,9 @@
-kind: Deployment
-apiVersion: apps/v1
-metadata:
-  name: whoami-app
-  namespace: small-projects
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: whoami-app
-  template:
-    metadata:
-      labels:
-        app: whoami-app
-    spec:
-      containers:
-        - name: whoami-app
-          image: containous/whoami
+Most of my experience comes from
+self hosted kubernetes 2-node cluster,
+see "projects" tab to see what I deploy
+there.
+
+I also worked with GKE clusters at work,
+but this was not a lot. I also created
+4-node PoC cluster back in Nokia for
+our team purposes.

@@ -1,0 +1,5 @@
+I have medium frontend skills with HTML and CSS.
+This is trivially because I spend more time doing backend
+work for years. Although I maintain this site and few other
+with no issues of any kind and done a lot of frontend 
+in recent years.

@@ -18,7 +18,7 @@ const Services = () => {
   return (
     <>
       <Head>
-        <title>Rafał Safin | Projects</title>
+        <title>Rafał Safin | Services</title>
         <meta name="description" content="Rafał Safin portfolio services" />
       </Head>
       <Wrapper>

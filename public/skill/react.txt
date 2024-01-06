@@ -1,11 +1,3 @@
-import React from 'react'
-
-const Reactjs = () => {
-  return (
-    <div>
-      <h1>My dear friend React.</h1>
-    </div>
-  )
-}
-
-export default Reactjs
+React was my first framework to work with frontend.
+I used it purely for my first apps, but also tried with 
+Gatsby to finally end up using Next.

@@ -12,7 +12,7 @@
     "data": {
       "title": "sql",
       "icon": "sql",
-      "language": "sql",
+      "language": "txt",
       "area": "u",
       "code": "/skill/sql.txt"
     }
@@ -21,70 +21,70 @@
     "data": {
       "title": "postgresql",
       "icon": "postgres",
-      "language": "sql",
+      "language": "txt",
       "area": "v",
       "code": "/skill/postgresql.txt"
     }
   },
   {
     "data": {
-      "title": "html",
+      "title": "html+css",
       "icon": "html",
-      "language": "html",
+      "language": "txt",
       "area": "n",
-      "code": "/skill/html.txt"
+      "code": "/skill/html_css.txt"
     }
   },
   {
     "data": {
-      "title": "css",
-      "icon": "css",
-      "language": "css",
+      "title": "jira",
+      "icon": "jira",
+      "language": "txt",
       "area": "t",
-      "code": "/skill/css.txt"
+      "code": "/skill/jira.txt"
     }
   },
   {
     "data": {
       "title": "VS Code",
       "icon": "vscode",
-      "language": "json",
+      "language": "txt",
       "area": "w",
       "code": "/skill/vscode.txt"
     }
   },
   {
     "data": {
-      "title": "django REST",
-      "icon": "djangoRest",
-      "language": "python",
+      "title": "go",
+      "icon": "go",
+      "language": "txt",
       "area": "d",
-      "code": "/skill/djangorest.txt"
+      "code": "/skill/go.txt"
     }
   },
   {
     "data": {
       "title": "react",
       "icon": "react",
-      "language": "javascript",
+      "language": "txt",
       "area": "j",
       "code": "/skill/react.txt"
     }
   },
   {
     "data": {
-      "title": "javascript",
-      "icon": "js",
-      "language": "javascript",
+      "title": "typescript",
+      "icon": "typescript",
+      "language": "txt",
       "area": "h",
-      "code": "/skill/js.txt"
+      "code": "/skill/ts.txt"
     }
   },
   {
     "data": {
       "title": "grafana",
       "icon": "grafana",
-      "language": "shell",
+      "language": "txt",
       "area": "o",
       "code": "/skill/grafana.txt"
     }
@@ -93,7 +93,7 @@
     "data": {
       "title": "django",
       "icon": "django",
-      "language": "python",
+      "language": "txt",
       "area": "i",
       "code": "/skill/django.txt"
     }
@@ -102,7 +102,7 @@
     "data": {
       "title": "git",
       "icon": "git",
-      "language": "shell",
+      "language": "txt",
       "area": "p",
       "code": "/skill/git.txt"
     }
@@ -111,7 +111,7 @@
     "data": {
       "title": "github",
       "icon": "github",
-      "language": "shell",
+      "language": "txt",
       "area": "q",
       "code": "/skill/github.txt"
     }
@@ -120,52 +120,52 @@
     "data": {
       "title": "linux",
       "icon": "linux",
-      "language": "shell",
+      "language": "txt",
       "area": "k",
       "code": "/skill/linux.txt"
     }
   },
   {
     "data": {
-      "title": "aws",
-      "icon": "aws",
-      "language": "shell",
+      "title": "cloud providers",
+      "icon": "cloud_providers",
+      "language": "txt",
       "area": "c",
-      "code": "/skill/aws.txt"
+      "code": "/skill/cloud_providers.txt"
     }
   },
   {
     "data": {
       "title": "kubernetes",
       "icon": "kubernetes",
-      "language": "yml",
+      "language": "txt",
       "area": "e",
       "code": "/skill/kubernetes.txt"
     }
   },
   {
     "data": {
-      "title": "typescript",
-      "icon": "typescript",
-      "language": "typescript",
+      "title": "prometheus",
+      "icon": "prometheus",
+      "language": "txt",
       "area": "m",
-      "code": "/skill/ts.txt"
+      "code": "/skill/prometheus.txt"
     }
   },
   {
     "data": {
-      "title": "pypi",
-      "icon": "pypi",
-      "language": "yml",
+      "title": "opentofu+ ansible",
+      "icon": "iaac",
+      "language": "txt",
       "area": "z",
-      "code": "/skill/pypi.txt"
+      "code": "/skill/iaac.txt"
     }
   },
   {
     "data": {
       "title": "fastapi",
       "icon": "python",
-      "language": "python",
+      "language": "txt",
       "area": "y",
       "code": "/skill/fastapi.txt"
     }
@@ -174,9 +174,9 @@
     "data": {
       "title": "docker",
       "icon": "docker",
-      "language": "shell",
+      "language": "txt",
       "area": "x",
-      "code": "/skill/python.txt"
+      "code": "/skill/docker.txt"
     }
   }
 ]

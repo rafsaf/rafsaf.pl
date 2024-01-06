@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Image from "next/image";
 import { setColor } from "../../styles";
 import { GiArrowDunk } from "react-icons/gi";
-import HeroImage from "../../public/hero.webp";
+import HeroImage from "../../public/hero_small.webp";
 
 const HeroContainer = styled.header`
   #profile-picture {

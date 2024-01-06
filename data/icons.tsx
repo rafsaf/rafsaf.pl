@@ -22,10 +22,14 @@ import {
   SiTypescript,
   SiKubernetes,
   SiGrafana,
+  SiPrometheus,
+  SiJira,
+  SiAnsible,
 } from "react-icons/si";
 import styled from "styled-components";
 import React from "react";
 import { setColor } from "../styles";
+import { BiCloud, BiLogoGoLang } from "react-icons/bi";
 
 const returnIcon = (iconName: string): JSX.Element => {
   if (iconName in icons) {
@@ -57,7 +61,7 @@ const icons: IconsI = {
     </Icon>
   ),
   typescript: (
-    <Icon>
+    <Icon $small>
       <SiTypescript />
     </Icon>
   ),
@@ -69,6 +73,31 @@ const icons: IconsI = {
   pypi: (
     <Icon>
       <SiPypi />
+    </Icon>
+  ),
+  iaac: (
+    <Icon>
+      <SiAnsible />
+    </Icon>
+  ),
+  cloud_providers: (
+    <Icon>
+      <BiCloud />
+    </Icon>
+  ),
+  prometheus: (
+    <Icon $small>
+      <SiPrometheus />
+    </Icon>
+  ),
+  jira: (
+    <Icon $small>
+      <SiJira />
+    </Icon>
+  ),
+  go: (
+    <Icon $large>
+      <BiLogoGoLang />
     </Icon>
   ),
   python: (

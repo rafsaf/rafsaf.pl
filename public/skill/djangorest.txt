@@ -1,8 +1,0 @@
-class BookSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = models.DjangoApi
-        fields = [
-            'language',
-            'title',
-            'author',
-        ]

@@ -1,6 +1,5 @@
-git config --global user.name "Rafał Safin"
-git config --global user.email "rafal.safin12@gmail.com"
-
-cd My_Portfolio
-git init
-git commit -m 'Initial commit here'
+I have many years and enterprise level git knowledge.
+Daily I deal with rebases, resets, prs, commits, branch
+protection rules, merges, huge conflicts.
+I've seen different branching strategies
+with their adventages and downsides.
