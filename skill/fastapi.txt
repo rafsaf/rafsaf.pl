@@ -1,8 +1,4 @@
-from fastapi import FastAPI
-
-app = FastAPI()
-
-
-@app.get("/")
-async def root():
-    return {"message": "Hello World"}
+I've been a fan from the beginning of framework.
+I like it's syntax, simplicity, async Python features.
+My open source fastapi cookiecutter template is a many
+stars succecssful project.

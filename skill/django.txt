@@ -1,8 +1,5 @@
-from django.test import TestCase
-
-class DummyTest(TestCase):
-    def setUp(self) -> None:
-        self.message: str = "Hello"
-
-    def test_i_wish_every_test_pass_like_this(self) -> None:
-        pass
+I have +4y of experience with django and django rest
+framework. I used it as both MVT monolithic apps and
+for only rest. Since FastAPI rise, I like it somewhat
+more, but still Django's reliability and stability is
+is at an unbelievable level.

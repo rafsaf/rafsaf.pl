@@ -2,5 +2,11 @@ def hello_there(greeting: str) -> None:
     print(greeting)
 
 hello_there("Hi, I love Python.")
-
-hello_there("It is just awesome!!!")
+hello_there(
+    "I have +4y of experience, "
+    "but still things to learn :)"
+)
+hello_there(
+    "Click on tabs to see my "
+    "notes about technologies."
+)

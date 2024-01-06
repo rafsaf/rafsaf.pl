@@ -1,0 +1,5 @@
+I started to play with Go in 2023, 
+contributing code to terraform proxmox provider.
+
+It's somewhat fun to write things in Go,
+but probably I still prefer Python ;p

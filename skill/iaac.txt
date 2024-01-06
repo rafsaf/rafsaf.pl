@@ -1,0 +1,3 @@
+I love IaaC approach. This is de facto the only way to do 
+things in today world. I'm fan of OpenTofu (fork of Terraform)
+and Ansible.

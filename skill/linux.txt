@@ -1,5 +1,5 @@
-cd portfolio_folder
-rm -rf old_portfolio
-mkdir new_portfolio
-cd new_portfolio
-touch index.html
+I am by no means Linux expert. Not even close to one.
+But I use it daily both privately and in work.
+For desktop system, servers, qcow2 vms in home lab.
+I stopped using Windows for anything but gaming 2y ago.
+Favourite distribution: Debian (though with sentiment for Ubuntu).

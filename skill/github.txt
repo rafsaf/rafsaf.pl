@@ -1,7 +1,5 @@
-echo "# Some repo" >> README.md
-git init
-git add README.md
-git commit -m "first commit"
-git branch -M main
-git remote add origin https://github.com/rafsaf/repo.git
-git push -u origin main
+I use public GitHub and also GitHub Enterprise at work.
+I worked with GitLab, but have more sentiment for GitHub
+since I host there many of my private and public open source
+projects. When I have time, I maintain my own open sources,
+sometimes contribute to others or just create issues.

@@ -1,6 +1,0 @@
-<div>
-  <article>
-    <h1>Hello from portfolio</h1>
-    <p>Hopefully you enjoy your day<p>
-  </article>
-</div>
