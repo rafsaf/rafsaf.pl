@@ -35,7 +35,7 @@ h2,
 h3,
 h4 {
     letter-spacing: 0.25rem;
-    text-transform: capitalize;
+    text-transform: none;
     line-height: 1.25;
     margin-bottom: 0.75rem;
 }

@@ -4,7 +4,7 @@ import Hero from "../components/globals/Hero";
 import Skills from "../components/index/skills";
 import TimeLine from "../components/index/timeline";
 import Image from "next/image";
-import MeImg from "../public/me.webp";
+import MeImg from "../public/me_2023.webp";
 
 const index = () => {
   return (
@@ -19,6 +19,7 @@ const index = () => {
             id="profile-picture"
             src={MeImg}
             alt="My picture"
+            style={{border: "1px solid black"}}
             placeholder="blur"
           />
           <h2>

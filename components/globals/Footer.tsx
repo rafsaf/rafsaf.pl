@@ -6,8 +6,8 @@ const Footer = () => {
   return (
     <FooterContainer>
       <div>
-        <h3>Rafał Safin</h3>
-        <h3>rafal.safin@rafsaf.pl</h3>
+        <h3>Contact</h3>
+        <p>Email: rafal.safin@rafsaf.pl</p>
         {Icons.map((item, index) => (
           <a key={index} href={item.url} target="_blank" rel="noreferrer">
             {item.icon}
@@ -21,9 +21,9 @@ const Footer = () => {
             rel={"noreferrer noopener"}
           >
             can be found here
-          </a>
+          </a>.
         </p>
-        <p>2021-2023 &#169; rafsaf.pl</p>
+        <p>2021-2024 &#169; rafsaf.pl</p>
       </div>
     </FooterContainer>
   );
