@@ -2,9 +2,13 @@
 
 &nbsp;
 
+#### Opera
+
+2024-03-18 - today &nbsp; – &nbsp; _Software Developer at Opera Software_
+
 #### Samsung
 
-2023-03-01 - today &nbsp; – &nbsp; _Senior Software Engineer at Samsung R&D_
+2023-03-01 - 2024-02-29 &nbsp; – &nbsp; _Senior Software Engineer at Samsung R&D_
 
 2021-11-01 - 2023-02-28 (1y4m) &nbsp; – &nbsp; _Software Engineer at Samsung R&D_
 
