@@ -5,7 +5,7 @@ import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { BsX } from "react-icons/bs";
 import { BiDownArrow } from "react-icons/bi";
-import StaticImage from "next-export-optimize-images/image";
+import Image from "next-export-optimize-images/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
@@ -17,12 +17,7 @@ const Navbar = () => {
       <NavCenter>
         <NavLogo $redToggle={toggle}>
           <Link href="/">
-            <StaticImage
-              src="/rafsaf4.svg"
-              height={45}
-              width={200}
-              alt="logo"
-            />
+            <Image src="/rafsaf4.svg" height={45} width={200} alt="logo" />
           </Link>
 
           <button onClick={() => setToggle(!toggle)}>
