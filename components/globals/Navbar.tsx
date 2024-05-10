@@ -168,7 +168,7 @@ const NavPhoneLinks = styled.div`
     text-transform: uppercase;
     ${setFont.roboto};
     letter-spacing: 0.15rem;
-    font-weight: 500;
+    font-weight: 400;
   }
   @media (min-width: 992px) {
     display: none;
