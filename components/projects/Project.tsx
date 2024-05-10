@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import Img from "next/image";
+import Image from "next-export-optimize-images/image";
 import { setColor } from "../../styles";
 import { SingleProject } from "../../pages/projects";
 
@@ -9,7 +9,7 @@ const Project: React.FC<{ item: SingleProject }> = ({ item }) => {
     <Card href={item.data.href} target="_blank" rel="noreferrer">
       <ImageWrapper>
         <div>
-          <Img
+          <Image
             src={item.data.avatar}
             alt={item.data.title}
             style={{ objectFit: "cover" }}
