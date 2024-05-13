@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import Picture from 'next-export-optimize-images/picture';
+import Image from "next/image";
 import { setColor } from "../../styles";
 import { GiArrowDunk } from "react-icons/gi";
 import HeroImage from "../../public/hero_small.webp";
@@ -110,7 +110,7 @@ const Hero: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
     <HeroContainer id="hero">
       <section>
-        <Picture
+        <Image
           id="hero-picture"
           src={HeroImage}
           alt="Hero image"

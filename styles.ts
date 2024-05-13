@@ -1,19 +1,3 @@
-import { Lato, Roboto_Mono } from "next/font/google";
-
-export const lato = Lato({
-  weight: ["300", "400"],
-  style: ["normal", "italic"],
-  display: "swap",
-  subsets: ["latin-ext"],
-  preload: true,
-});
-export const robotoMono = Roboto_Mono({
-  weight: ["300", "400"],
-  display: "swap",
-  subsets: ["latin-ext"],
-  preload: true,
-});
-
 export const setColor = {
   primaryColor: "#0fe1fa",
   primaryColor2: "#2793a0",
@@ -32,6 +16,7 @@ export const setColor = {
 };
 
 export const setFont = {
-  main: `font-family: ${lato.style.fontFamily}, sans-serif;`,
-  roboto: `font-family: ${robotoMono.style.fontFamily}, monospace;`,
+  main: "font-family: 'Lato', sans-serif;",
+  slant: "font-family: 'Courgette', cursive;",
+  roboto: "font-family: 'Roboto Mono', monospace;",
 };

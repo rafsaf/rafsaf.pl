@@ -23,7 +23,7 @@ const Footer = () => {
             can be found here
           </a>.
         </p>
-        <p>2021-{new Date().getFullYear()} &#169; rafsaf.pl</p>
+        <p>2021-2024 &#169; rafsaf.pl</p>
       </div>
     </FooterContainer>
   );

@@ -19,9 +19,9 @@
   },
   {
     "data": {
-      "title": "Ogion",
+      "title": "Backuper",
       "text": "A tool for performing scheduled database backups and transferring encrypted data to secure clouds, for home labs, hobby projects, etc., in environments such as k8s, docker, vms.",
-      "href": "https://ogion.rafsaf.pl",
+      "href": "https://github.com/rafsaf/backuper",
       "desc": "open source",
       "avatar": "/articles/backuper.webp"
     }
