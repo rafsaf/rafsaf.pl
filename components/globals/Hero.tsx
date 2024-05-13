@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import Image from "next-export-optimize-images/image";
+import Image from "next/image";
 import { setColor } from "../../styles";
 import { GiArrowDunk } from "react-icons/gi";
 import HeroImage from "../../public/hero_small.webp";
