@@ -5,7 +5,7 @@ import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { BsX } from "react-icons/bs";
 import { BiDownArrow } from "react-icons/bi";
-import StaticImage from "next-export-optimize-images/image";
+import StaticImage from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
