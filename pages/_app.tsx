@@ -7,6 +7,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
   return (
     <Layout>
       <Head>
+        <link rel="shortcut icon" href="/ico.png" />
         <title>Rafał Safin</title>
         <meta name="description" content="Rafał Safin portfolio" />
       </Head>
