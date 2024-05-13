@@ -6,5 +6,4 @@ module.exports = withExportImages({
   compiler: {
     styledComponents: true,
   },
-  output: 'export',
 });
