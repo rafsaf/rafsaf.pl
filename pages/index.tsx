@@ -3,7 +3,7 @@ import Head from "next/head";
 import Hero from "../components/globals/Hero";
 import Skills from "../components/index/skills";
 import TimeLine from "../components/index/timeline";
-import Image from "next/image";
+import Picture from 'next-export-optimize-images/picture';
 import MeImg from "../public/me_2023_600x600.webp";
 
 const index = () => {
@@ -15,7 +15,7 @@ const index = () => {
       </Head>
       <Hero>
         <div>
-          <Image
+          <Picture
             id="profile-picture"
             src={MeImg}
             alt="My picture"

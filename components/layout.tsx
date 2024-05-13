@@ -2,13 +2,16 @@ import React from "react";
 import styled from "styled-components";
 import Navbar from "./globals/Navbar";
 import Footer from "./globals/Footer";
+import StyledComponentsRegistry from "./../lib/registry";
 
 const layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
     <main>
-      <Navbar />
-      <Wrapper>{children}</Wrapper>
-      <Footer />
+      <StyledComponentsRegistry>
+        <Navbar />
+        <Wrapper>{children}</Wrapper>
+        <Footer />
+      </StyledComponentsRegistry>
     </main>
   );
 };
