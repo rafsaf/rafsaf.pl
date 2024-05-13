@@ -7,7 +7,7 @@ export const lato = Lato({
   subsets: ["latin-ext"],
   preload: true,
 });
-export const roboto_mono = Roboto_Mono({
+export const robotoMono = Roboto_Mono({
   weight: ["300", "400"],
   display: "swap",
   subsets: ["latin-ext"],
@@ -33,5 +33,5 @@ export const setColor = {
 
 export const setFont = {
   main: `font-family: ${lato.style.fontFamily}, sans-serif;`,
-  roboto: `font-family: ${roboto_mono.style.fontFamily}, monospace;`,
+  roboto: `font-family: ${robotoMono.style.fontFamily}, monospace;`,
 };
