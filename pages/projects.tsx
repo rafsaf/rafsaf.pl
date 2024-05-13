@@ -55,5 +55,6 @@ export interface SingleProject {
     text: string;
     title: string;
     avatar: string;
+    blurhash: string;
   };
 }

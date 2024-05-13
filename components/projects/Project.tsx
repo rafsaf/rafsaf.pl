@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import Picture from 'next-export-optimize-images/picture';
+import Picture from "next-export-optimize-images/picture";
 import { setColor } from "../../styles";
 import { SingleProject } from "../../pages/projects";
 
@@ -13,6 +13,8 @@ const Project: React.FC<{ item: SingleProject }> = ({ item }) => {
             src={item.data.avatar}
             alt={item.data.title}
             style={{ objectFit: "cover" }}
+            placeholder="blur"
+            blurDataURL={item.data.blurhash}
             fill
           />
         </div>

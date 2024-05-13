@@ -5,7 +5,8 @@
       "text": "A project of increasing popularity  used by small community of players playing a browser game Tribal Wars. It gathers several hundred people a day and thousands per month. There is a dedicated Discord channel for more engaged users and payments to take advantage of all the features of the site.",
       "href": "https://plemiona-planer.pl/en/",
       "desc": "commercial",
-      "avatar": "/articles/plemiona-planer.webp"
+      "avatar": "/articles/plemiona-planer.webp",
+      "blurhash": "LIRpI7fR-;fi0cj?xaog9Ya#j[ae"
     }
   },
   {
@@ -14,7 +15,8 @@
       "text": "This is a minimal template for FastAPI backend + postgresql db as of 2021.11, async style for database sessions, endpoints and tests. It provides basic codebase that almost every application has, but nothing more.",
       "href": "https://github.com/rafsaf/minimal-fastapi-postgres-template",
       "desc": "open source",
-      "avatar": "/articles/minimal-fastapi-template.webp"
+      "avatar": "/articles/minimal-fastapi-template.webp",
+      "blurhash": "L5SsBF0Jr^SdP8tRV@In=}xboyt7"
     }
   },
   {
@@ -23,7 +25,8 @@
       "text": "A tool for performing scheduled database backups and transferring encrypted data to secure clouds, for home labs, hobby projects, etc., in environments such as k8s, docker, vms.",
       "href": "https://ogion.rafsaf.pl",
       "desc": "open source",
-      "avatar": "/articles/backuper.webp"
+      "avatar": "/articles/backuper.webp",
+      "blurhash": "L3SiaDj[_3_300tRRjIU00bGMyj["
     }
   },
   {
@@ -32,7 +35,8 @@
       "text": "Respo states for Resource Policy and is tiny, user friendly tool for building RBAC systems based on single yml file, mainly with FastAPI framework in mind. In most cases – for even large set of roles and organizations – single file would be enough to provide restricting system access.",
       "href": "https://rafsaf.github.io/respo/",
       "desc": "open source",
-      "avatar": "/articles/respo.webp"
+      "avatar": "/articles/respo.webp",
+      "blurhash": "LIR:Qhf+%Mt60iogNGWA0ibIWBjF"
     }
   },
   {
@@ -41,7 +45,8 @@
       "text": "This simple pypi package is used to create a new FastAPI application with optimal project structure, postgresql database and other extras. Uses github actions and pytest for testing, poetry, cookiecutter, docker.",
       "href": "https://pypi.org/project/fastapi-plan/",
       "desc": "open source",
-      "avatar": "/articles/fastapi-plan.webp"
+      "avatar": "/articles/fastapi-plan.webp",
+      "blurhash": "L?P7FPWCj[j]0Lj[ayfQ9aoff6ay"
     }
   },
   {
@@ -50,7 +55,8 @@
       "text": "The main emphasis in creating this project was placed on learning the docker and docker-compose technology and creating APIs in python using the modern FastAPI framework. Besides, it is an example of documentation written with Sphinx and hosted on readthedocs.",
       "href": "https://docker-fastapi-projects.readthedocs.io/",
       "desc": "open source",
-      "avatar": "/articles/docker-fastapi.webp"
+      "avatar": "/articles/docker-fastapi.webp",
+      "blurhash": "LrPs#D004nD*ogogogj]ozkDflkC"
     }
   },
   {
@@ -59,7 +65,8 @@
       "text": "An unfinished blog / wiki project for the Earthsea universe by Ursula Le Guin, with the ability to add your own articles thanks to a simple API. This is an application written in React.js, it will be rewritten in the near future.",
       "href": "https://new.ziemiomorze.pl/",
       "desc": "personal",
-      "avatar": "/articles/ziemiomorze.webp"
+      "avatar": "/articles/ziemiomorze.webp",
+      "blurhash": "L2S$r*EM?a-n01Ipxu%1_3WEM{tQ"
     }
   },
   {
@@ -68,7 +75,8 @@
       "text": "Tea Station very simple site project based on the CSS and HTML course, build with Gatsby.js and hosted on netlify. In the design, the main focus is on css float.",
       "href": "https://rafsaf-gatsby-tea-station.netlify.app/",
       "desc": "css course",
-      "avatar": "/articles/tea-station.webp"
+      "avatar": "/articles/tea-station.webp",
+      "blurhash": "L39Gjh%|IB~B^k?GtQs.Me%1x]IV"
     }
   },
   {
@@ -77,7 +85,8 @@
       "text": "Backroad site project based on the CSS and HTML course, build with Gatsby.js and hosted on netlify. In the design, the main focus is on css flex.",
       "href": "https://rafsaf-gatsby-backroad.netlify.app/",
       "desc": "css course",
-      "avatar": "/articles/backroad.webp"
+      "avatar": "/articles/backroad.webp",
+      "blurhash": "LeA2D4aeRPay.maeaef6%gayofay"
     }
   }
 ]
