@@ -10,7 +10,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 
 const Navbar = () => {
-  const [toggle, setToggle] = useState(false);
+  const [toggle, setToggle] = useState<boolean>(false);
 
   return (
     <Nav>
@@ -25,14 +25,20 @@ const Navbar = () => {
             />
           </Link>
 
-          <button onClick={() => setToggle(!toggle)}>
+          <button
+            id="hamburger-menu"
+            aria-label="hamburger menu"
+            onClick={() => setToggle(!toggle)}
+          >
             {toggle === false ? <GiHamburgerMenu /> : <BsX />}
           </button>
         </NavLogo>
-        <NavPhoneLinks>{toggle ? <Links /> : null}</NavPhoneLinks>
+        <NavPhoneLinks>
+          {toggle ? <Links onClick={() => setToggle(false)} /> : null}
+        </NavPhoneLinks>
 
         <NavDesktopLinks>
-          <Links></Links>
+          <Links onClick={() => {}}></Links>
         </NavDesktopLinks>
         <NavDesktopIcons>
           {Icons.map((item, index) => (
@@ -48,13 +54,13 @@ const Navbar = () => {
 
 export default Navbar;
 
-const Links = () => {
+const Links = (props: { onClick: () => void }) => {
   const router = useRouter();
   return (
     <ul>
       <li>
         <Link href="/" passHref legacyBehavior>
-          <NavLink $isActive={router.pathname === "/"}>
+          <NavLink $isActive={router.pathname === "/"} onClick={props.onClick}>
             <BiDownArrow />
             Home Page
           </NavLink>
@@ -62,7 +68,10 @@ const Links = () => {
       </li>
       <li>
         <Link href="/projects" passHref legacyBehavior>
-          <NavLink $isActive={router.pathname === "/projects"}>
+          <NavLink
+            $isActive={router.pathname === "/projects"}
+            onClick={props.onClick}
+          >
             <BiDownArrow />
             Projects
           </NavLink>
@@ -70,7 +79,10 @@ const Links = () => {
       </li>
       <li>
         <Link href="/services" passHref legacyBehavior>
-          <NavLink $isActive={router.pathname === "/services"}>
+          <NavLink
+            $isActive={router.pathname === "/services"}
+            onClick={props.onClick}
+          >
             <BiDownArrow />
             Services
           </NavLink>
@@ -103,6 +115,7 @@ const activeLink = css`
 `;
 
 const NavLink = styled.a<{ $isActive?: boolean }>`
+  display: block;
   color: ${setColor.mainWhite};
   svg {
     display: none;

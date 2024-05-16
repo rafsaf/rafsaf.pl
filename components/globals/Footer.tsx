@@ -9,7 +9,13 @@ const Footer = () => {
         <h3>Contact</h3>
         <p>Email: rafal.safin@rafsaf.pl</p>
         {Icons.map((item, index) => (
-          <a key={index} href={item.url} target="_blank" rel="noreferrer">
+          <a
+            key={index}
+            href={item.url}
+            aria-label={`social media icon ${item.url}`}
+            target="_blank"
+            rel="noreferrer"
+          >
             {item.icon}
           </a>
         ))}
@@ -18,10 +24,12 @@ const Footer = () => {
           <a
             href="https://github.com/rafsaf/rafsaf.pl"
             target={"_blank"}
+            aria-label="link to source code on github"
             rel={"noreferrer noopener"}
           >
             can be found here
-          </a>.
+          </a>
+          .
         </p>
         <p>2021-{new Date().getFullYear()} &#169; rafsaf.pl</p>
       </div>
