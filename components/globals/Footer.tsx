@@ -12,7 +12,7 @@ const Footer = () => {
           <a
             key={index}
             href={item.url}
-            aria-label={`social media icon ${item.url}`}
+            aria-label="social media icon"
             target="_blank"
             rel="noreferrer"
           >
