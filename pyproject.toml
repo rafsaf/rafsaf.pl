@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "rafsaf-pl"
+version = "0.1.0"
+description = ""
+authors = ["rafsaf <rafal.safin@rafsaf.pl>"]
+license = "MIT"
+readme = "README.md"
+packages = [{include = "rafsaf"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+watchfiles = "^0.24.0"
+jinja2 = "^3.1.4"
+markdown2 = {extras = ["all"], version = "^2.5.1"}
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

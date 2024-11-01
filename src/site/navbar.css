@@ -1,0 +1,122 @@
+@property --phone-display {
+  syntax: "block | none";
+  inherits: true;
+  initial-value: block;
+}
+@property --desktop-display {
+  syntax: "block | none";
+  inherits: true;
+  initial-value: block;
+}
+@property --menu-display {
+  syntax: "block | none";
+  inherits: true;
+  initial-value: block;
+}
+
+.nav {
+  --desktop-display: none;
+  --phone-display: block;
+  --menu-display: none;
+  position: fixed;
+  z-index: 200;
+  background: var(--mainBlack);
+  color: var(--mainWhite);
+  width: 100%;
+  padding: 0.3rem 1.5rem;
+  border-bottom: 2px solid var(--primaryColor3);
+}
+
+.nav-link {
+  display: block;
+  color: var(--mainWhite);
+}
+.nav-link:hover {
+  color: var(--primaryColor);
+}
+
+.nav-center {
+  max-width: 1300px;
+  margin: 0 auto;
+}
+
+.nav-logo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.nav-logo > button {
+  display: var(--phone-display);
+  cursor: pointer;
+}
+.nav-logo > button > svg {
+  fill: var(--light);
+  height: 2rem;
+  width: 2rem;
+}
+
+.nav-phone-links {
+  display: var(--menu-display);
+}
+.nav-phone-links > ul {
+  padding: 1rem 0rem;
+}
+.nav-phone-links > ul > li {
+  font-size: 1.5rem;
+  border-bottom: 1px solid var(--light);
+  padding-bottom: 0.7rem;
+  margin: 1.2rem 1.3rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15rem;
+  font-weight: 500;
+}
+
+.nav-desktop-links {
+  display: var(--desktop-display);
+}
+.nav-desktop-links > ul {
+  display: flex;
+}
+.nav-desktop-links > ul > li {
+  padding: 0 1.5rem;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15rem;
+  font-weight: 300;
+}
+
+.nav-desktop-icons {
+  display: var(--desktop-display);
+}
+
+@media (min-width: 992px) {
+  .nav {
+    padding: 0 1.5rem;
+    --desktop-display: display;
+    --phone-display: none;
+  }
+  .nav-center {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .nav-desktop-links {
+    display: block;
+  }
+  .nav-phone-links {
+    display: none;
+  }
+  .nav-logo > button {
+    display: none;
+  }
+  .nav-desktop-icons {
+    display: block;
+  }
+  .nav-desktop-icons > a > svg {
+    color: var(--mainWhite);
+    font-size: 2.1rem;
+    margin: 0.3rem 0.5rem 0 0.5rem;
+  }
+}
