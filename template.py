@@ -1,6 +1,5 @@
 import jinja2
 import pathlib
-import shutil
 
 root_dir = pathlib.Path(__file__).resolve().parent
 src = root_dir / "src"
@@ -30,12 +29,7 @@ def process_path(p: pathlib.Path) -> None:
 
 
 if __name__ == "__main__":
-    try:
-        shutil.rmtree(out)
-    except FileNotFoundError:
-        pass
-
-    out.mkdir()
+    out.mkdir(exist_ok=True)
 
     environment = jinja2.Environment(loader=jinja2.FileSystemLoader(src))
 

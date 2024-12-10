@@ -1,7 +1,162 @@
-{% extends "components/layout.html" %} {% block content %}
-<p>asdasd</p>
-<p>asdasd</p>
-<p>asdasd</p>
-<p>asdasd</p>
-<p>asdasd</p>
+{% extends "components/layout.html" %}
+{% block title %}
+<title>Rafał Safin | Services</title>
+<meta name="description" content="Rafał Safin portfolio services" />
+{% endblock %}
+{% block content %}
+<style>
+    .profile-picture {
+        display: inline-block;
+        width: 18rem;
+        height: 18rem;
+    }
+
+    .hero-picture {
+        position: absolute;
+        top: 0;
+        left: 0;
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
+        filter: brightness(18%);
+    }
+
+    .hero {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        z-index: -2;
+    }
+
+    .hero-content small {
+        margin-top: 0;
+        display: block;
+        font-size: 0.6rem;
+
+        color: var(--mainWhite);
+    }
+
+    .hero-content h2 {
+        text-transform: none;
+        text-align: center;
+        margin-top: 2rem;
+
+        color: var(--mainWhite);
+        display: block;
+
+        span {
+            font-size: 0.9rem;
+        }
+    }
+
+    .hero-content {
+        font-size: 1.2rem;
+        margin-top: 2rem;
+        text-transform: none;
+        text-align: center;
+
+        color: var(--mainWhite);
+        letter-spacing: 0.08rem;
+        display: block;
+    }
+
+    .hero-container {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        border-bottom: 1rem solid var(--mainGrey);
+        padding: 3rem 0 8rem;
+    }
+
+    .circle-btn svg {
+        position: absolute;
+        color: var(--light);
+        background: var(--mainGrey);
+        border-top-left-radius: 50%;
+        border-top-right-radius: 50%;
+        z-index: 0;
+        height: 3rem;
+        width: 3rem;
+        padding: 1rem;
+        padding-bottom: 0;
+        margin: 0;
+        fill: var(--light);
+        bottom: -0rem;
+        left: 50%;
+        transform: translate(-50%);
+        box-sizing: content-box;
+        cursor: pointer;
+
+    }
+
+
+    @media (min-width: 992px) {
+        .circle-btn svg {
+            height: 4rem;
+            width: 4rem;
+            padding: 1.5rem;
+            padding-bottom: 0;
+        }
+
+        .circle-btn svg:hover {
+            height: 4.2rem;
+            width: 4.2rem;
+            transition: 0.1s linear;
+        }
+    }
+
+    @media (min-width: 992px) {
+        p {
+            max-width: 50vw;
+        }
+
+        .profile-picture {
+            width: 25rem;
+            height: 25rem;
+        }
+    }
+</style>
+<div class="hero-container">
+    <section class="hero">
+        <img class="hero-picture" src="/_data/images/hero_small.webp" alt="Hero image" />
+    </section>
+    <section class="hero-content">
+
+        <img class="profile-picture" src="/_data/images/me_2023_600x600.webp" alt="My picture"
+            style="border: 1px solid black" />
+        <small>Photo by Bogdan Tymoszyk</small>
+        <h2>
+            Hi, I'm Rafał <br />
+            <span>(Polish: ['rafaw])</span>
+        </h2>
+        <p>
+            I am a professional Software Engineer living in Wrocław
+            a beautiful city in Poland. I mostly build things (web apps?) using the Python programming
+            language and love cloud based infrastructures and CI/CD of all kinds, having experience with
+            virtually every provider out there. </p>
+        <p>
+            Why <b>rafsaf</b>? It's a combination of 3 letters of my first and
+            last name that I use since primary school, and it sounds a bit funny
+            in Polish.
+        </p>
+
+    </section>
+    <section>
+        <button class="circle-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img">
+                <g>
+                    <path
+                        d="M237.13 18.283c-51.748 0-99.183 27.58-136.067 73.395 11.946-6.97 24.526-11.903 37.51-14.76 8.952-1.97 18.062-2.96 27.25-3 27.562-.123 55.824 8.283 82.636 24.318 70.828 42.362 132.585 137.45 153.704 275.178l-49.44 12.637 74.33 109.74 74.327-147.733-51.84 13.25c.564-8.534.9-17.16.9-25.905 0-175.088-95.847-317.12-213.307-317.12h-.002zm-71.165 74.305c-7.924.04-15.734.9-23.375 2.582-30.47 6.705-58.785 26.48-81.356 61.89C37.996 207.88 24.4 269.28 24.4 335.4c0 15.983 1.35 31.378 2.883 46.73 14.387-135.103 92.702-238.62 187.363-238.62 34.713 0 67.177 13.976 95.083 38.334-21.608-29.968-45.915-52.65-70.863-67.57-24.337-14.556-49.13-21.81-72.902-21.688z"
+                        fill="#fff" fill-opacity="1">
+                    </path>
+                </g>
+            </svg>
+        </button>
+    </section>
+</div>
+
 {% endblock %}
