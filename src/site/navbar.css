@@ -44,14 +44,20 @@
   justify-content: space-between;
   align-items: center;
 }
-.nav-logo > button {
+.nav-logo-hamburger-btn {
   display: var(--phone-display);
   cursor: pointer;
 }
-.nav-logo > button > svg {
+.nav-logo-hamburger {
   fill: var(--light);
   height: 2rem;
   width: 2rem;
+}
+.nav-logo-rafsaf-link {
+  display: flex;
+}
+.nav-logo-rafsaf {
+  height: 2.5rem;
 }
 
 .nav-phone-links {
@@ -61,7 +67,7 @@
   padding: 1rem 0rem;
 }
 .nav-phone-links > ul > li {
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   border-bottom: 1px solid var(--light);
   padding-bottom: 0.7rem;
   margin: 1.2rem 1.3rem;
@@ -107,15 +113,10 @@
   .nav-phone-links {
     display: none;
   }
-  .nav-logo > button {
+  .nav-logo-hamburger-btn {
     display: none;
   }
   .nav-desktop-icons {
     display: block;
-  }
-  .nav-desktop-icons > a > svg {
-    color: var(--mainWhite);
-    font-size: 2.1rem;
-    margin: 0.3rem 0.5rem 0 0.5rem;
   }
 }
