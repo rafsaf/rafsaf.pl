@@ -16,6 +16,11 @@
 
 2021-07-01 - 2021-10-29 (4m) &nbsp; – &nbsp; _Working Student at Nokia_
 
-&nbsp;
+#### (Learning)
+
+2019-10-01 - 2021-06-30 (1y8m) &nbsp; – &nbsp; _rafsaf.pl & plemiona-planer.pl_
+
+---
+
 
 _Below are my notes from the last years since the beginning of my programming career. The rules are that I create it every year and never update the old descriptions (even if my priorities, style or personality have changed, the texts remain)._
