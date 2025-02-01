@@ -2,7 +2,76 @@
 {% block title %}
 <title>Rafał Safin | Services</title>
 <meta name="description" content="Rafał Safin portfolio services" />
+<link rel="stylesheet" href="/services.css" />
 {% endblock %}
 {% block content %}
-asddsa
+<div class="services-wrapper">
+    <h2>My services</h2>
+
+    <p>
+        I host my projects, domains, storage on many different environments,
+        including some of most popular public clouds out there: Google Cloud,
+        AWS, Oracle Cloud, OVH Cloud and my own self hosted Proxmox server
+        with couple of VMs inside and Kubernetes K3s cluster among them. Also
+        using GitHub-pages, Netlify, Readthedocs.
+        <br />
+        <br />
+        You can check availability of each below.
+    </p>
+
+    <div id="services" class="information-wrapper">
+        <a class="service" href="https://plemiona-planer.pl">
+            Plemiona Planer, professional tool for tribal wars game [Oracle Cloud/AWS]
+        </a>
+        <a class="service" href="https://grafana.rafsaf.pl">
+            Grafana instance for visualisation of data from k3s cluster and other projects [VM - self hosted proxmox]
+        </a>
+        <a class="service" href="https://nextcloud.rafsaf.pl">
+            Nextcloud app mainly for phone images hosting [K3s Cluster - self hosted proxmox]
+        </a>
+        <a class="service" href="https://ogion.rafsaf.pl">
+            Ogion documentation [Github Pages]
+        </a>
+        <a class="service" href="https://prometheus.rafsaf.pl">
+            Prometheus for metrics from proxmox, k3s cluster and other projects [VM - self hosted proxmox)]
+        </a>
+        <a class="service" href="https://keycloak.rafsaf.pl">
+            Keycloak auth provider to access few of my sites [VM - self hosted proxmox)]
+        </a>
+        <a class="service" href="https://firefly.rafsaf.pl">
+            Firefly III personal finances manager behind oauth2 proxy [K3s Cluster - self hosted proxmox]
+        </a>
+        <a class="service" href="https://stg.plemiona-planer.pl">
+            Plemiona Planer stage environment [Oracle Cloud]
+        </a>
+        <a class="service" href="https://minimal-fastapi-postgres-template.rafsaf.pl/">
+            Showcase of minimal fastapi postgres template [K3s Cluster - self hosted proxmox]
+        </a>
+        <a class="service" href="https://whoami.rafsaf.pl">
+            Simple app behind oauth2 proxy [K3s Cluster - self hosted proxmox]
+        </a>
+        <a class="service" href="https://rafsaf.pl">
+            The site that you read now [GH Pages]
+        </a>
+        <a class="service" href="https://rafsaf-gatsby-tea-station.netlify.app">
+            Coursework static Gatsby app [Netlify]
+        </a>
+        <a class="service" href="https://rafsaf.github.io/respo">
+            Respo open source docs [GH Pages]
+        </a>
+        <a class="service" href="https://docker-fastapi-projects.readthedocs.io">
+            FastAPI Plan docs [Readthedocs]
+        </a>
+        <a class="service" href="https://rafsaf.github.io/scripts_tribal_wars">
+            TW browser game scripts [GH Pages]
+        </a>
+        <a class="service" href="https://rafsaf.github.io/react-with-rest-api">
+            Rick & Morty react app [GH Pages]
+        </a>
+        <a class="service" href="https://rafsaf.github.io/calculator">
+            Very simple grades calculator [GH Pages]
+        </a>
+    </div>
+</div>
+
 {% endblock %}
