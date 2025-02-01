@@ -4,22 +4,22 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  color: var(--mainWhite);
+  color: var(--white);
   text-align: center;
   letter-spacing: 0.3rem;
 }
 
 .footer-icon {
-  fill: var(--mainWhite);
+  fill: var(--white);
   height: 2rem;
   width: 2rem;
   margin: 0.5rem;
   margin-bottom: 1.5rem;
-  color: var(--mainWhite);
+  color: var(--white);
 }
 
 .footer-source {
-  color: var(--mainWhite);
+  color: var(--white);
   text-decoration: underline;
 }
 

@@ -21,17 +21,17 @@
   position: fixed;
   z-index: 200;
   background: var(--mainBlack);
-  color: var(--mainWhite);
+  color: var(--white);
   width: 100%;
-  border-bottom: 2px solid var(--primaryColor3);
+  border-bottom: 2px solid var(--blue3);
 }
 
 .nav-link {
   display: block;
-  color: var(--mainWhite);
+  color: var(--white);
 }
 .nav-link:hover {
-  color: var(--primaryColor);
+  color: var(--blue1);
 }
 
 .nav-center {

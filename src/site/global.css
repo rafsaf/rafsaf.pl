@@ -1,20 +1,13 @@
 @layer global {
   :root {
-    --primaryColor: #0fe1fa;
-    --primaryColor2: #2793a0;
-    --primaryColor3: #0b7380;
-    --mainWhite: #fff;
-    --light: #dad8d8;
-    --blue: #3c6baa;
     --mainBlack: #272727;
-    --orange: #d74c2f;
-    --mainGrey: #719da0;
-    --mainGrey: #719da0;
-    --mainGreen: #35eb44;
-    --serviceLiveBg: #dff2bf;
-    --serviceLiveText: #366800;
-    --serviceDeadBg: #ffd2d2;
-    --serviceDeadText: #d8000c;
+    --blue1: #0fe1fa;
+    --blue2: #2793a0;
+    --blue3: #0b7380;
+    --blue4: #3c6baa;
+    --white: #fff;
+    --light: #dad8d8;
+    --grey: #719da0;
   }
   * {
     margin: 0;
@@ -23,8 +16,8 @@
   }
   body {
     font-family: sans-serif;
-    background: var(--mainWhite);
-    color: var(--primaryColor);
+    background: var(--white);
+    color: var(--mainBlack);
     line-height: 1.5;
     font-size: 0.875rem;
   }
@@ -76,15 +69,16 @@
     }
     h2 {
       font-size: 2.5rem;
+      margin-bottom: 2rem;
     }
     h3 {
-      font-size: 2rem;
+      font-size: 2.1rem;
     }
     h4 {
-      font-size: 1rem;
+      font-size: 1.4rem;
     }
     body {
-      font-size: 1rem;
+      font-size: 1.2rem;
     }
     h1,
     h2,

@@ -28,7 +28,7 @@
   display: block;
   font-size: 0.6rem;
 
-  color: var(--mainWhite);
+  color: var(--white);
 }
 
 .hero-content h2 {
@@ -36,7 +36,7 @@
   text-align: center;
   margin-top: 2rem;
 
-  color: var(--mainWhite);
+  color: var(--white);
   display: block;
 
   span {
@@ -50,7 +50,7 @@
   text-transform: none;
   text-align: center;
 
-  color: var(--mainWhite);
+  color: var(--white);
   letter-spacing: 0.08rem;
   display: block;
 }
@@ -61,14 +61,14 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  border-bottom: 1rem solid var(--mainGrey);
+  border-bottom: 1rem solid var(--grey);
   padding: 3rem 0 8rem;
 }
 
 .circle-btn svg {
   position: absolute;
   color: var(--light);
-  background: var(--mainGrey);
+  background: var(--grey);
   border-top-left-radius: 50%;
   border-top-right-radius: 50%;
   z-index: 0;
@@ -112,7 +112,7 @@
 }
 
 .skills-container {
-  border-bottom: 1rem solid var(--mainGrey);
+  border-bottom: 1rem solid var(--grey);
 }
 
 .skills {
@@ -124,7 +124,7 @@
   margin: 0.5rem 0;
   height: 2rem;
   width: 2rem;
-  fill: var(--mainWhite);
+  fill: var(--white);
 }
 
 .skill-name {
@@ -138,10 +138,10 @@
   align-content: center;
   justify-content: center;
   text-align: center;
-  background: var(--primaryColor3);
-  color: var(--mainWhite);
-  border-bottom: 1px solid var(--mainGrey);
-  border-left: 1px solid var(--mainGrey);
+  background: var(--blue3);
+  color: var(--white);
+  border-bottom: 1px solid var(--grey);
+  border-left: 1px solid var(--grey);
   font-size: 1rem;
   padding: 1rem 1rem;
   font-weight: 400;
@@ -157,7 +157,7 @@
   }
 
   .skill:hover {
-    background: var(--primaryColor2);
+    background: var(--blue2);
     transition: 0.4s linear;
 
     .skill-icon {
