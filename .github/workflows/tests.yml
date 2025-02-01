@@ -8,19 +8,55 @@ on:
       - "*.*"
 
 jobs:
-  tests:
+  tests-check-build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - name: Set up Python 3.13.1
+        uses: actions/setup-python@v5
         with:
-          node-version: 20
-          cache: npm
+          python-version: "3.13.1"
 
-      - name: Install dependencies
-        run: |
-          npm install
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+        with:
+          virtualenvs-create: true
+          virtualenvs-in-project: false
+          virtualenvs-path: /opt/venv
 
-      - name: Run tests
+      - name: Load cached venv
+        id: cached-poetry-dependencies
+        uses: actions/cache@v4
+        with:
+          path: /opt/venv
+          key: venv-${{ runner.os }}-3.13.1-${{ hashFiles('poetry.lock') }}
+
+      - name: Install dependencies and actiavte virtualenv
+        if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
         run: |
-          npm run test
+          poetry install --no-interaction --no-root
+
+      - name: Build
+        run: |
+          poetry run python template.py
+          touch out/.nojekyll
+          echo "rafsaf.pl" > out/CNAME
+
+      - name: Check
+        run: |
+          if [ ! -f "./out/index.html" ]; then
+              echo "./out/index.html does not exist."
+              exit 1
+          fi
+          if [ ! -f "./out/services/index.html" ]; then
+              echo "./out/services/index.html does not exist."
+              exit 1
+          fi
+          if [ ! -f "./out/projects/index.html" ]; then
+              echo "./out/projects/index.html does not exist."
+              exit 1
+          fi
+          if [ ! -d "./out/_data" ]; then
+              echo "./out/_data does not exist."
+              exit 1
+          fi

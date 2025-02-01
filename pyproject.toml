@@ -1,21 +1,20 @@
-[tool.poetry]
+[project]
+authors = [{ name = "rafsaf", email = "rafal.safin@rafsaf.pl" }]
+dependencies = [
+    "jinja2 (>=3.1.5,<4.0.0)",
+    "markdown (>=3.7,<4.0)",
+    "watchfiles (>=1.0.4,<2.0.0)",
+]
+description = "rafsaf.pl portfolio"
+license = { text = "MIT" }
 name = "rafsaf-pl"
-version = "0.1.0"
-description = ""
-authors = ["rafsaf <rafal.safin@rafsaf.pl>"]
-license = "MIT"
 readme = "README.md"
+requires-python = ">=3.13"
+version = "0.1.0"
+
+[tool.poetry]
 package-mode = false
-packages = [{ include = "rafsaf" }]
-
-[tool.poetry.dependencies]
-python = "^3.10"
-watchfiles = "^0.24.0"
-jinja2 = "^3.1.4"
-markdown2 = { extras = ["all"], version = "^2.5.1" }
-markdown = "^3.7"
-
 
 [build-system]
-requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+requires = ["poetry-core>=2.0.0,<3.0.0"]
