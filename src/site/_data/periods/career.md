@@ -1,3 +1,11 @@
+## Brief introduction
+
+As of programming languages, I mostly write in Python (since 2019) and Go (since 2023). I'm reliable, patient, precise, quite talented engineer with good memory and social skills.
+
+Usually in every team I work, I take as much devops job as possible just beacuse I like it (ansible,kubernetes,ci/cd/vm/firewall settings/logs/metrics/dashboards/monitoring/secrets management just to mention something), I love to maintain big tech infrastrucure from quite older VM based or even bare metal stack to K8s, on cloud or self hosted. I know / tried or at least heard of probably every software/cloud provider/solution is there.
+
+&nbsp;
+
 ## Professional career
 
 &nbsp;
