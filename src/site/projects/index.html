@@ -2,8 +2,169 @@
 {% block title %}
 <title>Rafał Safin | Projects</title>
 <meta name="description" content="Rafał Safin portfolio projects" />
+<link rel="stylesheet" href="/projects.css" />
 {% endblock %}
 {% block content %}
-asdasd
-asd
+<div class="projects-wrapper">
+
+    <a class="projects-card" href="https://plemiona-planer.pl/en/">
+        <div class="projects-card-head">
+            <div class="projects-card-image-wrapper">
+                <img class="projects-card-image" src="/_data/images/articles/plemiona-planer.webp">
+            </div>
+            <div class="projects-card-description">
+                commercial
+            </div>
+        </div>
+        <div class="projects-card-content">
+            <h3>Plemiona Planer</h3>
+            <p>A project of increasing popularity used by small community of players playing a browser game Tribal Wars.
+                It gathers several hundred people a day and thousands per month. There is a dedicated Discord channel
+                for more engaged users and payments to take advantage of all the features of the site.</p>
+        </div>
+    </a>
+
+    <a class="projects-card" href="https://github.com/rafsaf/minimal-fastapi-postgres-template" target="_blank"
+        rel="noreferrer">
+        <div class="projects-card-head">
+            <div class="projects-card-image-wrapper">
+                <img class="projects-card-image" src="/_data/images/articles/minimal-fastapi-template.webp">
+            </div>
+            <div class="projects-card-description">
+                open source
+            </div>
+        </div>
+        <div class="projects-card-content">
+            <h3>Minimal FastAPI template</h3>
+            <p>This is a minimal template for FastAPI backend + postgresql db, async style for database
+                sessions, endpoints and tests. It provides basic codebase that almost every application has, but nothing
+                more.</p>
+        </div>
+    </a>
+
+    <a class="projects-card" href="https://ogion.rafsaf.pl">
+        <div class="projects-card-head">
+            <div class="projects-card-image-wrapper">
+                <img class="projects-card-image" src="/_data/images/articles/backuper.webp">
+            </div>
+            <div class="projects-card-description">
+                open source
+            </div>
+        </div>
+        <div class="projects-card-content">
+            <h3>Ogion</h3>
+            <p>A tool for performing scheduled database backups and transferring encrypted data to secure clouds, for
+                home labs, hobby projects, etc., in environments such as k8s, docker, vms.</p>
+        </div>
+    </a>
+
+    <a class="projects-card" href="https://rafsaf.github.io/respo/">
+        <div class="projects-card-head">
+            <div class="projects-card-image-wrapper">
+                <img class="projects-card-image" src="/_data/images/articles/respo.webp">
+            </div>
+            <div class="projects-card-description">
+                archived (open source)
+            </div>
+        </div>
+        <div class="projects-card-content">
+            <h3>Respo</h3>
+            <p>Respo states for Resource Policy and is tiny, user friendly tool for building RBAC systems based on
+                single yml file, mainly with FastAPI framework in mind. In most cases – for even large set of roles and
+                organizations – single file would be enough to provide restricting system access.</p>
+        </div>
+    </a>
+
+    <a class="projects-card" href="https://docker-fastapi-projects.readthedocs.io/">
+        <div class="projects-card-head">
+            <div class="projects-card-image-wrapper">
+                <img class="projects-card-image" src="/_data/images/articles/docker-fastapi.webp">
+            </div>
+            <div class="projects-card-description">
+                archived (open source)
+            </div>
+        </div>
+        <div class="projects-card-content">
+            <h3>docker fastapi projects</h3>
+            <p>The main emphasis in creating this project was placed on learning the docker and docker-compose
+                technology and creating APIs in python using the modern FastAPI framework. Besides, it is an example of
+                documentation written with Sphinx and hosted on readthedocs.</p>
+        </div>
+    </a>
+
+    <a class="projects-card" href="https://new.ziemiomorze.pl/">
+        <div class="projects-card-head">
+            <div class="projects-card-image-wrapper">
+                <img class="projects-card-image" src="/_data/images/articles/ziemiomorze.webp">
+            </div>
+            <div class="projects-card-description">
+                archived (personal)
+            </div>
+        </div>
+        <div class="projects-card-content">
+            <h3>ziemiomorze</h3>
+            <p>An unfinished blog / wiki project for the Earthsea universe by Ursula Le Guin, with the ability to add
+                your own articles thanks to a simple API. This is an application written in React.js, it will be
+                rewritten in the near future.</p>
+        </div>
+    </a>
+
+    <a class="projects-card" href="https://rafsaf-gatsby-tea-station.netlify.app/">
+        <div class="projects-card-head">
+            <div class="projects-card-image-wrapper">
+                <img class="projects-card-image" src="/_data/images/articles/tea-station.webp">
+            </div>
+            <div class="projects-card-description">
+                archived (css course)
+            </div>
+        </div>
+        <div class="projects-card-content">
+            <h3>tea station</h3>
+            <p>Tea Station very simple site project based on the CSS and HTML course, build with Gatsby.js and hosted on
+                netlify. In the design, the main focus is on css float.</p>
+        </div>
+    </a>
+
+    <a class="projects-card" href="https://rafsaf-gatsby-backroad.netlify.app/">
+        <div class="projects-card-head">
+            <div class="projects-card-image-wrapper">
+                <img class="projects-card-image" src="/_data/images/articles/backroad.webp">
+            </div>
+            <div class="projects-card-description">
+                archived (css course)
+            </div>
+        </div>
+        <div class="projects-card-content">
+            <h3>backroad</h3>
+            <p>Backroad site project based on the CSS and HTML course, build with Gatsby.js and hosted on netlify. In
+                the design, the main focus is on css flex.</p>
+        </div>
+    </a>
+</div>
+<div class="projects-others">
+    <h2>Very old / random / didn't happen:</h2>
+
+    <div class="projects-others-text">
+        <a href="https://github.com/rafsaf/portfolio">Old portfolio site</a>
+    </div>
+    <div class="projects-others-text">
+        <a href="https://github.com/rafsaf/react-with-rest-api">Rick & Morty helloworld
+            React app</a>
+    </div>
+    <div class="projects-others-text">
+        <a href="https://github.com/rafsaf/rest_api_for_portfolio">Simple REST api for
+            old portfolio</a>
+    </div>
+    <div class="projects-others-text">
+        <a href="https://github.com/rafsaf/earthsea">Old Earthsea react frontend</a>
+    </div>
+    <div class="projects-others-text">
+        <a href="https://github.com/rafsaf/django_rest_api_first">Very first django
+            REST api</a>
+    </div>
+    <div class="projects-others-text">
+        <a href="https://github.com/rafsaf/earthsea-api">Old Earthsea react backend in
+            django REST</a>
+    </div>
+</div>
 {% endblock %}
