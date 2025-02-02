@@ -6,7 +6,7 @@ Usually in every team I work, I take as much devops job as possible just beacuse
 
 &nbsp;
 
-## Emplyement history
+## Employment history
 
 &nbsp;
 
