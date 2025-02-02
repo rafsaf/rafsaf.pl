@@ -53,6 +53,7 @@
   color: var(--white);
   letter-spacing: 0.08rem;
   display: block;
+  padding: 0 1rem;
 }
 
 .hero-container {
@@ -169,9 +170,9 @@
 
 .articles {
   color: var(--mainBlack);
-  margin: 1rem auto 1rem;
+  margin: 1rem auto;
+  padding: 0.25rem 1rem;
   max-width: 46rem;
-  padding: 0.25rem;
 }
 .articles article {
   margin-bottom: 3rem;
