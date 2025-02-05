@@ -1,6 +1,8 @@
+import datetime
 import jinja2
 import pathlib
 import markdown
+
 
 root_dir = pathlib.Path(__file__).resolve().parent
 src = root_dir / "src"
@@ -26,7 +28,7 @@ def convert_markdown_to_html_in_place(p: pathlib.Path) -> None:
         return
 
 
-def process_path(p: pathlib.Path) -> None:
+def process_path(p: pathlib.Path, context: dict) -> None:
     rel_src = p.relative_to(src)
     rel_site = p.relative_to(site)
 
@@ -34,10 +36,10 @@ def process_path(p: pathlib.Path) -> None:
     out_file.parent.mkdir(parents=True, exist_ok=True)
 
     if p.is_file() and p.name.endswith(".html"):
-        content = environment.get_template(str(rel_src)).render()
+        content = environment.get_template(str(rel_src)).render(context)
     elif p.is_dir():
         for nested_path in p.iterdir():
-            process_path(nested_path)
+            process_path(nested_path, context)
         return
     else:
         content = p.read_bytes()
@@ -55,5 +57,7 @@ if __name__ == "__main__":
     for path in (site / "_data").iterdir():
         convert_markdown_to_html_in_place(path)
 
+    context = {"build_timestamp": int(datetime.datetime.now(datetime.UTC).timestamp())}
+
     for path in site.iterdir():
-        process_path(path)
+        process_path(path, context)
