@@ -1,8 +1,8 @@
 # Professional career
 
-As of programming languages, I mostly write in Python (since 2019) and Go (since 2023). I'm reliable, patient, precise, quite talented engineer with good memory and social skills.
+As for programming languages, I mostly write in Python (since 2019) and Go (since 2023). I'm a reliable, patient, precise, and quite talented engineer with a good memory and social skills.
 
-Usually in every team I work, I take as much devops job as possible just beacuse I like it (ansible,kubernetes,ci/cd/vm/firewall settings/logs/metrics/dashboards/monitoring/secrets management just to mention something), I love to maintain big tech infrastrucure from quite older VM based or even bare metal stack to K8s, on cloud or self hosted. I know / tried or at least heard of probably every software/cloud provider/solution is there.
+Usually, in every team I work with, I take on as much DevOps work as possible simply because I enjoy it (Ansible, Kubernetes, CI/CD, VM/firewall settings, logs/metrics/dashboards/monitoring/secrets management, just to name a few). I love maintaining large tech infrastructure, from older VM-based or even bare-metal stacks to Kubernetes, either on the cloud or self-hosted. I know, have tried, or at least have heard of probably every software/cloud provider/solution out there.
 
 &nbsp;
 
@@ -26,4 +26,4 @@ Usually in every team I work, I take as much devops job as possible just beacuse
 
 &nbsp;
 
-_Below are my notes from the last years since the beginning of my programming career. The rules are that I create it every year and never update the old descriptions (even if my priorities, style or personality have changed, the texts remain)._
+_Below are my notes from the last few years since the beginning of my programming career. The rule is that I create them every year and never update the old descriptions (even if my priorities, style, grammar skills, or personality have changed, the texts remain)._
