@@ -1,10 +1,6 @@
 [project]
 authors = [{ name = "rafsaf", email = "rafal.safin@rafsaf.pl" }]
-dependencies = [
-    "jinja2 (>=3.1.5,<4.0.0)",
-    "markdown (>=3.7,<4.0)",
-    "watchfiles (>=1.0.4,<2.0.0)",
-]
+dependencies = ["jinja2 (>=3.1.5)", "markdown (>=3.7)", "watchfiles (>=1.0.4)"]
 description = "rafsaf.pl portfolio"
 license = { text = "MIT" }
 name = "rafsaf-pl"
