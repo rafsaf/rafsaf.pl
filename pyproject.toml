@@ -1,16 +1,16 @@
 [project]
-authors = [{ name = "rafsaf", email = "rafal.safin@rafsaf.pl" }]
-dependencies = ["jinja2 (>=3.1.5)", "markdown (>=3.7)", "watchfiles (>=1.0.4)"]
-description = "rafsaf.pl portfolio"
-license = { text = "MIT" }
 name = "rafsaf-pl"
-readme = "README.md"
-requires-python = ">=3.13"
 version = "0.1.0"
+description = "rafsaf.pl portfolio"
+authors = [{ name = "rafsaf", email = "rafal.safin@rafsaf.pl" }]
+requires-python = ">=3.14,<3.15"
+readme = "README.md"
+license = { text = "MIT" }
+dependencies = ["jinja2 (>=3.1.5)", "markdown (>=3.7)", "watchfiles (>=1.0.4)"]
 
-[tool.poetry]
-package-mode = false
+[tool.uv]
+package = false
 
 [build-system]
-build-backend = "poetry.core.masonry.api"
-requires = ["poetry-core>=2.0.0,<3.0.0"]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

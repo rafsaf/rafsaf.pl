@@ -1,3 +1,3 @@
 .PHONY: watch
 watch:
-	poetry run watchfiles "python template.py" src
+	uv run watchfiles "python template.py" src
