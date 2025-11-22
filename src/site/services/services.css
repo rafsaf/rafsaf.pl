@@ -21,10 +21,11 @@
   margin-top: 2.25rem;
 }
 
-.services-list .service-meta {
-  color: var(--mainBlack);
+.services-list .projects-contribution {
+  align-items: flex-start;
 }
 
-.services-list p {
+.services-list .projects-contribution-repo {
+  white-space: normal;
   color: var(--blue4);
 }

@@ -15,3 +15,11 @@ Pure React but very poor quality oldest version of rafsaf.pl is archived here ht
 ## 2025 update
 
 I am so so sick after **another** major release of **another** JS framework where you can basically throw away 50% of your code trying to figure out **new, better way to do this**. I've been using few frameworks here in past few years, now and on this site will be pure JS stuff with some jinja templates extras. Bye bye JS frameworks. Imagine having site that is not throwing 5000 errors on npm update. Oh sorry, yarn. Ops, pnpm. Nooo, bun. Or maybe already something else more shiny pop up yesterday?
+
+## Updating OSS contributions section
+
+The Projects page lists a "Some contributions" section that is generated from merged pull requests to other public repositories. To refresh the list run:
+
+```bash
+scripts/update_contributions.py
+```
