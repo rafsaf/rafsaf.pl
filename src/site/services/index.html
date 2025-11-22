@@ -2,6 +2,7 @@
 {% block title %}
 <title>Rafał Safin | Services</title>
 <meta name="description" content="Rafał Safin portfolio services" />
+<link rel="stylesheet" href="/projects/projects.css?t={{ build_timestamp }}" />
 <link rel="stylesheet" href="/services/services.css?t={{ build_timestamp }}" />
 {% endblock %}
 {% block content %}
@@ -19,59 +20,97 @@
         You can check the availability of each below.
     </p>
 
-    <div id="services" class="information-wrapper">
-        <a class="service" href="https://plemiona-planer.pl">
-            Plemiona Planer, professional tool for tribal wars game [Oracle Cloud/AWS]
-        </a>
-        <a class="service" href="https://grafana.rafsaf.pl">
-            Grafana instance for visualisation of data from k3s cluster and other projects [VM - self hosted proxmox]
-        </a>
-        <a class="service" href="https://nextcloud.rafsaf.pl">
-            Nextcloud app mainly for phone images hosting [K3s Cluster - self hosted proxmox]
-        </a>
-        <a class="service" href="https://ogion.rafsaf.pl">
-            Ogion documentation [Github Pages]
-        </a>
-        <a class="service" href="https://prometheus.rafsaf.pl">
-            Prometheus for metrics from proxmox, k3s cluster and other projects [VM - self hosted proxmox)]
-        </a>
-        <a class="service" href="https://keycloak.rafsaf.pl">
-            Keycloak auth provider to access few of my sites [VM - self hosted proxmox)]
-        </a>
-        <a class="service" href="https://firefly.rafsaf.pl">
-            Firefly III personal finances manager behind oauth2 proxy [K3s Cluster - self hosted proxmox]
-        </a>
-        <a class="service" href="https://stg.plemiona-planer.pl">
-            Plemiona Planer stage environment [Oracle Cloud]
-        </a>
-        <a class="service" href="https://minimal-fastapi-postgres-template.rafsaf.pl/">
-            Showcase of minimal fastapi postgres template [K3s Cluster - self hosted proxmox]
-        </a>
-        <a class="service" href="https://whoami.rafsaf.pl">
-            Simple app behind oauth2 proxy [K3s Cluster - self hosted proxmox]
-        </a>
-        <a class="service" href="https://rafsaf.pl">
-            The site that you read now [GH Pages]
-        </a>
-        <a class="service" href="https://rafsaf-gatsby-tea-station.netlify.app">
-            Coursework static Gatsby app [Netlify]
-        </a>
-        <a class="service" href="https://rafsaf.github.io/respo">
-            Respo open source docs [GH Pages]
-        </a>
-        <a class="service" href="https://docker-fastapi-projects.readthedocs.io">
-            FastAPI Plan docs [Readthedocs]
-        </a>
-        <a class="service" href="https://rafsaf.github.io/scripts_tribal_wars">
-            TW browser game scripts [GH Pages]
-        </a>
-        <a class="service" href="https://rafsaf.github.io/react-with-rest-api">
-            Rick & Morty react app [GH Pages]
-        </a>
-        <a class="service" href="https://rafsaf.github.io/calculator">
-            Very simple grades calculator [GH Pages]
-        </a>
-    </div>
+    <ol class="projects-list services-list">
+        <li>
+            <a class="project-link" href="https://plemiona-planer.pl">Plemiona Planer</a>
+            <span class="project-meta service-meta">Oracle Cloud · AWS</span>
+            <p>Professional tool used by Tribal Wars players.</p>
+        </li>
+        <li>
+            <a class="project-link" href="https://grafana.rafsaf.pl">Grafana dashboards</a>
+            <span class="project-meta service-meta">Self-hosted Proxmox VM</span>
+            <p>Visualises metrics collected from the k3s cluster and side projects.</p>
+        </li>
+        <li>
+            <a class="project-link" href="https://nextcloud.rafsaf.pl">Nextcloud</a>
+            <span class="project-meta service-meta">K3s cluster · Proxmox</span>
+            <p>Personal file sync and photo backup instance.</p>
+        </li>
+        <li>
+            <a class="project-link" href="https://ogion.rafsaf.pl">Ogion docs</a>
+            <span class="project-meta service-meta">GitHub Pages</span>
+            <p>Documentation for the Ogion encrypted backup scheduler.</p>
+        </li>
+        <li>
+            <a class="project-link" href="https://prometheus.rafsaf.pl">Prometheus</a>
+            <span class="project-meta service-meta">Self-hosted Proxmox VM</span>
+            <p>Central metrics store for Proxmox, k3s and other boxes.</p>
+        </li>
+        <li>
+            <a class="project-link" href="https://keycloak.rafsaf.pl">Keycloak</a>
+            <span class="project-meta service-meta">Self-hosted Proxmox VM</span>
+            <p>Auth provider and OAuth gateway for internal sites.</p>
+        </li>
+        <li>
+            <a class="project-link" href="https://firefly.rafsaf.pl">Firefly III</a>
+            <span class="project-meta service-meta">K3s cluster · Proxmox</span>
+            <p>Personal finances manager protected by an OAuth2 proxy.</p>
+        </li>
+        <li>
+            <a class="project-link" href="https://stg.plemiona-planer.pl">Plemiona Planer staging</a>
+            <span class="project-meta service-meta">Oracle Cloud</span>
+            <p>Stage environment mirroring the production planner.</p>
+        </li>
+        <li>
+            <a class="project-link" href="https://minimal-fastapi-postgres-template.rafsaf.pl/">Minimal
+                FastAPI template demo</a>
+            <span class="project-meta service-meta">K3s cluster · Proxmox</span>
+            <p>Live showcase of the minimal FastAPI + PostgreSQL starter.</p>
+        </li>
+        <li>
+            <a class="project-link" href="https://whoami.rafsaf.pl">whoami</a>
+            <span class="project-meta service-meta">K3s cluster · Proxmox</span>
+            <p>Simple OAuth-protected diagnostic endpoint.</p>
+        </li>
+        <li>
+            <a class="project-link" href="https://rafsaf.pl">rafsaf.pl</a>
+            <span class="project-meta service-meta">GitHub Pages</span>
+            <p>The site you are browsing right now.</p>
+        </li>
+        <li>
+            <a class="project-link" href="https://rafsaf-gatsby-tea-station.netlify.app">Tea Station</a>
+            <span class="project-meta service-meta">Netlify</span>
+            <p>Course project rebuilt with Gatsby and deployed to Netlify.</p>
+        </li>
+        <li>
+            <a class="project-link" href="https://rafsaf.github.io/respo">Respo docs</a>
+            <span class="project-meta service-meta">GitHub Pages</span>
+            <p>Documentation for the Respo RBAC helper.</p>
+        </li>
+        <li>
+            <a class="project-link" href="https://docker-fastapi-projects.readthedocs.io">Docker FastAPI
+                projects docs</a>
+            <span class="project-meta service-meta">Read the Docs</span>
+            <p>Documentation for the Docker/FastAPI learning project.</p>
+        </li>
+        <li>
+            <a class="project-link" href="https://rafsaf.github.io/scripts_tribal_wars">Tribal Wars
+                scripts</a>
+            <span class="project-meta service-meta">GitHub Pages</span>
+            <p>A bundle of browser scripts for the Tribal Wars game.</p>
+        </li>
+        <li>
+            <a class="project-link" href="https://rafsaf.github.io/react-with-rest-api">React with REST
+                API</a>
+            <span class="project-meta service-meta">GitHub Pages</span>
+            <p>Rick &amp; Morty demo client for a public REST API.</p>
+        </li>
+        <li>
+            <a class="project-link" href="https://rafsaf.github.io/calculator">Grades calculator</a>
+            <span class="project-meta service-meta">GitHub Pages</span>
+            <p>Very simple calculator built during early coursework.</p>
+        </li>
+    </ol>
 </div>
 
 {% endblock %}
