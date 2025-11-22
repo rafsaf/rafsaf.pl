@@ -159,28 +159,36 @@
 
 .articles {
   color: var(--mainBlack);
-  margin: 2rem auto 0;
-  padding: 0.25rem 1rem 4rem;
+  margin: 1.25rem auto 0;
+  padding: 0 clamp(0.2rem, 3vw, 0.9rem) 1.75rem;
   max-width: 56rem;
+  width: 100%;
 }
 .articles article {
-  margin-bottom: 3.5rem;
+  margin-bottom: 3rem;
   background: var(--paper-alt);
   border: 1px solid rgba(31, 29, 26, 0.12);
-  padding: 2.5rem;
-  border-radius: 1.5rem;
+  padding: clamp(1rem, 3.5vw, 2.2rem) clamp(0.85rem, 3.5vw, 1.9rem);
+  border-radius: 1.25rem;
   box-shadow: 0 30px 70px var(--shadow-color);
   position: relative;
-  overflow: hidden;
+  overflow: visible;
+  isolation: isolate;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+  hyphens: auto;
 }
 
 .articles article::before {
   content: "✶";
   position: absolute;
-  top: 1rem;
-  left: 1.5rem;
-  font-size: 2rem;
-  color: rgba(240, 93, 35, 0.4);
+  top: 1.2rem;
+  left: 1rem;
+  transform: translate(-55%, -45%);
+  font-size: clamp(1.35rem, 3vw, 1.9rem);
+  color: rgba(240, 93, 35, 0.45);
+  pointer-events: none;
+  z-index: 0;
 }
 
 .articles article::after {
@@ -193,4 +201,29 @@
   letter-spacing: 0.4rem;
   text-transform: uppercase;
   color: rgba(31, 29, 26, 0.25);
+}
+
+@media (max-width: 640px) {
+  .articles {
+    margin-top: 0.85rem;
+    padding: 0 0 1.15rem;
+  }
+
+  .articles article {
+    margin-bottom: 2.2rem;
+    border-radius: 0.95rem;
+    padding: clamp(0.9rem, 4vw, 1.35rem) clamp(0.7rem, 4vw, 1.2rem);
+  }
+
+  .articles article::before {
+    top: 0.85rem;
+    left: 0.75rem;
+    transform: translate(-50%, -40%);
+    font-size: clamp(1.15rem, 5vw, 1.5rem);
+  }
+
+  .articles article::after {
+    right: 1rem;
+    letter-spacing: 0.25rem;
+  }
 }
