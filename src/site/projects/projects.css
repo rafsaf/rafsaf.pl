@@ -23,15 +23,12 @@
 .projects-list li::before {
   counter-increment: project;
   content: counter(project) ".";
-  font-family: "SFMono-Regular", "Roboto Mono", Menlo, Consolas, monospace;
   font-size: 0.9rem;
-  color: var(--blue4);
   min-width: 2ch;
   text-align: right;
 }
 
-.project-link,
-.project-meta {
+.project-link {
   grid-column: 2 / -1;
 }
 
@@ -46,19 +43,9 @@
   text-decoration: underline;
 }
 
-.project-meta {
-  display: block;
-  margin: 0.2rem 0 0;
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.12rem;
-  color: var(--blue4);
-}
-
 .projects-list p {
   grid-column: 2 / -1;
   margin: 0.35rem 0 0;
-  color: var(--blue4);
   line-height: 1.45;
 }
 
@@ -69,7 +56,7 @@
 }
 
 .projects-others h2 {
-  font-size: 1.2rem;
+  font-size: 2rem;
   letter-spacing: 0.1rem;
   margin-bottom: 0.75rem;
 }
@@ -93,12 +80,6 @@
   padding-top: 2rem;
 }
 
-.projects-contributions-note {
-  margin: 0 0 0.5rem;
-  font-size: 0.85rem;
-  color: var(--blue4);
-}
-
 .projects-contribution {
   display: flex;
   flex-wrap: wrap;
@@ -111,8 +92,6 @@
   display: inline-flex;
   align-items: baseline;
   gap: 0.15rem;
-  font-size: 0.85rem;
-  color: var(--blue4);
   white-space: nowrap;
 }
 

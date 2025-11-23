@@ -15,14 +15,14 @@
     --shadow-strong: rgba(20, 17, 13, 0.35);
     --muted-green: #6d8c7c;
     --font-sans: system-ui, -apple-system, "Segoe UI", sans-serif;
-    --font-serif: "Georgia", "Times New Roman", serif;
-    --font-mono: "SFMono-Regular", "Roboto Mono", Menlo, Consolas, monospace;
   }
+
   * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
   }
+
   body {
     font-family: var(--font-sans);
     background-color: var(--paper);
@@ -46,6 +46,7 @@
     pointer-events: none;
     z-index: -1;
   }
+
   a {
     color: var(--blue2);
     text-decoration: underline;
@@ -58,15 +59,17 @@
   a:hover {
     color: var(--blue1);
   }
+
   button {
     background: transparent;
     border: none;
     outline: none;
     font-weight: 500;
-    font-family: var(--font-mono);
+    font-family: var(--font-sans);
     letter-spacing: 0.08rem;
     text-transform: uppercase;
   }
+
   img {
     width: 100%;
     display: block;
@@ -77,7 +80,7 @@
   h2,
   h3,
   h4 {
-    font-family: var(--font-serif);
+    font-family: var(--font-sans);
     letter-spacing: 0.08rem;
     text-transform: none;
     line-height: 1.1;
@@ -88,44 +91,56 @@
   h1 {
     font-size: clamp(2.4rem, 5vw, 3.8rem);
   }
+
   h2 {
     font-size: clamp(2rem, 3vw, 3rem);
   }
+
   h3 {
     font-size: clamp(1.4rem, 2.4vw, 2rem);
   }
+
   h4 {
     font-size: 1.1rem;
   }
+
   p {
     margin-bottom: 1.5rem;
     max-width: 60ch;
   }
+
   ul {
     list-style: none;
   }
+
   @media (min-width: 800px) {
     h1 {
       font-size: 4rem;
       margin-bottom: 2rem;
       margin-top: 1rem;
     }
+
     h2 {
       font-size: 2.5rem;
       margin-bottom: 2rem;
     }
+
     h3 {
       font-size: 2.1rem;
     }
+
     h4 {
       font-size: 1.4rem;
     }
-      body {
-        font-size: 1.2rem;
-      }
+
+    body {
+      font-size: 1.2rem;
+    }
+
     p {
       font-size: 1.05rem;
     }
+
     h1,
     h2,
     h3,
@@ -134,9 +149,9 @@
     }
   }
 
-/* layout component */
+  /* layout component */
 
-.main-content {
+  .main-content {
     min-height: 100vh;
     position: relative;
     padding: clamp(1.5rem, 5vw, 4rem) clamp(0.75rem, 4vw, 3.25rem) clamp(2rem, 6vw, 4rem);
@@ -170,11 +185,13 @@
   inherits: true;
   initial-value: block;
 }
+
 @property --desktop-display {
   syntax: "block | none";
   inherits: true;
   initial-value: block;
 }
+
 @property --menu-display {
   syntax: "block | none";
   inherits: true;
@@ -206,6 +223,7 @@
   font-weight: 600;
   text-decoration: none;
 }
+
 .nav-link:hover {
   color: var(--blue2);
 }
@@ -240,6 +258,7 @@
   align-items: center;
   gap: 0.75rem;
 }
+
 .nav-logo-hamburger-btn {
   display: var(--phone-display);
   cursor: pointer;
@@ -247,11 +266,13 @@
   border-radius: 999px;
   padding: 0.35rem;
 }
+
 .nav-logo-hamburger {
   fill: var(--mainBlack);
   height: 1.35rem;
   width: 1.35rem;
 }
+
 .nav-logo-brand {
   display: inline-flex;
   align-items: center;
@@ -270,10 +291,12 @@
   border-top: 1px solid rgba(31, 29, 26, 0.08);
   margin-top: 0.35rem;
 }
-.nav-phone-links > ul {
+
+.nav-phone-links>ul {
   padding: 0.75rem 0rem;
 }
-.nav-phone-links > ul > li {
+
+.nav-phone-links>ul>li {
   font-size: 0.95rem;
   border-bottom: 1px dashed rgba(31, 29, 26, 0.15);
   padding-bottom: 0.55rem;
@@ -286,11 +309,13 @@
 .nav-desktop-links {
   display: var(--desktop-display);
 }
-.nav-desktop-links > ul {
+
+.nav-desktop-links>ul {
   display: flex;
   gap: 0.35rem;
 }
-.nav-desktop-links > ul > li {
+
+.nav-desktop-links>ul>li {
   padding: 0 0.75rem;
   font-size: 0.85rem;
   text-transform: uppercase;
@@ -304,6 +329,7 @@
     --desktop-display: block;
     --phone-display: none;
   }
+
   .nav-center {
     display: flex;
     flex-wrap: wrap;
@@ -319,9 +345,11 @@
     top: 50%;
     transform: translate(-50%, -50%);
   }
+
   .nav-phone-links {
     display: none;
   }
+
   .nav-logo-hamburger-btn {
     display: none;
   }
@@ -414,4 +442,3 @@
   flex-wrap: wrap;
   gap: 0.35rem;
 }
-
