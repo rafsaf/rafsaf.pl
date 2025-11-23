@@ -27,16 +27,8 @@
   color: var(--mainBlack);
 }
 
-.hero-kicker {
-  margin-top: 0;
-  margin-bottom: 0.6rem;
-  font-size: 0.75rem;
-  letter-spacing: 0.25rem;
-  text-transform: uppercase;
-  color: var(--blue4);
-}
 
-.hero-text h1 {
+.hero-text h2 {
   text-transform: none;
   letter-spacing: 0.04rem;
   margin-bottom: 1rem;
@@ -45,7 +37,7 @@
 .hero-text h1 span {
   display: block;
   font-size: 0.85rem;
-  font-family: var(--font-mono);
+  font-family: var(--font-sans);
   letter-spacing: 0.2rem;
   color: var(--muted-green);
 }
@@ -103,7 +95,7 @@
 
 .skill-name {
   margin: 0.5rem 0;
-  font-family: var(--font-mono);
+  font-family: var(--font-sans);
   letter-spacing: 0.22rem;
 }
 
@@ -151,6 +143,7 @@
     letter-spacing: 0.28rem;
     font-size: 1.05rem;
   }
+
   .skill:hover {
     box-shadow: 0 35px 60px var(--shadow-color);
     transform: translateY(-6px) rotate(-0.5deg);
@@ -164,6 +157,7 @@
   max-width: 56rem;
   width: 100%;
 }
+
 .articles article {
   margin-bottom: 3rem;
   background: var(--paper-alt);
@@ -196,7 +190,7 @@
   position: absolute;
   bottom: 1rem;
   right: 1.5rem;
-  font-family: var(--font-mono);
+  font-family: var(--font-sans);
   font-size: 0.75rem;
   letter-spacing: 0.4rem;
   text-transform: uppercase;

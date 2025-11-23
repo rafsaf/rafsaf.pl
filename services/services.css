@@ -10,11 +10,10 @@
   margin-bottom: 1rem;
 }
 
-.services-wrapper > p {
+.services-wrapper>p {
   margin: 0;
   font-size: 1rem;
   line-height: 1.6;
-  color: var(--blue4);
 }
 
 .services-list {
@@ -27,5 +26,4 @@
 
 .services-list .projects-contribution-repo {
   white-space: normal;
-  color: var(--blue4);
 }
