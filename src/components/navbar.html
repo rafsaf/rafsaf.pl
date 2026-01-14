@@ -13,6 +13,7 @@
       <ul>
         <li><a class="nav-link" href="/">Home</a></li>
         <li><a class="nav-link" href="/projects/">Projects</a></li>
+        <li><a class="nav-link" href="/blog/">Blog</a></li>
         <li><a class="nav-link" href="/services/">Services</a></li>
       </ul>
     </div>
@@ -20,6 +21,7 @@
       <ul>
         <li><a class="nav-link" href="/">Home</a></li>
         <li><a class="nav-link" href="/projects/">Projects</a></li>
+        <li><a class="nav-link" href="/blog/">Blog</a></li>
         <li><a class="nav-link" href="/services/">Services</a></li>
       </ul>
     </div>
@@ -45,9 +47,14 @@
   );
 
   const links = document.getElementsByClassName("nav-link");
-  for (link of links) {
-    const url = new URL(link.href);
-    if (url.pathname === window.location.pathname) {
+  const currentPath = window.location.pathname;
+
+  for (const link of links) {
+    const urlPath = new URL(link.href).pathname;
+    const isExact = urlPath === currentPath;
+    const isSectionMatch = urlPath !== "/" && currentPath.startsWith(urlPath);
+
+    if (isExact || isSectionMatch) {
       link.style.setProperty("color", "var(--blue1)");
     }
   }

@@ -1,0 +1,31 @@
+{% extends "components/layout.html" %}
+{% block title %}
+<title>Rafał Safin | Blog</title>
+<meta name="description" content="Rafał Safin blog and notes" />
+<link rel="stylesheet" href="/projects/projects.css?t={{ build_timestamp }}" />
+{% endblock %}
+{% block content %}
+<div class="projects-wrapper">
+    <h1>Blog / notes</h1>
+    <p>
+        Minimal posts, no images, same plain HTML as the rest of the site.
+        Expect occasional long-form entries when there is something worth writing down.
+    </p>
+</div>
+
+<div class="projects-others">
+    <h2>Latest:</h2>
+
+    <div class="projects-others-text">
+        (2024)
+        <a href="/blog/2024/">2024 retrospective</a> — Year-in-review reused from the existing
+        timeline notes.
+    </div>
+    <div class="projects-others-text">
+        (2023)
+        <a href="/blog/2023/">2023 retrospective</a> — Promotion year and homelab rebuild recap.
+    </div>
+
+    <div class="projects-others-text">More posts will appear here as I write them.</div>
+</div>
+{% endblock %}
