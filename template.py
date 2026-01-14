@@ -14,19 +14,6 @@ def convert_markdown_to_html_in_place(p: pathlib.Path) -> None:
     if p.is_file() and p.name.endswith(".md"):
         content = p.read_text()
 
-        last_updated = datetime.datetime.fromtimestamp(
-            p.stat().st_mtime, datetime.UTC
-        ).strftime("%Y-%m-%d")
-        footer = (
-            "\n\n"
-            "<br>"
-            "<br>"
-            "\n\n"
-            "---\n\n"
-            f"_Last updated: {last_updated}_\n\n"
-            "Content license: CC BY-NC 4.0 — share and adapt with attribution, no commercial use."
-        )
-
         md_out_file = p.with_suffix(".html")
         md_converter = markdown.Markdown(
             extensions=[
@@ -34,11 +21,13 @@ def convert_markdown_to_html_in_place(p: pathlib.Path) -> None:
                 "markdown.extensions.codehilite",
                 "markdown.extensions.tables",
                 "markdown.extensions.sane_lists",
+                "markdown.extensions.extra",
+                "markdown.extensions.sane_lists",
             ],
             output_format="html",
         )
 
-        md_content = md_converter.convert(content + footer)
+        md_content = md_converter.convert(content)
         md_converter.reset()
 
         if md_out_file.exists() and md_out_file.read_text() == md_content:
