@@ -53,6 +53,13 @@
 .blog-post li {
   margin-bottom: 0.5rem;
   line-height: 1.6;
+  font-size: 1rem;
+}
+
+@media (min-width: 800px) {
+  .blog-post li {
+    font-size: 1.05rem;
+  }
 }
 
 .blog-post li > ul,
