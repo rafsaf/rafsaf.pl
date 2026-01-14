@@ -1,3 +1,20 @@
+# Homelab refresh notes
+
+Quick checkpoint on rearranging the small rack at home. Nothing fancy — just wiring and monitoring tweaks.
+
+![Rack sketch](./homelab-rack.svg)
+![alt text](image.png)
+Some context:
+
+- Moved the Proxmox nodes to separate PDUs to avoid a single power bar failure.
+- Split management and storage traffic; kept k3s traffic on VLAN 30.
+- Replaced the noisy 1U router fan with a Noctua and dropped temps by ~6°C.
+- Enabled disk SMART scraping in Prometheus and added Grafana alerts for pre-fail attributes.
+
+The change log is intentionally short; I want these posts to stay readable on a phone.
+
+```python
+
 import datetime
 import jinja2
 import pathlib
@@ -14,32 +31,8 @@ def convert_markdown_to_html_in_place(p: pathlib.Path) -> None:
     if p.is_file() and p.name.endswith(".md"):
         content = p.read_text()
 
-        last_updated = datetime.datetime.fromtimestamp(
-            p.stat().st_mtime, datetime.UTC
-        ).strftime("%Y-%m-%d")
-        footer = (
-            "\n\n"
-            "<br>"
-            "<br>"
-            "\n\n"
-            "---\n\n"
-            f"_Last updated: {last_updated}_\n\n"
-            "Content license: CC BY-NC 4.0 — share and adapt with attribution, no commercial use."
-        )
-
         md_out_file = p.with_suffix(".html")
-        md_converter = markdown.Markdown(
-            extensions=[
-                "markdown.extensions.fenced_code",
-                "markdown.extensions.codehilite",
-                "markdown.extensions.tables",
-                "markdown.extensions.sane_lists",
-            ],
-            output_format="html",
-        )
-
-        md_content = md_converter.convert(content + footer)
-        md_converter.reset()
+        md_content = markdown.markdown(content)
 
         if md_out_file.exists() and md_out_file.read_text() == md_content:
             return
@@ -87,3 +80,5 @@ if __name__ == "__main__":
 
     for path in site.iterdir():
         process_path(path, context)
+
+```
