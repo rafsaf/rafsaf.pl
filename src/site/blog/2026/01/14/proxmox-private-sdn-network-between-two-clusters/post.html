@@ -1,4 +1,4 @@
-<h1>Proxmox private SDN EVPN network between two clusters</h1>
+<h1>Proxmox private SDN network between two clusters</h1>
 <p>Story of setuping network between two distinct Proxmox clusters in different locations based on wireguard and <a href="https://pve.proxmox.com/pve-docs/chapter-pvesdn.html">SDN</a> <a href="https://pve.proxmox.com/pve-docs/chapter-pvesdn.html#pvesdn_zone_plugin_evpn">EVPN</a> zone.</p>
 <p>I started with already <strong>working</strong> homelabs setup for Proxmox (diagram below). It's quite typical and nothing special beside paranoid usage of <a href="https://registry.terraform.io/providers/bpg/proxmox/latest/docs">proxmox opentofu bpg provider</a> (which I really love and also contribute to) for everything what is possible and ansible for nodes/vms setup. I think that's strong requirement, simple "fire and forget" approach to setup something like this article describes is probably very bad idea to the point where you probably will end up with messed up, broken current environment and not working SDN (for one of dozen not trivial reasons).</p>
 <p>Enjoy!</p>
@@ -83,7 +83,7 @@ This is more or less the result:</li>
 <ul>
 <li><strong>Early traps</strong> trying to use VXLAN Zone and/or fabrics instead of EVPN zone and wireguard.</li>
 <li><strong>Underlay WireGuard</strong> between the Proxmox hosts setup using ansible.</li>
-<li><strong>Overlay:</strong> Proxmox SDN <strong>EVPN zone</strong> controlled by <code>evpnctl</code> (FRR). VXLAN encapsulation runs over the WireGuard underlay.</li>
+<li><strong>Overlay SDN</strong> Proxmox EVPN zone controlled by <code>evpnctl</code> (FRR). VXLAN encapsulation runs over the WireGuard underlay.</li>
 <li><strong>Per-site SDN subnets:</strong></li>
 <li>Rozalin: <code>10.1.1.0/24</code> (gateway <code>10.1.1.1</code>)</li>
 <li>Wro: <code>10.2.1.0/24</code> (gateway <code>10.2.1.1</code>)</li>
@@ -260,7 +260,7 @@ evpn_controller_peers:
 <p>Last but not least, sysctl modification that will help later. ALL of them are required, maybe except rp_filter settings, but see <a href="https://pve.proxmox.com/pve-docs/chapter-pvesdn.html#_multiple_evpn_exit_nodes">Multiple EVPN Exit Nodes</a>, they encourage do to it right away to allow packets flow between nodes.</p>
 <ul>
 <li><code>net.ipv4.ip_forward=1</code> (setting in Linux controls whether the system can forward IPv4 packets between network interfaces)</li>
-<li><code>net.bridge.bridge-nf-call-iptables=1</code> (see <a href="https://wiki.libvirt.org/Net.bridge.bridge-nf-call_and_sysctl.conf.html">libvirt wiki</a>, without it packets were stuck on pve firewall in my case, <code>net.bridge.bridge-nf-call-ip6tables</code> is not really needed but won't hurt to already fix ipv6).</li>
+<li><code>net.bridge.bridge-nf-call-iptables=1</code> (see <a href="https://wiki.libvirt.org/Net.bridge.bridge-nf-call_and_sysctl.conf.html">libvirt wiki</a>, without it packets were stuck on pve firewall in my case (from VM1 in wro to VM2 in roz to be precise, not on wireguard level), <code>net.bridge.bridge-nf-call-ip6tables</code> is not really needed but won't hurt to already fix ipv6).</li>
 </ul>
 <p>With all of that in place and sucessfull deployment of this ansible playbook on proxmox nodes in both regions:</p>
 <ul>

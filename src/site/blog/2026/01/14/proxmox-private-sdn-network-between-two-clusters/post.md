@@ -1,4 +1,4 @@
-# Proxmox private SDN EVPN network between two clusters
+# Proxmox private SDN network between two clusters
 
 Story of setuping network between two distinct Proxmox clusters in different locations based on wireguard and [SDN](https://pve.proxmox.com/pve-docs/chapter-pvesdn.html) [EVPN](https://pve.proxmox.com/pve-docs/chapter-pvesdn.html#pvesdn_zone_plugin_evpn) zone.
 
@@ -89,7 +89,7 @@ This is more or less the result:
 
 - **Early traps** trying to use VXLAN Zone and/or fabrics instead of EVPN zone and wireguard.
 - **Underlay WireGuard** between the Proxmox hosts setup using ansible.
-- **Overlay:** Proxmox SDN **EVPN zone** controlled by `evpnctl` (FRR). VXLAN encapsulation runs over the WireGuard underlay.
+- **Overlay SDN** Proxmox EVPN zone controlled by `evpnctl` (FRR). VXLAN encapsulation runs over the WireGuard underlay.
 - **Per-site SDN subnets:**
   - Rozalin: `10.1.1.0/24` (gateway `10.1.1.1`)
   - Wro: `10.2.1.0/24` (gateway `10.2.1.1`)
@@ -281,7 +281,7 @@ Of course for that we use our wireguard internal ip, that is `10.2.0.1` for wro 
 Last but not least, sysctl modification that will help later. ALL of them are required, maybe except rp_filter settings, but see [Multiple EVPN Exit Nodes](https://pve.proxmox.com/pve-docs/chapter-pvesdn.html#_multiple_evpn_exit_nodes), they encourage do to it right away to allow packets flow between nodes.
 
 - `net.ipv4.ip_forward=1` (setting in Linux controls whether the system can forward IPv4 packets between network interfaces)
-- `net.bridge.bridge-nf-call-iptables=1` (see [libvirt wiki](https://wiki.libvirt.org/Net.bridge.bridge-nf-call_and_sysctl.conf.html), without it packets were stuck on pve firewall in my case, `net.bridge.bridge-nf-call-ip6tables` is not really needed but won't hurt to already fix ipv6).
+- `net.bridge.bridge-nf-call-iptables=1` (see [libvirt wiki](https://wiki.libvirt.org/Net.bridge.bridge-nf-call_and_sysctl.conf.html), without it packets were stuck on pve firewall in my case (from VM1 in wro to VM2 in roz to be precise, not on wireguard level), `net.bridge.bridge-nf-call-ip6tables` is not really needed but won't hurt to already fix ipv6).
 
 With all of that in place and sucessfull deployment of this ansible playbook on proxmox nodes in both regions:
 
