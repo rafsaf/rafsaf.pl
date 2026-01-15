@@ -5,11 +5,11 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width" />
   <link rel="shortcut icon" href="/_data/images/ico.png" />
-  <link rel="stylesheet" href="/global.css?t=1763902526" />
+  <link rel="stylesheet" href="/global.css?t=1768474960" />
   
 <title>Rafał Safin | Home</title>
 <meta name="description" content="Rafał Safin home" />
-<link rel="stylesheet" href="/index.css?t=1763902526" />
+<link rel="stylesheet" href="/index.css?t=1768474960" />
 
 </head>
 
@@ -29,14 +29,14 @@
       <ul>
         <li><a class="nav-link" href="/">Home</a></li>
         <li><a class="nav-link" href="/projects/">Projects</a></li>
-        <li><a class="nav-link" href="/services/">Services</a></li>
+        <li><a class="nav-link" href="/blog/">Blog</a></li>
       </ul>
     </div>
     <div class="nav-desktop-links">
       <ul>
         <li><a class="nav-link" href="/">Home</a></li>
         <li><a class="nav-link" href="/projects/">Projects</a></li>
-        <li><a class="nav-link" href="/services/">Services</a></li>
+        <li><a class="nav-link" href="/blog/">Blog</a></li>
       </ul>
     </div>
   </div>
@@ -61,9 +61,14 @@
   );
 
   const links = document.getElementsByClassName("nav-link");
-  for (link of links) {
-    const url = new URL(link.href);
-    if (url.pathname === window.location.pathname) {
+  const currentPath = window.location.pathname;
+
+  for (const link of links) {
+    const urlPath = new URL(link.href).pathname;
+    const isExact = urlPath === currentPath;
+    const isSectionMatch = urlPath !== "/" && currentPath.startsWith(urlPath);
+
+    if (isExact || isSectionMatch) {
       link.style.setProperty("color", "var(--blue1)");
     }
   }
