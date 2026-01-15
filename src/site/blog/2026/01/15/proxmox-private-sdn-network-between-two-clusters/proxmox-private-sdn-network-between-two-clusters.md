@@ -1,8 +1,8 @@
 # Proxmox private SDN network between two clusters
 
-Story of setuping network between two distinct Proxmox clusters in different locations based on wireguard and [SDN](https://pve.proxmox.com/pve-docs/chapter-pvesdn.html) [EVPN](https://pve.proxmox.com/pve-docs/chapter-pvesdn.html#pvesdn_zone_plugin_evpn) zone.
+Story of setting up network between two distinct Proxmox clusters in different locations based on wireguard and [SDN](https://pve.proxmox.com/pve-docs/chapter-pvesdn.html) [EVPN](https://pve.proxmox.com/pve-docs/chapter-pvesdn.html#pvesdn_zone_plugin_evpn) zone.
 
-I started with already **working** homelabs setup for Proxmox (diagram below). It's quite typical and nothing special beside paranoid usage of [proxmox opentofu bpg provider](https://registry.terraform.io/providers/bpg/proxmox/latest/docs) (which I really love and also contribute to) for everything what is possible and ansible for nodes/vms setup. I think that's strong requirement, simple "fire and forget" approach to setup something like this article describes is probably very bad idea to the point where you probably will end up with messed up, broken current environment and not working SDN (for one of dozen not trivial reasons).
+I started with already **working** homelab setup for Proxmox (diagram below). It's quite typical and nothing special besides the paranoid usage of [proxmox opentofu bpg provider](https://registry.terraform.io/providers/bpg/proxmox/latest/docs) (which I really love and also contribute to) for everything that was possible and ansible for nodes/vms setup. I think that's a strong requirement, simple "fire and forget" approach to setup something like this article describes is probably a very bad idea to the point where you'll probably end up with a messed up, broken current environment and non-working SDN (for one of dozens of non-trivial reasons).
 
 Enjoy!
 
@@ -44,8 +44,8 @@ The goals were the following:
 - Waste a lot of time.
 - Have fun learning SDN.
 - (If you think i needed it for anything really, then you are wrong).
-- Be able to connect from VMs from roz to wro and reverse. So for example, in the above diagram, haproxy VM is unable to connect to ddns_updater VM other than using NAT port. With cross network, it's as simple as within each cluster in initial setup.
-- Posibility to extend it with another cluster. In theory, this is quite scalable to new nodes within each cluster with minimal effort, and moderate effort to span new 10.3.0.0/16 zone in new location (ideally, I can try that some day and write followup, if that can be done in <2h then i would call it success, where something like 2 days fail).
+- Be able to connect from VMs from roz to wro and reverse. So for example, in the above diagram, haproxy VM is unable to connect to ddns_updater VM other than using NAT port. With cross-site network, it's as simple as within each cluster in initial setup.
+- Possibility to extend it with another cluster. In theory, this is quite scalable to new nodes within each cluster with minimal effort, and moderate effort to span new 10.3.0.0/16 zone in new location (ideally, I can try that some day and write a followup; if that can be done in <2h then I would call it success, whereas something like 2 days would be a fail).
 - Have firewall enabled. A lot of things is much simpler and just work with PVE firewall disabled.
 This is more or less the result:
 
@@ -118,7 +118,7 @@ After another spike and looking for solutions, it turned out that wireguard vpn 
 
 ## Underlay WireGuard
 
-There is ansible role – [ansible-role-wireguard](https://github.com/githubixx/ansible-role-wireguard) which have seemingless setup based on assumption that **you have all nodes in single inventory** (and hosts group). There is great README on the GitHub, I am not going into the details. Thankfully, I already have that. I have `proxmox` group and dedicated `playbook_proxmox.yml` playbook for proxmox nodes (wherever roz or wro). The only nit pick is `linear` strategy (free doesn't work well).
+There is ansible role – [ansible-role-wireguard](https://github.com/githubixx/ansible-role-wireguard) which has a seamless setup based on assumption that **you have all nodes in single inventory** (and hosts group). There is great README on the GitHub, I am not going into the details. Thankfully, I already have that. I have `proxmox` group and dedicated `playbook_proxmox.yml` playbook for proxmox nodes (whether roz or wro). The only nit pick is `linear` strategy (free doesn't work well).
 
 ```yaml
 # playbook_proxmox.yml
@@ -168,9 +168,9 @@ evpn_controller_peers:
 # wro host_vars
 
 wireguard_addresses:
-  - "10.1.0.1/16"
-wireguard_endpoint: "roz.rafsaf.pl"
-wireguard_allowed_ips: "10.1.0.0/16"
+  - "10.2.0.1/16"
+wireguard_endpoint: "wro.rafsaf.pl"
+wireguard_allowed_ips: "10.2.0.0/16"
 wireguard_persistent_keepalive: "25"
 wireguard_port: "51820"
 wireguard_interface_restart: true
@@ -240,12 +240,12 @@ The role use `lsb_release`, so that's why it's added. Same for `sudo` for become
     - evpn_controller_created is changed
 ```
 
-Why do i create EVPN controller via ansible instead of using already mentioned [opentofu proxmox provider](https://github.com/bpg/terraform-provider-proxmox)? Because in v0.93.0 as of Jan 2026, there is no controller resource support yet. As it's rather simple API, probably this will be added in near future.
+Why do i create EVPN controller via ansible instead of using already mentioned [opentofu proxmox provider](https://github.com/bpg/terraform-provider-proxmox)? Because in v0.93.0 as of Jan 2026, there is no controller resource support yet. As it's a rather simple API, this will probably be added in the near future. Another option is to just use GUI.
 
-[EVPN Controller](https://pve.proxmox.com/pve-docs/chapter-pvesdn.html#pvesdn_controller_plugin_evpn) is requirement for SDN EVPN zone, with simple arguments, unique random ASN and list of peers basically where:
+[EVPN Controller](https://pve.proxmox.com/pve-docs/chapter-pvesdn.html#pvesdn_controller_plugin_evpn) is a requirement for SDN EVPN zone, with simple arguments, unique random ASN and list of peers basically where:
 > Peers - An IP list of all nodes that are part of the EVPN zone. (could also be external nodes or route reflector servers)
 
-Of course for that we use our wireguard internal ip, that is `10.2.0.1` for wro and `10.1.0.1` for roz. What if, again, we add new node `10.1.0.2` into roz cluster? Then we need to update peers list and update existing controllers. There is no such thing in above simplified role. Doing it via opentofu would be much more convinient.
+Of course for that we use our wireguard internal IP, that is `10.2.0.1` for wro and `10.1.0.1` for roz. What if, again, we add new node `10.1.0.2` into roz cluster? Then we need to update the peers list and update existing controllers. There is no such thing in the above simplified role. Doing it via opentofu would be much more convenient.
 
 ```yaml
 # proxmox_host role - part 3/3
@@ -277,14 +277,14 @@ Of course for that we use our wireguard internal ip, that is `10.2.0.1` for wro 
     - net.ipv4.conf.all.rp_filter
 ```
 
-Last but not least, sysctl modification that will help later. ALL of them are required, maybe except rp_filter settings, but see [Multiple EVPN Exit Nodes](https://pve.proxmox.com/pve-docs/chapter-pvesdn.html#_multiple_evpn_exit_nodes), they encourage do to it right away to allow packets flow between nodes.
+Last but not least, sysctl modification that will help later. ALL of them are required, maybe except rp_filter settings, but see [Multiple EVPN Exit Nodes](https://pve.proxmox.com/pve-docs/chapter-pvesdn.html#_multiple_evpn_exit_nodes), they encourage doing it right away to allow packet flow between nodes.
 
 - `net.ipv4.ip_forward=1` (setting in Linux controls whether the system can forward IPv4 packets between network interfaces)
 - `net.bridge.bridge-nf-call-iptables=1` (see [libvirt wiki](https://wiki.libvirt.org/Net.bridge.bridge-nf-call_and_sysctl.conf.html), without it packets were stuck on pve firewall in my case (from VM1 in wro to VM2 in roz to be precise, not on wireguard level), `net.bridge.bridge-nf-call-ip6tables` is not really needed but won't hurt to already fix ipv6).
 
-With all of that in place and sucessfull deployment of this ansible playbook on proxmox nodes in both regions:
+With all of that in place and successful deployment of this ansible playbook on proxmox nodes in both regions:
 
-- wireguard is working between nodes, eg. encrypted traffic between 10.2.0.1 and 10.1.0.1 (eg. test with telnet)
+- wireguard is working between nodes, e.g. encrypted traffic between 10.2.0.1 and 10.1.0.1 (e.g. test with telnet)
 - evpn controller is in place for SDN EVPN foundation (that can be moved to opentofu resource, if it exists)
 - there are sysctl variables prepared
 
@@ -361,7 +361,7 @@ Clarifications:
 - controller – the id of one created in ansible, evpn controller id, in my case "evpnctl"
 - vrf_vxlan 99999 – arbitrary value:
   > A VXLAN-ID used for dedicated routing interconnect between VNets. It must be different than the VXLAN-ID of the VNets
-- [MTU](https://en.wikipedia.org/wiki/Maximum_transmission_unit) reduced for VXLAN (50 bytes) + WireGuard (~80 bytes) – 1500 - 50 - 80 = 1370. In fact, actually it's possible that 1370 is not perfect value and packet fragmentation is there, but I didn't dig that deep for now, what ever I guess unless it's corporate grade level network you are building, but then you probably are not reading this article.
+- [MTU](https://en.wikipedia.org/wiki/Maximum_transmission_unit) reduced for VXLAN (50 bytes) + WireGuard (~60-80 bytes) – 1500 - 50 - 80 = 1370. In fact, it's possible that 1370 is not the perfect value and packet fragmentation may occur, but I didn't dig that deep for now. Whatever works, I guess, unless you're building a corporate-grade network, but then you're probably not reading this article.
 - advertise_subnets true (Announce the full subnet in the EVPN network) seems useful, but I didn't check result without it
 - disable_arp_nd_suppression false (again, at your opinion)
 - exit_nodes - all of them, in this case, only one
@@ -573,7 +573,7 @@ resource "proxmox_virtual_environment_download_file" "dell_r740__debian_13_trixi
 
 This is mainly [proxmox_virtual_environment_vm](https://registry.terraform.io/providers/bpg/proxmox/latest/docs/resources/virtual_environment_vm) I use, with firewall rules alongisde.
 
-Let's focus on change before/after SDN are network interfaces. For older vms, there is only eth0 definition on `vmbr0`:
+Let's focus on the change before/after SDN for network interfaces. For older VMs, there is only eth0 definition on `vmbr0`:
 
 ```tf
 initialization {
@@ -614,7 +614,7 @@ network:
             set-name: eth0
 ```
 
-where in SDN vm it's:
+whereas in the SDN VM it's:
 
 ```tf
 initialization {
@@ -644,7 +644,7 @@ network_device {
 }
 ```
 
-This mean eth0 is now SDN network and **default route for internet is via 10.1.1.1 gateway**, we leave (optional) vmbr0 managment interface, but it's not used for internet anymore.
+This means eth0 is now the SDN network and **default route for internet is via 10.1.1.1 gateway**. We leave the (optional) vmbr0 management interface, but it's not used for internet anymore.
 
 ```bash
 network:
@@ -677,9 +677,9 @@ network:
       set-name: "eth1"
 ```
 
-(Please ignore nameserver 192.168.3.8, i use dnscrpyt vm for DNS resolution and this is why such address)
+(Please ignore nameserver 192.168.3.8, I use dnscrypt VM for DNS resolution and this is why such address)
 
-In fact, this is exactly what we need. ALL Traffic must go over subnet gateway and SDN because this is the place where we can decide either traffic should go over router to public internet or to other DC (yes, if fact this is also using public internet, but hidden by wireguard magic and encrypted):
+In fact, this is exactly what we need. ALL traffic must go over the subnet gateway and SDN because this is the place where we can decide whether traffic should go over router to public internet or to the other data center (yes, in fact this is also using public internet, but hidden by wireguard magic and encrypted):
 
 For example:
 
@@ -715,7 +715,7 @@ eth1 control when overlay is broken, port forwarding from router
 
 `snat=1` enabled in `proxmox_virtual_environment_sdn_subnet`.
 
-You could theoretically have masqarade and nat setup for `10.1.1.0/24` on your router and with some hassle that is going to work, but this is exactly what we want to avoid – having hardcoded, non trivial setup anywhere if not needed. With `snat`, proxmox node is going to have iptables rule for this subnet so it can access internet via `vmbr0` node interface:
+You could theoretically have masquerade and NAT setup for `10.1.1.0/24` on your router and with some hassle that is going to work, but this is exactly what we want to avoid – having a hardcoded, non-trivial setup anywhere if not needed. With `snat`, proxmox node is going to have iptables rule for this subnet so it can access internet via `vmbr0` node interface:
 
 ```bash
 $ iptables -t nat -L -n -v | egrep '10\.1\.1\.0/24|MASQUERADE|SNAT'
@@ -726,7 +726,7 @@ $ iptables -t nat -L -n -v | egrep '10\.1\.1\.0/24|MASQUERADE|SNAT'
     0     0 SNAT       all  --  *      vmbr0   10.1.1.0/24          0.0.0.0/0            to:192.168.2.3
 ```
 
-Small nit pick found: after disabling it, `snat=0`, iptables rules were still in place for `10.1.1.0/24`, so Proxmox does not clean it. It's probably bug, but maybe feature.
+Small nit pick found: after disabling it with `snat=0`, iptables rules were still in place for `10.1.1.0/24`, so Proxmox doesn't clean them up. It's probably a bug, but maybe a feature.
 
 ### The killer setting: `exit_nodes_local_routing`
 
@@ -744,8 +744,8 @@ Test scenario that discovered the issue:
 - `tcpdump -n -vv -i vmbr0 host 104.18.27.120` in 1st terminal on roz node
 - `tcpdump -n -vv -i xvrf_crossite host 104.18.27.120` in 2nd terminal on roz node
 - `tcpdump -n -vv -i crossvnt host 104.18.27.120` in 3rd terminal on roz node
-- `tcpdump -n -v -i eth0 'host 104.18.27.120'` in 1nd terminal in vm
-- `10.1.1.11` roz vm `curl --connect-timeout 5 http://example.com -v` (104.18.27.120) in 2nd terminal in vm
+- `tcpdump -n -v -i eth0 'host 104.18.27.120'` in 1st terminal in VM
+- `10.1.1.11` roz VM: `curl --connect-timeout 5 http://example.com -v` (104.18.27.120) in 2nd terminal in VM
 
 #### On Proxmox (vmbr0)
 
@@ -849,15 +849,15 @@ resource "proxmox_virtual_environment_cluster_firewall_security_group" "tf-clust
 }
 ```
 
-PVE automatically create some [IPSets for every SDN Vnet](https://pve.proxmox.com/pve-docs/chapter-pvesdn.html#pvesdn_firewall_integration) so this is where "vnetid-all", "vnetid-gateway" comes from.
+PVE automatically creates some [IPSets for every SDN Vnet](https://pve.proxmox.com/pve-docs/chapter-pvesdn.html#pvesdn_firewall_integration) so this is where "vnetid-all", "vnetid-gateway" come from.
 
 Clarifications:
 
-- Allow udp to host wireguard – udp port from ansible setup must be allowed for cluster. This is "public" port with port forwarding on public ip in my case
-- Allow EVPN BGP over WireGuard and Allow VXLAN over WireGuard – allow BGP and VXLAN ports, without this, packets will be stuck between clusters (vm1wro to vm1roz and reverse), for wro it's `source = "10.1.0.0/24"`.
-- SDN crosssite_vnet allow cross-site subnet – allow forward traffic between "vpn" full 10.0.0.0/8 network to all ips in subnet. This is wide for simplicity, but could be `10.2.0.0/16` for now. Without this, packets will flow from cluster to cluster, but will be stuck trying to reach sdn interface from wireguard interface.
-- SDN crosssite_vnet allow traffic from no-gateway to gateway – no-gateway subnet ips must have access to gateway (check with ping gateway_ip).
-- SDN crosssite_vnet allow forward traffic to 0.0.0.0/0 – this allow public internet access from vms in subnet.
+- Allow udp to host wireguard – UDP port from ansible setup must be allowed for cluster. This is the "public" port with port forwarding on public IP in my case
+- Allow EVPN BGP over WireGuard and Allow VXLAN over WireGuard – allow BGP and VXLAN ports; without this, packets will be stuck between clusters (vm1wro to vm1roz and reverse). For wro it's `source = "10.1.0.0/24"`.
+- SDN crosssite_vnet allow cross-site subnet – allow forward traffic between "VPN" full 10.0.0.0/8 network to all IPs in subnet. This is wide for simplicity, but could be `10.2.0.0/16` for now. Without this, packets will flow from cluster to cluster, but will be stuck trying to reach SDN interface from wireguard interface.
+- SDN crosssite_vnet allow traffic from no-gateway to gateway – no-gateway subnet IPs must have access to gateway (check with ping gateway_ip).
+- SDN crosssite_vnet allow forward traffic to 0.0.0.0/0 – this allows public internet access from VMs in subnet.
 
 ---
 
