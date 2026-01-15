@@ -288,3 +288,9 @@ With all of that in place and sucessfull deployment of this ansible playbook on 
 - wireguard is working between nodes, eg. encrypted traffic between 10.2.0.1 and 10.1.0.1 (eg. test with telnet)
 - evpn controller is in place for SDN EVPN foundation (that can be moved to opentofu resource, if it exists)
 - there are sysctl variables prepared
+
+---
+
+Last updated: 2026-01-15
+
+Content license: CC BY-NC 4.0 — share and adapt with attribution, no commercial use.
