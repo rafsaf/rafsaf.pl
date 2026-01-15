@@ -8,17 +8,17 @@
 </ul>
 <p>The <em>reality</em> was mostly about understanding Proxmox SDN semantics, exit node behavior, Linux forwarding, and Proxmox firewall forwarding.</p>
 <hr>
-<h2>TL;DR (final working shape)</h2>
+<h2>Final working shape</h2>
 <ul>
-<li><strong>Underlay:</strong> WireGuard between the Proxmox hosts.</li>
+<li><strong>Underlay:</strong> WireGuard between the Proxmox hosts setup using ansible.</li>
 <li><strong>Overlay:</strong> Proxmox SDN <strong>EVPN zone</strong> controlled by <code>evpnctl</code> (FRR). VXLAN encapsulation runs over the WireGuard underlay.</li>
 <li><strong>Per-site SDN subnets:</strong></li>
 <li>Rozalin: <code>10.1.1.0/24</code> (gateway <code>10.1.1.1</code>)</li>
 <li>Wro: <code>10.2.1.0/24</code> (gateway <code>10.2.1.1</code>)</li>
-<li><strong>Egress:</strong> SDN subnet has <code>snat=true</code> (per site). Traffic from SDN to “outside” egresses via the site’s exit node.</li>
-<li><strong>Critical fix:</strong> <code>exit_nodes_local_routing=false</code> (enabling “local routing” was the trap).</li>
-<li><strong>Critical host sysctls:</strong> enable forwarding, disable rp_filter.</li>
-<li><strong>Firewall:</strong> Proxmox cluster firewall must explicitly allow forwarding for SDN objects, not just “open the ports”.</li>
+<li><strong>Egress:</strong> SDN subnet has <code>snat=true</code> (per site). Traffic from SDN to "outside" egresses via the site’s exit node.</li>
+<li><strong>Critical fix:</strong> <code>exit_nodes_local_routing=false</code> (enabling "local routing" was the trap).</li>
+<li><strong>Critical host sysctls:</strong> enable forwarding, net.bridge.bridge-nf-call-iptables, disable rp_filter.</li>
+<li><strong>Firewall:</strong> Proxmox cluster firewall must explicitly allow FORWARD and IN rules for SDN subnets and also between nodes on public network level (wireguard) and also some allow IN rules for wireguard network interface.</li>
 </ul>
 <hr>
 <h2>Architecture</h2>
