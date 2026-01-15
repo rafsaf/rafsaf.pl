@@ -1,0 +1,18 @@
+{% extends "components/layout.html" %}
+{% block title %}
+<title>Proxmox private SDN network between two clusters</title>
+<meta name="description"
+    content="Proxmox private SDN network between two clusters. Story of setuping network between two distinct Proxmox clusters in different locations based on wireguard and SDN EVPN zone." />
+<meta name="license" content="CC BY-NC 4.0" />
+<meta name="dcterms.rights" content="https://creativecommons.org/licenses/by-nc/4.0/" />
+<link rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/" />
+<link rel="stylesheet" href="/blog/blog.css?t={{ build_timestamp }}" />
+{% endblock %}
+{% block content %}
+<div class="blog-post">
+    <p><a href="/blog/">← Back to blog</a></p>
+    {% include
+    'site/blog/2026/01/15/proxmox-private-sdn-network-between-two-clusters/proxmox-private-sdn-network-between-two-clusters.html'
+    %}
+</div>
+{% endblock %}

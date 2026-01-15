@@ -15,7 +15,20 @@ def convert_markdown_to_html_in_place(p: pathlib.Path) -> None:
         content = p.read_text()
 
         md_out_file = p.with_suffix(".html")
-        md_content = markdown.markdown(content)
+        md_converter = markdown.Markdown(
+            extensions=[
+                "markdown.extensions.fenced_code",
+                "markdown.extensions.codehilite",
+                "markdown.extensions.tables",
+                "markdown.extensions.sane_lists",
+                "markdown.extensions.extra",
+                "markdown.extensions.sane_lists",
+            ],
+            output_format="html",
+        )
+
+        md_content = md_converter.convert(content)
+        md_converter.reset()
 
         if md_out_file.exists() and md_out_file.read_text() == md_content:
             return
@@ -56,6 +69,8 @@ if __name__ == "__main__":
 
     for path in (site / "_data").iterdir():
         convert_markdown_to_html_in_place(path)
+
+    convert_markdown_to_html_in_place(site / "blog")
 
     context = {"build_timestamp": int(datetime.datetime.now(datetime.UTC).timestamp())}
 
