@@ -17,6 +17,10 @@
     --font-sans: system-ui, -apple-system, "Segoe UI", sans-serif;
   }
 
+  html {
+    overflow-x: hidden;
+  }
+
   * {
     margin: 0;
     padding: 0;
@@ -24,6 +28,7 @@
   }
 
   body {
+    overflow-x: hidden;
     font-family: var(--font-sans);
     background-color: var(--paper);
     background-image: radial-gradient(circle at 10% 10%, rgba(240, 93, 35, 0.08) 0%, transparent 40%),
