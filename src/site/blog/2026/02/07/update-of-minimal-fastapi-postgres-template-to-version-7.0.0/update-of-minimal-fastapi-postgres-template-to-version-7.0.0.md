@@ -16,9 +16,7 @@ In other words, what I mean by that, that I don't need to keep any backward comp
 
 But – **Please!!!** – don't think I am the person that love new tech popping up each month and I start each new project with new technology (new JS framework was created 67 days ago according to [dayssincelastjsframework.com](https://dayssincelastjsframework.com/)). In fact, I'm somewhere in between (maybe a bit towards Greybeards). I use Django without calling it legacy, I think 3 times before adopting new tech, I don't fall easily into excitement where things like [SQLModel](https://github.com/fastapi/sqlmodel) pop up (I've seen teams that fell into this trap, feel sorry if you too), same as I don't trust new InfluxDB being faster 30000x than any other thing, because it's written in Rust so it can break laws of physics. Right. But sometimes, still, I see value in new things.
 
-## Release 7.0.0
-
-### 1. Migration from Poetry into uv
+## 1. Migration from Poetry into uv
 
 I used [poetry](https://python-poetry.org/) for many years. But version 2 and afterwards ended my ocean of patience for them. Disappearing venvs, broken management, constant changes in underlying behaviour causing you to frequently just delete managed venvs manually and recreate them. Python installation management (new feature) also only sometimes working. I tend to use it with [pyenv](https://github.com/pyenv/pyenv) and in recent versions that I was just infuriated with all kind of problems simply feeling like wasting my time.
 
@@ -35,11 +33,11 @@ FROM base AS final
 COPY --from=uv /requirements.txt .
 ```
 
-### 2. Bump all software
+## 2. Bump all software
 
 Obviously.
 
-### 3. New "modules" design
+## 3. New "modules" design
 
 My team at Opera created the project based on that exact template which helped me understand some fundamental flaws in current shape.
 
@@ -142,7 +140,7 @@ app/
 
 Indeed, modules are much more scalable. I don't think this need further explanation to be honest.
 
-### 4. Prometheus exporter
+## 4. Prometheus exporter
 
 I feel in 2026 **not** using Prometheus is something not very common. Yes, it says "minimal" template, but there are not a lot of cases where you don't need some monitoring. Clever way to start it is as a new thread in lifecycle hook of fastapi app itself.
 
@@ -189,7 +187,7 @@ But then someone may ask – wait, what if there are multiple processes of FastA
 CMD ["/venv/bin/uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--workers", "1", "--loop", "uvloop"]
 ```
 
-### 5. polyfactory and faker
+## 5. polyfactory and faker
 
 Last year I learned how convenient and scalable is to use factories for DB models (than hand crafted creating each test).
 
@@ -204,7 +202,7 @@ new_user = UserFactory.create_async()
 
 Price? Even more confusing `conftest.py` and `fixture_session_with_rollback` fixture. At this point it is probably hardly readable by async newcomers, but it is as it is.
 
-### 6. Alembic upgrade in tests
+## 6. Alembic upgrade in tests
 
 Usually (that was also the case for this template for years of course) in tests people from SQLAlchemy world just use current tables without thinking about using their own migration.
 
@@ -226,7 +224,7 @@ loop = asyncio.get_running_loop()
 await loop.run_in_executor(None, alembic_upgrade)
 ```
 
-### 7. Makefile
+## 7. Makefile
 
 Yes, I know most people will probably delete it, but I use it and I like it so I put it here, remembering commands longer than a few words after working in 100 different projects in few companies is challenging enough to appreciate if there is a shortcut
 
@@ -243,11 +241,11 @@ test                           Run unit tests
 up                             Run FastAPI development server
 ```
 
-### 8. Probe module
+## 8. Probe module
 
 Template was lacking healthcheck endpoint.
 
-### Summary
+## Summary
 
 I am writing all of this in that long format, because it may be interesting at least for some people and it does not fit into README section. Thank you!
 

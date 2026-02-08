@@ -14,6 +14,19 @@ def convert_markdown_to_html_in_place(p: pathlib.Path) -> None:
     if p.is_file() and p.name.endswith(".md"):
         content = p.read_text()
 
+        try:
+            p.relative_to(site / "blog")
+        except ValueError:
+            extension_configs = {}
+        else:
+            extension_configs = {
+                "markdown.extensions.toc": {
+                    "permalink": True,
+                    "permalink_class": "heading-anchor",
+                    "permalink_title": "Link to this section",
+                }
+            }
+
         md_out_file = p.with_suffix(".html")
         md_converter = markdown.Markdown(
             extensions=[
@@ -23,7 +36,9 @@ def convert_markdown_to_html_in_place(p: pathlib.Path) -> None:
                 "markdown.extensions.sane_lists",
                 "markdown.extensions.extra",
                 "markdown.extensions.sane_lists",
+                "markdown.extensions.toc",
             ],
+            extension_configs=extension_configs,
             output_format="html",
         )
 
