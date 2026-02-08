@@ -12,18 +12,51 @@
   margin-top: 0;
 }
 
+.blog-post h1 .heading-anchor {
+  display: none;
+}
+
 .blog-post h2 {
   font-size: clamp(1.5rem, 2.8vw, 2rem);
   margin-top: 2.5rem;
   margin-bottom: 1rem;
   border-bottom: 2px solid rgba(31, 29, 26, 0.1);
   padding-bottom: 0.5rem;
+  position: relative;
 }
 
 .blog-post h3 {
   font-size: clamp(1.25rem, 2.2vw, 1.6rem);
   margin-top: 2rem;
   margin-bottom: 0.8rem;
+  position: relative;
+}
+
+.blog-post h2:hover,
+.blog-post h3:hover {
+  cursor: pointer;
+}
+
+.blog-post h2 .heading-anchor,
+.blog-post h3 .heading-anchor {
+  position: absolute;
+  left: -1.5rem;
+  opacity: 0;
+  color: var(--blue2);
+  text-decoration: none;
+  font-weight: 400;
+  transition: opacity 0.2s ease;
+  padding-right: 0.5rem;
+}
+
+.blog-post h2:hover .heading-anchor,
+.blog-post h3:hover .heading-anchor {
+  opacity: 1;
+}
+
+.blog-post h2 .heading-anchor:hover,
+.blog-post h3 .heading-anchor:hover {
+  color: var(--blue1);
 }
 
 .blog-post h4 {

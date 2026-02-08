@@ -1,0 +1,211 @@
+<h1 id="update-of-minimal-fastapi-postgres-template-to-version-700">Update of minimal-fastapi-postgres-template to version 7.0.0<a class="heading-anchor" href="#update-of-minimal-fastapi-postgres-template-to-version-700" title="Link to this section">&para;</a></h1>
+<p>This article describes the breaking changes and the rationale for this year's update for Open Source project <a href="https://github.com/rafsaf/minimal-fastapi-postgres-template">minimal-fastapi-postgres-template</a>.</p>
+<p><img alt="minimal-fastapi-postgres-template-2026-02-07-version-7.0.0" src="./minimal-fastapi-postgres-template-2026-02-07-version-7.0.0.png"></p>
+<h2 id="brief-history-and-attitude">Brief history and attitude<a class="heading-anchor" href="#brief-history-and-attitude" title="Link to this section">&para;</a></h2>
+<p>I started with <a href="https://github.com/rafsaf/minimal-fastapi-postgres-template">minimal-fastapi-postgres-template</a> in <a href="https://github.com/rafsaf/minimal-fastapi-postgres-template/commit/79f56b6eac8c01fc80de2d109eb2a377d177642a">Sep 21, 2021</a> forked from <a href="https://github.com/fastapi/full-stack-fastapi-template">official fastapi template</a> and introduced it in <a href="https://github.com/fastapi/full-stack-fastapi-template/issues/422#issuecomment-964508158">this comment in #422 issue</a>.</p>
+<p><img alt="issuecomment from 2021-11-09" src="./minimal-fastapi-postgres-template-issuecomment-from-2021-11-09.png"></p>
+<p>From there, I tend to update it <strong>yearly</strong>, usually at the end of the year (after new Python version release), or if I was busy, sometimes early next year. Template software like this evolve very fast, almost each year there were very significant breaking changes, including "emotional", "opinionated" decisions that is also strong factor.</p>
+<p>In other words, what I mean by that, that I don't need to keep any backward compatibility, no files must stay unchanged, no conventions are there forever, if I see something better in the wild, I just backport it (or not) next year, simple.</p>
+<p>But – <strong>Please!!!</strong> – don't think I am the person that love new tech popping up each month and I start each new project with new technology (new JS framework was created 67 days ago according to <a href="https://dayssincelastjsframework.com/">dayssincelastjsframework.com</a>). In fact, I'm somewhere in between (maybe a bit towards Greybeards). I use Django without calling it legacy, I think 3 times before adopting new tech, I don't fall easily into excitement where things like <a href="https://github.com/fastapi/sqlmodel">SQLModel</a> pop up (I've seen teams that fell into this trap, feel sorry if you too), same as I don't trust new InfluxDB being faster 30000x than any other thing, because it's written in Rust so it can break laws of physics. Right. But sometimes, still, I see value in new things.</p>
+<h2 id="1-migration-from-poetry-into-uv">1. Migration from Poetry into uv<a class="heading-anchor" href="#1-migration-from-poetry-into-uv" title="Link to this section">&para;</a></h2>
+<p>I used <a href="https://python-poetry.org/">poetry</a> for many years. But version 2 and afterwards ended my ocean of patience for them. Disappearing venvs, broken management, constant changes in underlying behaviour causing you to frequently just delete managed venvs manually and recreate them. Python installation management (new feature) also only sometimes working. I tend to use it with <a href="https://github.com/pyenv/pyenv">pyenv</a> and in recent versions that I was just infuriated with all kind of problems simply feeling like wasting my time.</p>
+<p>On the contrary, with <a href="https://docs.astral.sh/uv/">uv</a> <strong>it just works</strong> which is indeed great improvement, doesn't it? <code>uv sync</code> and voila, if something is broken then venv is recreated. Two things why I was NOT eager to use it: 10-100x faster, I don't like this kind of "marketing", using disk and pretending to be somehow faster (most of time pip, poetry or uv <strong>download</strong> stuff from PyPI... so it improves 10-100x my internet bandwidth, right?, how neat) is not attractive for me. Second reason is <a href="https://docs.astral.sh/uv/guides/integration/docker/">docker integration</a>. I am extra careful when someone's <strong>first, recommended</strong> way of using package manager is to use their own image... I don't need or want any package manager in my end image except pip, nor should anybody. Those are steps to create some kind of bias and to "have impact", just a guess as I don't understand motivations fully. Anyway you can have separate layer to export requirements.txt and just use pip, so no harm done.</p>
+<pre class="codehilite"><code class="language-dockerfile">FROM base AS uv
+COPY --from=ghcr.io/astral-sh/uv:0.9.2 /uv /uvx /bin/
+COPY uv.lock pyproject.toml ./
+RUN uv export --no-dev --no-hashes -o /requirements.txt --no-install-workspace --frozen
+RUN uv export --only-group dev --no-hashes -o /requirements-dev.txt --no-install-workspace --frozen
+
+FROM base AS final
+COPY --from=uv /requirements.txt .
+</code></pre>
+
+<h2 id="2-bump-all-software">2. Bump all software<a class="heading-anchor" href="#2-bump-all-software" title="Link to this section">&para;</a></h2>
+<p>Obviously.</p>
+<h2 id="3-new-modules-design">3. New "modules" design<a class="heading-anchor" href="#3-new-modules-design" title="Link to this section">&para;</a></h2>
+<p>My team at Opera created the project based on that exact template which helped me understand some fundamental flaws in current shape.</p>
+<p>Before:</p>
+<pre class="codehilite"><code class="language-bash">app/
+├── __init__.py
+├── main.py
+├── models.py
+├── api/
+│   ├── __init__.py
+│   ├── api_messages.py
+│   ├── api_router.py
+│   ├── deps.py
+│   └── endpoints/
+│       ├── __init__.py
+│       ├── auth.py
+│       └── users.py
+├── auth/
+│   └── tests/
+├── core/
+│   ├── __init__.py
+│   ├── config.py
+│   ├── database_session.py
+│   └── security/
+│       ├── __init__.py
+│       ├── jwt.py
+│       └── password.py
+├── probe/
+│   └── tests/
+├── schemas/
+│   ├── __init__.py
+│   ├── requests.py
+│   └── responses.py
+└── tests/
+    ├── __init__.py
+    ├── conftest.py
+    ├── test_api_router_jwt_errors.py
+    ├── test_auth/
+    │   ├── __init__.py
+    │   ├── test_access_token.py
+    │   ├── test_auth_refresh_token.py
+    │   └── test_register_new_user.py
+    ├── test_core/
+    │   ├── __init__.py
+    │   ├── test_jwt.py
+    │   └── test_password.py
+    └── test_users/
+        ├── __init__.py
+        ├── test_delete_current_user.py
+        ├── test_read_current_user.py
+        └── test_reset_password.py
+</code></pre>
+
+<p>After:</p>
+<pre class="codehilite"><code class="language-bash">app/
+├── __init__.py
+├── conftest.py
+├── main.py
+├── auth/
+│   ├── __init__.py
+│   ├── api_messages.py
+│   ├── dependencies.py
+│   ├── jwt.py
+│   ├── models.py
+│   ├── password.py
+│   ├── responses.py
+│   ├── schemas.py
+│   ├── views.py
+│   └── tests/
+│       ├── __init__.py
+│       ├── test_jwt.py
+│       ├── test_password.py
+│       ├── test_view_delete_current_user.py
+│       ├── test_view_login_access_token.py
+│       ├── test_view_read_current_user.py
+│       ├── test_view_refresh_token.py
+│       ├── test_view_register_new_user.py
+│       └── test_view_reset_current_user_password.py
+├── core/
+│   ├── __init__.py
+│   ├── config.py
+│   ├── database_session.py
+│   ├── lifespan.py
+│   ├── metrics.py
+│   └── models.py
+├── probe/
+│   ├── __init__.py
+│   ├── views.py
+│   └── tests/
+│       ├── __init__.py
+│       └── test_views.py
+└── tests/
+    ├── auth.py
+    └── factories.py
+</code></pre>
+
+<p>Indeed, modules are much more scalable. I don't think this need further explanation to be honest.</p>
+<h2 id="4-prometheus-exporter">4. Prometheus exporter<a class="heading-anchor" href="#4-prometheus-exporter" title="Link to this section">&para;</a></h2>
+<p>I feel in 2026 <strong>not</strong> using Prometheus is something not very common. Yes, it says "minimal" template, but there are not a lot of cases where you don't need some monitoring. Clever way to start it is as a new thread in lifecycle hook of fastapi app itself.</p>
+<pre class="codehilite"><code class="language-python">@asynccontextmanager
+async def lifespan(_: FastAPI) -&gt; AsyncGenerator[None]:  # pragma: no cover
+    logger.info(&quot;starting application...&quot;)
+    if get_settings().prometheus.enabled:
+        logger.info(
+            &quot;starting prometheus client server on interface %s port %d&quot;,
+            get_settings().prometheus.addr,
+            get_settings().prometheus.port,
+        )
+
+        prometheus_client.start_http_server(
+            addr=get_settings().prometheus.addr,
+            port=get_settings().prometheus.port,
+        )
+        metrics.APP_STARTED.inc()
+
+    yield
+
+    logger.info(&quot;shutting down application...&quot;)
+
+    await database_session._ASYNC_ENGINE.dispose()
+    logger.info(&quot;disposed database engine and closed connections...&quot;)
+
+    if get_settings().prometheus.enabled:
+        logger.info(
+            &quot;stopping prometheus with delay of %d seconds...&quot;,
+            get_settings().prometheus.stop_delay_secs,
+        )
+        metrics.APP_STOPPED.inc()
+        await asyncio.sleep(get_settings().prometheus.stop_delay_secs)
+
+    logger.info(&quot;bye! application shutdown completed&quot;)
+</code></pre>
+
+<p>But then someone may ask – wait, what if there are multiple processes of FastAPI app in one container? Well – in async Python world we have one loop per process anyway so it actually make no sense <strong>if it's simpler</strong>(and it is) to have more than one "process", "worker" in single container. If in docker, just use multiple instances, if in kubernetes, spawn more pods, no need to complicate prometheus setup at all (and there is no fun at all to play with it, believe me, <code>PROMETHEUS_MULTIPROC_DIR</code> is closer to hack than solution).</p>
+<pre class="codehilite"><code class="language-dockerfile"># Set CMD to uvicorn
+# /venv/bin/uvicorn is used because from entrypoint script PATH is new
+CMD [&quot;/venv/bin/uvicorn&quot;, &quot;app.main:app&quot;, &quot;--host&quot;, &quot;0.0.0.0&quot;, &quot;--port&quot;, &quot;8000&quot;, &quot;--workers&quot;, &quot;1&quot;, &quot;--loop&quot;, &quot;uvloop&quot;]
+</code></pre>
+
+<h2 id="5-polyfactory-and-faker">5. polyfactory and faker<a class="heading-anchor" href="#5-polyfactory-and-faker" title="Link to this section">&para;</a></h2>
+<p>Last year I learned how convenient and scalable is to use factories for DB models (than hand crafted creating each test).</p>
+<pre class="codehilite"><code class="language-python">class UserFactory(SQLAlchemyFactory[User]):
+    email = Use(Faker().email)
+    hashed_password = Use(lambda: get_password_hash(TESTS_USER_PASSWORD))
+
+# and then in tests...
+new_user = UserFactory.create_async()
+</code></pre>
+
+<p>Price? Even more confusing <code>conftest.py</code> and <code>fixture_session_with_rollback</code> fixture. At this point it is probably hardly readable by async newcomers, but it is as it is.</p>
+<h2 id="6-alembic-upgrade-in-tests">6. Alembic upgrade in tests<a class="heading-anchor" href="#6-alembic-upgrade-in-tests" title="Link to this section">&para;</a></h2>
+<p>Usually (that was also the case for this template for years of course) in tests people from SQLAlchemy world just use current tables without thinking about using their own migration.</p>
+<pre class="codehilite"><code class="language-python"># create app tables in test database
+async with engine.begin() as conn:
+    await conn.run_sync(Base.metadata.create_all)
+</code></pre>
+
+<p>But – old good Django has different default behaviour and it is for reason – that is to apply all migrations. It can save your time later avoiding flawed migration to detonate your database, so new code in <code>conftest.py</code> on fresh database bootstrap for tests is following:</p>
+<pre class="codehilite"><code class="language-python">def alembic_upgrade() -&gt; None:
+    # synchronous function to run alembic upgrade
+    alembic_config = alembic.config.Config(PROJECT_DIR / &quot;alembic.ini&quot;)
+    alembic.command.upgrade(alembic_config, &quot;head&quot;)
+
+loop = asyncio.get_running_loop()
+await loop.run_in_executor(None, alembic_upgrade)
+</code></pre>
+
+<h2 id="7-makefile">7. Makefile<a class="heading-anchor" href="#7-makefile" title="Link to this section">&para;</a></h2>
+<p>Yes, I know most people will probably delete it, but I use it and I like it so I put it here, remembering commands longer than a few words after working in 100 different projects in few companies is challenging enough to appreciate if there is a shortcut</p>
+<pre class="codehilite"><code class="language-bash">$ make help
+grep -E '^[\.a-zA-Z_-]+:.*?## .*$' Makefile | sort | awk 'BEGIN {FS = &quot;:.*?## &quot;}; {printf &quot;\033[36m%-30s\033[0m %s\n&quot;, $1, $2}'
+down                           Stop database
+.env                           Ensure there is env file or create one
+help                           Print this help message
+lint                           Run all linters
+local-setup                    Setup local postgres database
+run                            Alias for `up`
+test                           Run unit tests
+up                             Run FastAPI development server
+</code></pre>
+
+<h2 id="8-probe-module">8. Probe module<a class="heading-anchor" href="#8-probe-module" title="Link to this section">&para;</a></h2>
+<p>Template was lacking healthcheck endpoint.</p>
+<h2 id="summary">Summary<a class="heading-anchor" href="#summary" title="Link to this section">&para;</a></h2>
+<p>I am writing all of this in that long format, because it may be interesting at least for some people and it does not fit into README section. Thank you!</p>
+<hr>
+<p>Last updated: 2026-02-08</p>
+<p>Content license: CC BY-NC 4.0 — share and adapt with attribution, no commercial use.</p>

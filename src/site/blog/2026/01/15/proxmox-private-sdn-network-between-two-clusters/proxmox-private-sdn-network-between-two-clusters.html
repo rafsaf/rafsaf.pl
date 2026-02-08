@@ -1,4 +1,4 @@
-<h1>Proxmox private SDN network between two clusters</h1>
+<h1 id="proxmox-private-sdn-network-between-two-clusters">Proxmox private SDN network between two clusters<a class="heading-anchor" href="#proxmox-private-sdn-network-between-two-clusters" title="Link to this section">&para;</a></h1>
 <p>Story of setting up network between two distinct Proxmox clusters in different locations based on wireguard and <a href="https://pve.proxmox.com/pve-docs/chapter-pvesdn.html">SDN</a> <a href="https://pve.proxmox.com/pve-docs/chapter-pvesdn.html#pvesdn_zone_plugin_evpn">EVPN</a> zone.</p>
 <p>I started with already <strong>working</strong> homelab setup for Proxmox (diagram below). It's quite typical and nothing special besides the paranoid usage of <a href="https://registry.terraform.io/providers/bpg/proxmox/latest/docs">proxmox opentofu bpg provider</a> (which I really love and also contribute to) for everything that was possible and ansible for nodes/vms setup. I think that's a strong requirement, simple "fire and forget" approach to setup something like this article describes is probably a very bad idea to the point where you'll probably end up with a messed up, broken current environment and non-working SDN (for one of dozens of non-trivial reasons).</p>
 <p>Enjoy!</p>
@@ -79,7 +79,7 @@ This is more or less the result:</li>
 +----------------------------+      +----------------------------+
 </code></pre>
 
-<h2>Final working shape</h2>
+<h2 id="final-working-shape">Final working shape<a class="heading-anchor" href="#final-working-shape" title="Link to this section">&para;</a></h2>
 <ul>
 <li><strong>Early traps</strong> trying to use VXLAN Zone and/or fabrics instead of EVPN zone and wireguard.</li>
 <li><strong>Underlay WireGuard</strong> between the Proxmox hosts setup using ansible.</li>
@@ -91,7 +91,7 @@ This is more or less the result:</li>
 <li><strong>Critical fixes</strong> <code>exit_nodes_local_routing=false</code> (enabling "local routing" was the trap).</li>
 <li><strong>Firewall</strong> Proxmox cluster firewall must explicitly allow FORWARD and IN rules for SDN subnets and also between nodes on public network level (wireguard) and also some allow IN rules for wireguard network interface.</li>
 </ul>
-<h2>Early traps</h2>
+<h2 id="early-traps">Early traps<a class="heading-anchor" href="#early-traps" title="Link to this section">&para;</a></h2>
 <p>Early on I tried to use <a href="https://pve.proxmox.com/pve-docs/chapter-pvesdn.html#pvesdn_zone_plugin_vxlan">cross-site VXLAN zone</a>.</p>
 <p>This looks exactly what we want:</p>
 <blockquote>
@@ -106,7 +106,7 @@ You can, for example, create a VXLAN overlay network on top of public internet, 
 </blockquote>
 <p>Another dead end. They are indeed nice foundation for cluster network (for things like Ceph, which makes sense), but won't help in multi cluster network.</p>
 <p>After another spike and looking for solutions, it turned out that wireguard vpn between nodes and EVPN SDN on top of it <em>should</em> work as expected.</p>
-<h2>Underlay WireGuard</h2>
+<h2 id="underlay-wireguard">Underlay WireGuard<a class="heading-anchor" href="#underlay-wireguard" title="Link to this section">&para;</a></h2>
 <p>There is ansible role – <a href="https://github.com/githubixx/ansible-role-wireguard">ansible-role-wireguard</a> which has a seamless setup based on assumption that <strong>you have all nodes in single inventory</strong> (and hosts group). There is great README on the GitHub, I am not going into the details. Thankfully, I already have that. I have <code>proxmox</code> group and dedicated <code>playbook_proxmox.yml</code> playbook for proxmox nodes (whether roz or wro). The only nit pick is <code>linear</code> strategy (free doesn't work well).</p>
 <pre class="codehilite"><code class="language-yaml"># playbook_proxmox.yml
 # Ignore meaningless details, clue is that every node have same setup
@@ -267,7 +267,7 @@ evpn_controller_peers:
 <li>evpn controller is in place for SDN EVPN foundation (that can be moved to opentofu resource, if it exists)</li>
 <li>there are sysctl variables prepared</li>
 </ul>
-<h2>Overlay SDN</h2>
+<h2 id="overlay-sdn">Overlay SDN<a class="heading-anchor" href="#overlay-sdn" title="Link to this section">&para;</a></h2>
 <p>Below is the Proxmox SDN setup in roz region. In wro, the only difference is that subnet is obviously part of <code>10.2.x.x</code> and not <code>10.1.x.x</code>, but beside that, the same setup is used.</p>
 <pre class="codehilite"><code class="language-tf">resource &quot;proxmox_virtual_environment_sdn_zone_evpn&quot; &quot;crosssite&quot; {
   id         = &quot;crossite&quot;
@@ -365,7 +365,7 @@ resource &quot;proxmox_virtual_environment_sdn_applier&quot; &quot;evpn_finalize
 <li>arbitrary <code>10.1.1.1</code> gateway – standard choice for <code>10.1.1.0/24</code></li>
 <li><strong>snat</strong> true – this is required with this setup. Described in section below why.</li>
 </ul>
-<h2>Per-site SDN subnets and VMs</h2>
+<h2 id="per-site-sdn-subnets-and-vms">Per-site SDN subnets and VMs<a class="heading-anchor" href="#per-site-sdn-subnets-and-vms" title="Link to this section">&para;</a></h2>
 <pre class="codehilite"><code class="language-tf"># vm_sdntest.tf in roz
 
 locals {
@@ -671,8 +671,8 @@ eth0 overlay + exit-node + SNAT
 eth1 control when overlay is broken, port forwarding from router
 </code></pre>
 
-<h2>Critical fixes</h2>
-<h3>SNAT</h3>
+<h2 id="critical-fixes">Critical fixes<a class="heading-anchor" href="#critical-fixes" title="Link to this section">&para;</a></h2>
+<h3 id="snat">SNAT<a class="heading-anchor" href="#snat" title="Link to this section">&para;</a></h3>
 <p><code>snat=1</code> enabled in <code>proxmox_virtual_environment_sdn_subnet</code>.</p>
 <p>You could theoretically have masquerade and NAT setup for <code>10.1.1.0/24</code> on your router and with some hassle that is going to work, but this is exactly what we want to avoid – having a hardcoded, non-trivial setup anywhere if not needed. With <code>snat</code>, proxmox node is going to have iptables rule for this subnet so it can access internet via <code>vmbr0</code> node interface:</p>
 <pre class="codehilite"><code class="language-bash">$ iptables -t nat -L -n -v | egrep '10\.1\.1\.0/24|MASQUERADE|SNAT'
@@ -684,7 +684,7 @@ eth1 control when overlay is broken, port forwarding from router
 </code></pre>
 
 <p>Small nit pick found: after disabling it with <code>snat=0</code>, iptables rules were still in place for <code>10.1.1.0/24</code>, so Proxmox doesn't clean them up. It's probably a bug, but maybe a feature.</p>
-<h3>The killer setting: <code>exit_nodes_local_routing</code></h3>
+<h3 id="the-killer-setting-exit_nodes_local_routing">The killer setting: <code>exit_nodes_local_routing</code><a class="heading-anchor" href="#the-killer-setting-exit_nodes_local_routing" title="Link to this section">&para;</a></h3>
 <p>This was the bug-shaped hole.</p>
 <p>I initially assumed "local routing" should be enabled because... why not.</p>
 <blockquote>
@@ -700,13 +700,13 @@ eth1 control when overlay is broken, port forwarding from router
 <li><code>tcpdump -n -v -i eth0 'host 104.18.27.120'</code> in 1st terminal in VM</li>
 <li><code>10.1.1.11</code> roz VM: <code>curl --connect-timeout 5 http://example.com -v</code> (104.18.27.120) in 2nd terminal in VM</li>
 </ul>
-<h4>On Proxmox (vmbr0)</h4>
+<h4 id="on-proxmox-vmbr0">On Proxmox (vmbr0)<a class="heading-anchor" href="#on-proxmox-vmbr0" title="Link to this section">&para;</a></h4>
 <ul>
 <li>104.18.26.120.80 &gt; 10.1.1.11.59376 with full HTTP/1.1 200 OK body.</li>
 <li>SNAT on the exit node is correct (Cloudflare replies to 192.168.2.3:59376).</li>
 <li>De‑SNAT is correct (by the time it’s leaving vmbr0 towards EVPN, it’s 80 → 10.1.1.11:59376).</li>
 </ul>
-<h4>On Proxmox (crossvnt) and inside the VM (eth0)</h4>
+<h4 id="on-proxmox-crossvnt-and-inside-the-vm-eth0">On Proxmox (crossvnt) and inside the VM (eth0)<a class="heading-anchor" href="#on-proxmox-crossvnt-and-inside-the-vm-eth0" title="Link to this section">&para;</a></h4>
 <ul>
 <li>Handshake and GET are normal on port 80:</li>
 <li>10.1.1.11.58044 &gt; 104.18.27.120.<strong>80</strong> [S]</li>
@@ -734,7 +734,7 @@ eth1 control when overlay is broken, port forwarding from router
 <li>crossvnt → VM: these corrupted ports reach the guest, which correctly resets.</li>
 </ol>
 <p>With <code>exit_nodes_local_routing=false</code>, there is no <code>xvrf_crossite</code> interface at all and no problems.</p>
-<h2>Firewall</h2>
+<h2 id="firewall">Firewall<a class="heading-anchor" href="#firewall" title="Link to this section">&para;</a></h2>
 <p>First, for forward traffic rules you need nftables-based <a href="https://pve.proxmox.com/pve-docs/pve-firewall.8.html">proxmox-firewall</a>.</p>
 <ul>
 <li>On cluster level, <code>ebtables=true</code> (<code>proxmox_virtual_environment_cluster_firewall</code> ebtables=true)</li>
