@@ -4,7 +4,7 @@ This article describes the breaking changes and the rationale for this year's up
 
 ![minimal-fastapi-postgres-template-2026-02-07-version-7.0.0](./minimal-fastapi-postgres-template-2026-02-07-version-7.0.0.png)
 
-## Brief history and attiude
+## Brief history and attitude
 
 I started with [minimal-fastapi-postgres-template](https://github.com/rafsaf/minimal-fastapi-postgres-template) in [Sep 21, 2021](https://github.com/rafsaf/minimal-fastapi-postgres-template/commit/79f56b6eac8c01fc80de2d109eb2a377d177642a) forked from [official fastapi template](https://github.com/fastapi/full-stack-fastapi-template) and introduced it in [this comment in \#422 issue](https://github.com/fastapi/full-stack-fastapi-template/issues/422#issuecomment-964508158).
 
@@ -12,17 +12,17 @@ I started with [minimal-fastapi-postgres-template](https://github.com/rafsaf/min
 
 From there, I tend to update it **yearly**, usually at the end of the year (after new Python version release), or if I was busy, sometimes early next year. Template software like this evolve very fast, almost each year there were very significant breaking changes, including "emotional", "opinionated" decisions that is also strong factor.
 
-In other words, what I mean by that, that I don't need to keep any backward compability, no files must stay unchaged, no conventions are there forever, if I see something better in the wild, I just backport it (or not) next year, simple.
+In other words, what I mean by that, that I don't need to keep any backward compatibility, no files must stay unchanged, no conventions are there forever, if I see something better in the wild, I just backport it (or not) next year, simple.
 
-But – **Please!!!** – don't think I am the person that love new tech poping up each month and I start each new project with new technology (new JS framework was created 67 days ago according to [dayssincelastjsframework.com](https://dayssincelastjsframework.com/)). In fact, I'm somewhere in between (maybe a bit towards Greybeards). I use Django without calling it legacy, I think 3x times before adapting new tech, I don't fall easly into excitation where things like [SQLModel](https://github.com/fastapi/sqlmodel) pop up (I've seen teams that falled into this trap, feel sorry if you too), same as I don't trust new InfluxDB being faster 30000x than any other thing, because it's written in Rust so it can breake laws of physics. Right. But sometimes, still, I see value in new things.
+But – **Please!!!** – don't think I am the person that love new tech popping up each month and I start each new project with new technology (new JS framework was created 67 days ago according to [dayssincelastjsframework.com](https://dayssincelastjsframework.com/)). In fact, I'm somewhere in between (maybe a bit towards Greybeards). I use Django without calling it legacy, I think 3 times before adopting new tech, I don't fall easily into excitement where things like [SQLModel](https://github.com/fastapi/sqlmodel) pop up (I've seen teams that fell into this trap, feel sorry if you too), same as I don't trust new InfluxDB being faster 30000x than any other thing, because it's written in Rust so it can break laws of physics. Right. But sometimes, still, I see value in new things.
 
 ## Release 7.0.0
 
 ### 1. Migration from Poetry into uv
 
-I used [poetry](https://python-poetry.org/) for many years. But version 2 and afterwards ended my ocean of patience for them. Disapearing venvs, broken management, constant changes in underlying behaviour causing you to frequently just delete managed venvs manually and recreate them. Python installation management (new feature) also only sometimes working. I tend to use it with [pyenv](https://github.com/pyenv/pyenv) and in recent versions that I was just inforious with all kind of problems simply feeling like wasting my time.
+I used [poetry](https://python-poetry.org/) for many years. But version 2 and afterwards ended my ocean of patience for them. Disappearing venvs, broken management, constant changes in underlying behaviour causing you to frequently just delete managed venvs manually and recreate them. Python installation management (new feature) also only sometimes working. I tend to use it with [pyenv](https://github.com/pyenv/pyenv) and in recent versions that I was just infuriated with all kind of problems simply feeling like wasting my time.
 
-On the contrary, with [uv](https://docs.astral.sh/uv/) **it just works** which is indeed great improvement, doesn't it? `uv sync` and voila, if something is broken then venv is recreated. Two things why I was NOT eager to use it: 10-100x faster, I don't like this kind of "marketing", using disk and pretending to be somehow faster (most of time pip, poetry or uv **download** stuff from PyPI... so it improves 10-100x my internet bandwith, right?, how neat) is not attractive for me. Second reason is [docker integration](https://docs.astral.sh/uv/guides/integration/docker/). I am extra careful when someone's **first, recommended** way of using package manager is to use their own image... I don't need or want any package manager in my end image except pip, nor should anybody. Those are steps to create some kind of bias and to "have impact", just a guess as I don't understand motivations fully. Anyway you can have separate layer to export requirements.txt and just use pip, so no harm done.
+On the contrary, with [uv](https://docs.astral.sh/uv/) **it just works** which is indeed great improvement, doesn't it? `uv sync` and voila, if something is broken then venv is recreated. Two things why I was NOT eager to use it: 10-100x faster, I don't like this kind of "marketing", using disk and pretending to be somehow faster (most of time pip, poetry or uv **download** stuff from PyPI... so it improves 10-100x my internet bandwidth, right?, how neat) is not attractive for me. Second reason is [docker integration](https://docs.astral.sh/uv/guides/integration/docker/). I am extra careful when someone's **first, recommended** way of using package manager is to use their own image... I don't need or want any package manager in my end image except pip, nor should anybody. Those are steps to create some kind of bias and to "have impact", just a guess as I don't understand motivations fully. Anyway you can have separate layer to export requirements.txt and just use pip, so no harm done.
 
 ```dockerfile
 FROM base AS uv
@@ -181,7 +181,7 @@ async def lifespan(_: FastAPI) -> AsyncGenerator[None]:  # pragma: no cover
     logger.info("bye! application shutdown completed")
 ```
 
-But then someone may ask – wait, what if there are multiple processes of FastAPI app in one container? Well – in async Python world we have one loop per process anyway so it actually make no sense **if it's simpler**(and it is) to have more than one "process", "worker" in single container. If in docker, just use multiple instances, if in kubernetes, spawn more pods, no need to complicate prometheus setup at all (and there is no fun at all to play with it, belive me, `PROMETHEUS_MULTIPROC_DIR` is closer to hack than solution).
+But then someone may ask – wait, what if there are multiple processes of FastAPI app in one container? Well – in async Python world we have one loop per process anyway so it actually make no sense **if it's simpler**(and it is) to have more than one "process", "worker" in single container. If in docker, just use multiple instances, if in kubernetes, spawn more pods, no need to complicate prometheus setup at all (and there is no fun at all to play with it, believe me, `PROMETHEUS_MULTIPROC_DIR` is closer to hack than solution).
 
 ```dockerfile
 # Set CMD to uvicorn
@@ -191,7 +191,7 @@ CMD ["/venv/bin/uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000",
 
 ### 5. polyfactory and faker
 
-Last year I learned how convinient and scalable is to use factories for DB models (than hand crafted creating each test).
+Last year I learned how convenient and scalable is to use factories for DB models (than hand crafted creating each test).
 
 ```python
 class UserFactory(SQLAlchemyFactory[User]):
@@ -214,7 +214,7 @@ async with engine.begin() as conn:
     await conn.run_sync(Base.metadata.create_all)
 ```
 
-But – old good Django has different default behaviour and it is for reason – that is to apply all migrations. It can save your time later avoiding flawed migration to detonate your database, so new code in `conftest.py` on fresh database bootsrap for tests is following:
+But – old good Django has different default behaviour and it is for reason – that is to apply all migrations. It can save your time later avoiding flawed migration to detonate your database, so new code in `conftest.py` on fresh database bootstrap for tests is following:
 
 ```python
 def alembic_upgrade() -> None:
@@ -228,7 +228,7 @@ await loop.run_in_executor(None, alembic_upgrade)
 
 ### 7. Makefile
 
-Yes, I know most people will probably delete it, but I use it and I like it so I put it here, remembering commands longer than few words after working in 100 different projects in few companies is challenging enough to appreciate if they is shortcut
+Yes, I know most people will probably delete it, but I use it and I like it so I put it here, remembering commands longer than a few words after working in 100 different projects in few companies is challenging enough to appreciate if there is a shortcut
 
 ```bash
 $ make help
@@ -243,9 +243,13 @@ test                           Run unit tests
 up                             Run FastAPI development server
 ```
 
+### 8. Probe module
+
+Template was lacking healthcheck endpoint.
+
 ### Summary
 
-I am writting all of this in that long format, because it may be interesting at least for some people and it does not fit into README section. Thank you!
+I am writing all of this in that long format, because it may be interesting at least for some people and it does not fit into README section. Thank you!
 
 ---
 
