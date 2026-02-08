@@ -40,8 +40,8 @@ jobs:
               echo "./out/index.html does not exist."
               exit 1
           fi
-          if [ ! -f "./out/services/index.html" ]; then
-              echo "./out/services/index.html does not exist."
+          if [ ! -f "./out/blog/index.html" ]; then
+              echo "./out/blog/index.html does not exist."
               exit 1
           fi
           if [ ! -f "./out/projects/index.html" ]; then
