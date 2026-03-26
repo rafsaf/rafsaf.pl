@@ -1,0 +1,19 @@
+{% extends "components/layout.html" %}
+{% block title %}
+<title>Fixing multiple real IDOR, XSS, shell injections vulnerabilities with AI</title>
+<meta name="description"
+    content="Draft notes from fixing multiple real IDOR, XSS, and shell injection vulnerabilities with AI assistance." />
+<meta name="license" content="CC BY-NC 4.0" />
+<meta name="dcterms.rights" content="https://creativecommons.org/licenses/by-nc/4.0/" />
+<link rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/" />
+<link rel="stylesheet" href="/blog/blog.css?t={{ build_timestamp }}" />
+{% endblock %}
+{% block content %}
+<div class="blog-post">
+    <p><a href="/blog/">← Back to blog</a></p>
+    {% include
+    'site/blog/2026/03/26/fixing-multiple-real-idor-xss-shell-injections-vulnerabilities-with-ai/fixing-multiple-real-idor-xss-shell-injections-vulnerabilities-with-ai.html'
+    %}
+</div>
+{% include 'components/blog_heading_anchors.html' %}
+{% endblock %}
