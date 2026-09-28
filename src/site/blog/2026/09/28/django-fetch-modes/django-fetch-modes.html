@@ -1,0 +1,147 @@
+<h1 id="django-fetch-modes">Django fetch modes<a class="heading-anchor" href="#django-fetch-modes" title="Link to this section">&para;</a></h1>
+<p>Django 6.1 was <a href="https://docs.djangoproject.com/en/6.1/releases/6.1/">released</a> recently (2026.08.05) and introduced <a href="https://docs.djangoproject.com/en/6.1/topics/db/fetch-modes/">fetch modes</a> support.</p>
+<p><strong>My claim in this article is that default options are not useful. But it's very easy to log n+1 query problems.</strong></p>
+<p>Syntax is trivial to be added at <strong>model level</strong> (it SEEMS that could be good to have it on global level, but this could have unforseen side effects on your 10 third party apps and break code in so subtle way that you won't see it easly, example later!)</p>
+<pre class="codehilite"><code class="language-python">class BookManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().fetch_mode(...)
+
+
+class Book(models.Model):
+    ...
+
+    objects = BookManager()
+</code></pre>
+
+<p>Two new available modes (as FETCH_ONE represents Django's behaviour before 6.1) seems cool at first, but they are not really.</p>
+<h2 id="fetch_raise">FETCH_RAISE<a class="heading-anchor" href="#fetch_raise" title="Link to this section">&para;</a></h2>
+<p><code>FETCH_RAISE</code> is in fact killer option, I doubt anybody would dare to use it in production. This is just too much, you WILL end up with 500 errors sooner or later (I would say that it will be sooner, aka next minute after deployment). Basically: "I am 100% sure my app doesn't contain any hidden n+1 bug". Not true, after certain number of features times number of people who work on the project this WILL happen.</p>
+<p>Please don't use it, don't detonate your app.</p>
+<p>Not to mention that trying to adapt it for certain number of tests seems just not doable unless you spend week adapting them (what for, I don't know, who cares if your tests contain certain n+1 problems).</p>
+<h2 id="fetch_peers">FETCH_PEERS<a class="heading-anchor" href="#fetch_peers" title="Link to this section">&para;</a></h2>
+<p>My problems with <code>FETCH_PEERS</code> are following:</p>
+<ul>
+<li>You are <strong>not</strong> going to use it on purpose, since you are very good programmer and would use <code>select_related</code> and <code>prefetch_related</code> instead on your own.</li>
+<li>Then this means automatically that it will <strong>hide some real BUG</strong> in your code by definition (or in best case do nothing).</li>
+<li>So, instead of using <a href="https://pytest-django.readthedocs.io/en/latest/helpers.html#django-assert-num-queries">assert_num_queries</a> (or <code>assertNumQueries</code> at your option) in risky places where bug can happen and in general writting good performant code, you are using hack to save you.</li>
+<li>Not always this will be best option. If you look on <a href="https://github.com/django/django/blob/6.1/django/db/models/fetch_modes.py#L31-L40">actual implementation</a>, this is in fact <code>prefetch_related</code>. There are many cases where <code>select_related</code> would be more natural and just better.</li>
+<li>Even if <code>prefetch_related</code> <strong>should</strong> be quite safe to applicate in various places (as django deduplicate fetched objects) I can imagine and am pretty sure in the wild there will be cases where some (buggy as hell at your option) code will break after adding it.</li>
+</ul>
+<h2 id="fetch_error">FETCH_ERROR???<a class="heading-anchor" href="#fetch_error" title="Link to this section">&para;</a></h2>
+<p>My own thinking is that I don't like either to detonate my applications nor hide (or silently introduce) bugs so both <code>FETCH_RAISE</code> and <code>FETCH_PEERS</code> are non go.</p>
+<p>It's OK for me to flag some problems and I can fix them myself. Logging error or warning – this is the way.</p>
+<p>Thanfully, it's super easy to do (as always in Django :)</p>
+<pre class="codehilite"><code class="language-python">import inspect
+import logging
+from typing import Any
+
+from django.conf import settings
+from django.db.models import Manager, Model
+from django.db.models.fetch_modes import FetchOne
+
+log = logging.getLogger(__name__)
+
+
+class FetchError(FetchOne):
+    __slots__ = ()
+
+    track_peers = False
+
+    def fetch(self, fetcher: Any, instance: Model) -&gt; None:
+        klass = instance.__class__.__qualname__
+        field_name = fetcher.field.name
+
+        if not settings.TESTING and not self._is_django_admin_call():
+            log.error(&quot;Unexpected fetch of %s.%s.&quot;, klass, field_name, stack_info=True)
+
+        return super().fetch(fetcher, instance)
+
+    def _is_django_admin_call(self) -&gt; bool:
+        # Walk frame back pointers directly to avoid inspect.stack shadowing issues
+        frame = inspect.currentframe()
+        try:
+            depth = 0
+            while frame and depth &lt; 20:
+                module_name = frame.f_globals.get(&quot;__name__&quot;, &quot;&quot;)
+                if module_name.startswith(&quot;django.contrib.admin&quot;):
+                    return True
+                frame = frame.f_back
+                depth += 1
+        finally:
+            del frame  # Avoid reference cycle retention
+        return False
+
+    def __reduce__(self):
+        return &quot;FETCH_ERROR&quot;
+
+
+FETCH_ERROR = FetchError()
+
+
+class FetchErrorManager(Manager):
+    def get_queryset(self):
+        return super().get_queryset().fetch_mode(FETCH_ERROR)
+</code></pre>
+
+<h2 id="be-careful-fixing-n1">Be careful fixing n+1<a class="heading-anchor" href="#be-careful-fixing-n1" title="Link to this section">&para;</a></h2>
+<p>Here is <a href="https://github.com/rafsaf/Tribal-Wars-Planer/blob/f8f96d537591b5e7d554e59b57e56bacc6d8cc53/rest_api/views.py#L154-L185">permalink</a> if you need more context, but it's simple endpoint that deletes <code>Target</code> object with related children called <code>WeightModel</code> that have FK to model <code>WeightMaximum</code>. It's real code, written by my jounger self years ago. It is as it is, works fine (well, unless you remove n+1 problem in naive way!).</p>
+<pre class="codehilite"><code class="language-python">@api_view([&quot;DELETE&quot;])
+@permission_classes([IsAuthenticated])
+def delete_target(request: Request):
+    &quot;&quot;&quot;
+    For given target id, delete obj.
+    &quot;&quot;&quot;
+    req = TargetDeleteSerializer(data=request.data)  # type: ignore
+    if req.is_valid():
+        target: TargetVertex = get_object_or_404(
+            TargetVertex.objects.select_related(&quot;outline&quot;),
+            pk=req.data.get(&quot;target_id&quot;),
+            outline__owner=request.user,
+        )
+        with transaction.atomic():
+            weights = WeightModel.objects.filter(target=target)
+            # deletes weights related to this target and updates weight state
+            weight_model: WeightModel
+            for weight_model in weights:
+                state: WeightMaximum = weight_model.state
+                state.off_left += weight_model.off
+                state.off_state -= weight_model.off
+                state.nobleman_left += weight_model.nobleman
+                state.nobleman_state -= weight_model.nobleman
+                state.catapult_left += weight_model.catapult
+                state.catapult_state -= weight_model.catapult
+                state.save()
+
+            weights.delete()
+            target.delete()
+
+        return Response(status=status.HTTP_204_NO_CONTENT)
+    return Response(req.errors, status=status.HTTP_400_BAD_REQUEST)
+</code></pre>
+
+<p>It has 2x query per loop iteration – <code>weight_model.state</code> will fetch related model and <code>state.save()</code> save it after update. My first thought was that maybe I can live with additional <code>save()</code> as those targets has usually up to dozen children and users ralely use this endpoint (not going to go into the details here as it will be boring). Let's simply add <code>select_related</code>:</p>
+<pre class="codehilite"><code class="language-python">with transaction.atomic():
+-   weights = WeightModel.objects.filter(target=target)
++   weights = WeightModel.objects.filter(target=target).select_related(&quot;state&quot;)
+    # deletes weights related to this target and updates weight state
+    weight_model: WeightModel
+    for weight_model in weights:
+        state: WeightMaximum = weight_model.state
+        state.off_left += weight_model.off
+        state.off_state -= weight_model.off
+        state.nobleman_left += weight_model.nobleman
+        state.nobleman_state -= weight_model.nobleman
+        state.catapult_left += weight_model.catapult
+        state.catapult_state -= weight_model.catapult
+        state.save()
+</code></pre>
+
+<p>Do you see the bug? <a href="https://en.wikipedia.org/wiki/Proof_by_intimidation">The proof is left as an exercise for the reader</a>. Hint after nice 2 bug images.</p>
+<p><img alt="ładny-różowy-uśmiechnięty-robak-na-białym-tle-40980137.jpg" src="./ładny-różowy-uśmiechnięty-robak-na-białym-tle-40980137.jpg"></p>
+<p><small>Attribution: https://www.istockphoto.com</small></p>
+<p><img alt="istockphoto-1994315317-612x612.jpg" src="./istockphoto-1994315317-612x612.jpg"></p>
+<p><small>Attribution: https://www.istockphoto.com</small></p>
+<p>Hint: each <code>weight_model</code> modify <code>state</code> parent. What if <code>state</code> is the very same parent for two different <code>weight_model</code> from queryset? In fact n+1 is a reason that this piece of code is (relatively to be honest, seen better) ok.</p>
+<hr>
+<p>Last updated: 2026-09-28</p>
+<p>Content license: CC BY-NC 4.0 — share and adapt with attribution, no commercial use.</p>
