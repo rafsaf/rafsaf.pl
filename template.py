@@ -1,8 +1,8 @@
 import datetime
-import jinja2
 import pathlib
-import markdown
 
+import jinja2
+import markdown
 
 root_dir = pathlib.Path(__file__).resolve().parent
 src = root_dir / "src"
@@ -24,7 +24,11 @@ def convert_markdown_to_html_in_place(p: pathlib.Path) -> None:
                     "permalink": True,
                     "permalink_class": "heading-anchor",
                     "permalink_title": "Link to this section",
-                }
+                },
+                "markdown.extensions.codehilite": {
+                    "css_class": "language-",
+                    "use_pygments": False,
+                },
             }
 
         md_out_file = p.with_suffix(".html")

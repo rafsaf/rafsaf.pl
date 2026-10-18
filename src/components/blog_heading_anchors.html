@@ -33,4 +33,17 @@
             }
         }
     });
+
+    import hljs from '@highlightjs/core.js';
+    import javascript from '@highlightjs/languages/javascript.min.js';
+    import dockerfile from '@highlightjs/languages/dockerfile.min.js';
+    import python from '@highlightjs/languages/python.min.js';
+    import bash from '@highlightjs/languages/bash.min.js';
+    import yaml from '@highlightjs/languages/yaml.min.js';
+
+    hljs.registerLanguage('javascript', javascript);
+    hljs.registerLanguage('dockerfile', dockerfile);
+    hljs.registerLanguage('python', python);
+    hljs.registerLanguage('bash', bash);
+    hljs.registerLanguage('yaml', yaml);
 </script>

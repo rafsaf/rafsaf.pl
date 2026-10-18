@@ -2,7 +2,7 @@
 <p>Django 6.1 was <a href="https://docs.djangoproject.com/en/6.1/releases/6.1/">released</a> recently (2026.08.05) and introduced <a href="https://docs.djangoproject.com/en/6.1/topics/db/fetch-modes/">fetch modes</a> support.</p>
 <p><strong>My claim in this article is that default options are not useful. But it's very easy to log n+1 query problems.</strong></p>
 <p>Syntax is trivial to be added at <strong>model level</strong> (it SEEMS that could be good to have it on global level, but this could have unforseen side effects on your 10 third party apps and break code in so subtle way that you won't see it easly, example later!)</p>
-<pre class="codehilite"><code class="language-python">class BookManager(models.Manager):
+<pre><code class="language-python">class BookManager(models.Manager):
     def get_queryset(self):
         return super().get_queryset().fetch_mode(...)
 
@@ -12,7 +12,6 @@ class Book(models.Model):
 
     objects = BookManager()
 </code></pre>
-
 <p>Two new available modes (as FETCH_ONE represents Django's behaviour before 6.1) seems cool at first, but they are not really.</p>
 <h2 id="fetch_raise">FETCH_RAISE<a class="heading-anchor" href="#fetch_raise" title="Link to this section">&para;</a></h2>
 <p><code>FETCH_RAISE</code> is in fact killer option, I doubt anybody would dare to use it in production. This is just too much, you WILL end up with 500 errors sooner or later (I would say that it will be sooner, aka next minute after deployment). Basically: "I am 100% sure my app doesn't contain any hidden n+1 bug". Not true, after certain number of features times number of people who work on the project this WILL happen.</p>
@@ -31,7 +30,7 @@ class Book(models.Model):
 <p>My own thinking is that I don't like either to detonate my applications nor hide (or silently introduce) bugs so both <code>FETCH_RAISE</code> and <code>FETCH_PEERS</code> are non go.</p>
 <p>It's OK for me to flag some problems and I can fix them myself. Logging error or warning – this is the way.</p>
 <p>Thanfully, it's super easy to do (as always in Django :)</p>
-<pre class="codehilite"><code class="language-python">import inspect
+<pre><code class="language-python">import inspect
 import logging
 from typing import Any
 
@@ -82,10 +81,9 @@ class FetchErrorManager(Manager):
     def get_queryset(self):
         return super().get_queryset().fetch_mode(FETCH_ERROR)
 </code></pre>
-
 <h2 id="be-careful-fixing-n1">Be careful fixing n+1<a class="heading-anchor" href="#be-careful-fixing-n1" title="Link to this section">&para;</a></h2>
 <p>Here is <a href="https://github.com/rafsaf/Tribal-Wars-Planer/blob/f8f96d537591b5e7d554e59b57e56bacc6d8cc53/rest_api/views.py#L154-L185">permalink</a> if you need more context, but it's simple endpoint that deletes <code>Target</code> object with related children called <code>WeightModel</code> that have FK to model <code>WeightMaximum</code>. It's real code, written by my jounger self years ago. It is as it is, works fine (well, unless you remove n+1 problem in naive way!).</p>
-<pre class="codehilite"><code class="language-python">@api_view([&quot;DELETE&quot;])
+<pre><code class="language-python">@api_view([&quot;DELETE&quot;])
 @permission_classes([IsAuthenticated])
 def delete_target(request: Request):
     &quot;&quot;&quot;
@@ -118,9 +116,8 @@ def delete_target(request: Request):
         return Response(status=status.HTTP_204_NO_CONTENT)
     return Response(req.errors, status=status.HTTP_400_BAD_REQUEST)
 </code></pre>
-
 <p>It has 2x query per loop iteration – <code>weight_model.state</code> will fetch related model and <code>state.save()</code> save it after update. My first thought was that maybe I can live with additional <code>save()</code> as those targets has usually up to dozen children and users ralely use this endpoint (not going to go into the details here as it will be boring). Let's simply add <code>select_related</code>:</p>
-<pre class="codehilite"><code class="language-python">with transaction.atomic():
+<pre><code class="language-python">with transaction.atomic():
 -   weights = WeightModel.objects.filter(target=target)
 +   weights = WeightModel.objects.filter(target=target).select_related(&quot;state&quot;)
     # deletes weights related to this target and updates weight state
@@ -135,7 +132,6 @@ def delete_target(request: Request):
         state.catapult_state -= weight_model.catapult
         state.save()
 </code></pre>
-
 <p>Do you see the bug? <a href="https://en.wikipedia.org/wiki/Proof_by_intimidation">The proof is left as an exercise for the reader</a>. Hint after nice 2 bug images.</p>
 <p><img alt="ładny-różowy-uśmiechnięty-robak-na-białym-tle-40980137.jpg" src="./ładny-różowy-uśmiechnięty-robak-na-białym-tle-40980137.jpg"></p>
 <p><small>Attribution: https://www.istockphoto.com</small></p>
