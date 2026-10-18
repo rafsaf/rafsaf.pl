@@ -33,7 +33,8 @@
             }
         }
     });
-
+</script>
+<script type="module">
     import hljs from '@highlightjs/core.js';
     import javascript from '@highlightjs/languages/javascript.min.js';
     import dockerfile from '@highlightjs/languages/dockerfile.min.js';
@@ -46,4 +47,6 @@
     hljs.registerLanguage('python', python);
     hljs.registerLanguage('bash', bash);
     hljs.registerLanguage('yaml', yaml);
+
+    hljs.highlightAll();
 </script>
