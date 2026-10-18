@@ -292,7 +292,7 @@ With all of that in place and successful deployment of this ansible playbook on 
 
 Below is the Proxmox SDN setup in roz region. In wro, the only difference is that subnet is obviously part of `10.2.x.x` and not `10.1.x.x`, but beside that, the same setup is used.
 
-```tf
+```bash
 resource "proxmox_virtual_environment_sdn_zone_evpn" "crosssite" {
   id         = "crossite"
   controller = "evpnctl"
@@ -387,7 +387,7 @@ Clarifications:
 
 ## Per-site SDN subnets and VMs
 
-```tf
+```bash
 # vm_sdntest.tf in roz
 
 locals {
@@ -575,7 +575,7 @@ This is mainly [proxmox_virtual_environment_vm](https://registry.terraform.io/pr
 
 Let's focus on the change before/after SDN for network interfaces. For older VMs, there is only eth0 definition on `vmbr0`:
 
-```tf
+```bash
 initialization {
   ip_config {
       ipv4 {
@@ -616,7 +616,7 @@ network:
 
 whereas in the SDN VM it's:
 
-```tf
+```bash
 initialization {
   ip_config {
     ipv4 {
@@ -790,7 +790,7 @@ First, for forward traffic rules you need nftables-based [proxmox-firewall](http
 - On cluster level, `ebtables=true` (`proxmox_virtual_environment_cluster_firewall` ebtables=true)
 - On each node, additionally it must be enabled (via GUI for now, no opentofu resource yet) – `nftables (tech preview) = yes`
 
-```tf
+```bash
 resource "proxmox_virtual_environment_cluster_firewall_security_group" "tf-cluster-security-group-sdn" {
   name    = "tf-cluster-sg-sdn"
   comment = "Cluster level SDN firewall rules"
@@ -861,6 +861,7 @@ Clarifications:
 
 ---
 
-Last updated: 2026-01-15
+Updated: 2026-01-15
+Last updated: 2026-10-18
 
 Content license: CC BY-NC 4.0 — share and adapt with attribution, no commercial use.

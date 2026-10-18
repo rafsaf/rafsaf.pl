@@ -261,7 +261,7 @@ evpn_controller_peers:
 </ul>
 <h2 id="overlay-sdn">Overlay SDN<a class="heading-anchor" href="#overlay-sdn" title="Link to this section">&para;</a></h2>
 <p>Below is the Proxmox SDN setup in roz region. In wro, the only difference is that subnet is obviously part of <code>10.2.x.x</code> and not <code>10.1.x.x</code>, but beside that, the same setup is used.</p>
-<pre><code class="language-tf">resource &quot;proxmox_virtual_environment_sdn_zone_evpn&quot; &quot;crosssite&quot; {
+<pre><code class="language-bash">resource &quot;proxmox_virtual_environment_sdn_zone_evpn&quot; &quot;crosssite&quot; {
   id         = &quot;crossite&quot;
   controller = &quot;evpnctl&quot;
   vrf_vxlan  = 99999
@@ -357,7 +357,7 @@ resource &quot;proxmox_virtual_environment_sdn_applier&quot; &quot;evpn_finalize
 <li><strong>snat</strong> true – this is required with this setup. Described in section below why.</li>
 </ul>
 <h2 id="per-site-sdn-subnets-and-vms">Per-site SDN subnets and VMs<a class="heading-anchor" href="#per-site-sdn-subnets-and-vms" title="Link to this section">&para;</a></h2>
-<pre><code class="language-tf"># vm_sdntest.tf in roz
+<pre><code class="language-bash"># vm_sdntest.tf in roz
 
 locals {
   proxmox_dell_r740_node_name = &quot;proxmox-dell-r740&quot;
@@ -541,7 +541,7 @@ resource &quot;proxmox_virtual_environment_download_file&quot; &quot;dell_r740__
 </code></pre>
 <p>This is mainly <a href="https://registry.terraform.io/providers/bpg/proxmox/latest/docs/resources/virtual_environment_vm">proxmox_virtual_environment_vm</a> I use, with firewall rules alongisde.</p>
 <p>Let's focus on the change before/after SDN for network interfaces. For older VMs, there is only eth0 definition on <code>vmbr0</code>:</p>
-<pre><code class="language-tf">initialization {
+<pre><code class="language-bash">initialization {
   ip_config {
       ipv4 {
         address = &quot;${local.sdntest_ip}/16&quot;
@@ -576,7 +576,7 @@ network:
             set-name: eth0
 </code></pre>
 <p>whereas in the SDN VM it's:</p>
-<pre><code class="language-tf">initialization {
+<pre><code class="language-bash">initialization {
   ip_config {
     ipv4 {
       address = &quot;${local.sdntest_evpn_ip}/24&quot;
@@ -723,7 +723,7 @@ eth1 control when overlay is broken, port forwarding from router
 <li>On cluster level, <code>ebtables=true</code> (<code>proxmox_virtual_environment_cluster_firewall</code> ebtables=true)</li>
 <li>On each node, additionally it must be enabled (via GUI for now, no opentofu resource yet) – <code>nftables (tech preview) = yes</code></li>
 </ul>
-<pre><code class="language-tf">resource &quot;proxmox_virtual_environment_cluster_firewall_security_group&quot; &quot;tf-cluster-security-group-sdn&quot; {
+<pre><code class="language-bash">resource &quot;proxmox_virtual_environment_cluster_firewall_security_group&quot; &quot;tf-cluster-security-group-sdn&quot; {
   name    = &quot;tf-cluster-sg-sdn&quot;
   comment = &quot;Cluster level SDN firewall rules&quot;
 
@@ -790,5 +790,6 @@ eth1 control when overlay is broken, port forwarding from router
 <li>SDN crosssite_vnet allow forward traffic to 0.0.0.0/0 – this allows public internet access from VMs in subnet.</li>
 </ul>
 <hr>
-<p>Last updated: 2026-01-15</p>
+<p>Updated: 2026-01-15
+Last updated: 2026-10-18</p>
 <p>Content license: CC BY-NC 4.0 — share and adapt with attribution, no commercial use.</p>

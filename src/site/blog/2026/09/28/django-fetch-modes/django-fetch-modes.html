@@ -117,7 +117,7 @@ def delete_target(request: Request):
     return Response(req.errors, status=status.HTTP_400_BAD_REQUEST)
 </code></pre>
 <p>It has 2x query per loop iteration – <code>weight_model.state</code> will fetch related model and <code>state.save()</code> save it after update. My first thought was that maybe I can live with additional <code>save()</code> as those targets has usually up to dozen children and users ralely use this endpoint (not going to go into the details here as it will be boring). Let's simply add <code>select_related</code>:</p>
-<pre><code class="language-python">with transaction.atomic():
+<pre><code class="language-diff">with transaction.atomic():
 -   weights = WeightModel.objects.filter(target=target)
 +   weights = WeightModel.objects.filter(target=target).select_related(&quot;state&quot;)
     # deletes weights related to this target and updates weight state
