@@ -5,7 +5,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width" />
   <link rel="shortcut icon" href="/_data/images/ico.png" />
-  <link rel="stylesheet" href="/global.css?t=1773515497" />
+  <link rel="stylesheet" href="/global.css?t=1792418598" />
   
 <title>Proxmox private SDN network between two clusters</title>
 <meta name="description"
@@ -13,7 +13,7 @@
 <meta name="license" content="CC BY-NC 4.0" />
 <meta name="dcterms.rights" content="https://creativecommons.org/licenses/by-nc/4.0/" />
 <link rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/" />
-<link rel="stylesheet" href="/blog/blog.css?t=1773515497" />
+<link rel="stylesheet" href="/blog/blog.css?t=1792418598" />
 
   <!-- Privacy-friendly analytics by Plausible -->
   <script async src="https://analytics.rafsaf.pl/js/pa-PuPv02afN9M13G59cPfjc.js"></script>
@@ -21,6 +21,14 @@
     window.plausible = window.plausible || function () { (plausible.q = plausible.q || []).push(arguments) }, plausible.init = plausible.init || function (i) { plausible.o = i || {} };
     plausible.init()
   </script>
+  <link rel="stylesheet" href="/_data/js/@highlightjs/styles/vs-dark.min.css">
+  <script type="importmap">
+    {
+      "imports": {
+        "@highlightjs/": "/_data/js/@highlightjs/es/"
+      }
+    }
+</script>
 </head>
 
 <body>
@@ -91,7 +99,7 @@
 <p>Story of setting up network between two distinct Proxmox clusters in different locations based on wireguard and <a href="https://pve.proxmox.com/pve-docs/chapter-pvesdn.html">SDN</a> <a href="https://pve.proxmox.com/pve-docs/chapter-pvesdn.html#pvesdn_zone_plugin_evpn">EVPN</a> zone.</p>
 <p>I started with already <strong>working</strong> homelab setup for Proxmox (diagram below). It's quite typical and nothing special besides the paranoid usage of <a href="https://registry.terraform.io/providers/bpg/proxmox/latest/docs">proxmox opentofu bpg provider</a> (which I really love and also contribute to) for everything that was possible and ansible for nodes/vms setup. I think that's a strong requirement, simple "fire and forget" approach to setup something like this article describes is probably a very bad idea to the point where you'll probably end up with a messed up, broken current environment and non-working SDN (for one of dozens of non-trivial reasons).</p>
 <p>Enjoy!</p>
-<pre class="codehilite"><code class="language-bash">                            Public Internet
+<pre><code class="language-bash">                            Public Internet
                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
             roz                                      wro
@@ -122,7 +130,6 @@
 | - ...                     |
 +---------------------------+
 </code></pre>
-
 <p>The goals were the following:</p>
 <ul>
 <li>Waste a lot of time.</li>
@@ -133,7 +140,7 @@
 <li>Have firewall enabled. A lot of things is much simpler and just work with PVE firewall disabled.
 This is more or less the result:</li>
 </ul>
-<pre class="codehilite"><code class="language-bash">                        Public Internet
+<pre><code class="language-bash">                        Public Internet
             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
            roz                                     wro
@@ -167,7 +174,6 @@ This is more or less the result:</li>
 | - ...                      |      | - ...                      |
 +----------------------------+      +----------------------------+
 </code></pre>
-
 <h2 id="final-working-shape">Final working shape<a class="heading-anchor" href="#final-working-shape" title="Link to this section">&para;</a></h2>
 <ul>
 <li><strong>Early traps</strong> trying to use VXLAN Zone and/or fabrics instead of EVPN zone and wireguard.</li>
@@ -197,7 +203,7 @@ You can, for example, create a VXLAN overlay network on top of public internet, 
 <p>After another spike and looking for solutions, it turned out that wireguard vpn between nodes and EVPN SDN on top of it <em>should</em> work as expected.</p>
 <h2 id="underlay-wireguard">Underlay WireGuard<a class="heading-anchor" href="#underlay-wireguard" title="Link to this section">&para;</a></h2>
 <p>There is ansible role – <a href="https://github.com/githubixx/ansible-role-wireguard">ansible-role-wireguard</a> which has a seamless setup based on assumption that <strong>you have all nodes in single inventory</strong> (and hosts group). There is great README on the GitHub, I am not going into the details. Thankfully, I already have that. I have <code>proxmox</code> group and dedicated <code>playbook_proxmox.yml</code> playbook for proxmox nodes (whether roz or wro). The only nit pick is <code>linear</code> strategy (free doesn't work well).</p>
-<pre class="codehilite"><code class="language-yaml"># playbook_proxmox.yml
+<pre><code class="language-yaml"># playbook_proxmox.yml
 # Ignore meaningless details, clue is that every node have same setup
 # I put &quot;extra&quot; data like that on purpose to be precise, this is not light read anyway
 
@@ -217,10 +223,9 @@ You can, for example, create a VXLAN overlay network on top of public internet, 
           - &quot;2025_01_27_rafsaf_rycerski_servers.txt&quot;
           - &quot;2025_01_28_rafsaf_szczery_servers.txt&quot;
 </code></pre>
-
 <p>Host vars for wro and roz nodes. This is all documented in ansible role. In short, let's take roz. The wireguard adresses will be 10.1.0.1 and I plan to reserve 10.1.0.0/24 for new nodes, so new-node-roz2 would have <code>"10.1.0.2/16"</code> wireguard_addresses and <strong>the same</strong> wireguard_allowed_ips. <code>wireguard_endpoint</code> is DNS with <strong>public IP</strong> (either dynamic or static, does not matter). This is required to allow <code>wireguard_port</code> over UDP over public internet.</p>
 <p>Please ignore evpn related configuration for now (described later on).</p>
-<pre class="codehilite"><code class="language-yaml"># roz host_vars
+<pre><code class="language-yaml"># roz host_vars
 
 wireguard_addresses:
   - &quot;10.1.0.1/16&quot;
@@ -236,8 +241,7 @@ evpn_controller_peers:
   - &quot;10.2.0.1&quot;  # wro Wireguard IP
   - &quot;10.1.0.1&quot;  # roz Wireguard IP
 </code></pre>
-
-<pre class="codehilite"><code class="language-yaml"># wro host_vars
+<pre><code class="language-yaml"># wro host_vars
 
 wireguard_addresses:
   - &quot;10.2.0.1/16&quot;
@@ -253,9 +257,8 @@ evpn_controller_peers:
   - &quot;10.2.0.1&quot;  # wro Wireguard IP
   - &quot;10.1.0.1&quot;  # roz Wireguard IP
 </code></pre>
-
 <p>With configuration in place, let's go over <code>proxmox_host</code> role. I split it into 3 parts and describe it.</p>
-<pre class="codehilite"><code class="language-yaml"># proxmox_host role - part 1/3
+<pre><code class="language-yaml"># proxmox_host role - part 1/3
 
 - name: Install required apt libs
   apt:
@@ -277,12 +280,11 @@ evpn_controller_peers:
   ansible.builtin.import_role:
     name: githubixx.ansible_role_wireguard
 </code></pre>
-
 <p>The role use <code>lsb_release</code>, so that's why it's added. Same for <code>sudo</code> for become to work without any issue. Other than that, frr and frr-pythontools are simply <a href="https://pve.proxmox.com/pve-docs/chapter-pvesdn.html#pvesdn_controller_plugin_evpn">because</a> Proxmox wiki say so:</p>
 <blockquote>
 <p>To enable the EVPN controller, you need to enable FRR on every node, see install FRRouting.</p>
 </blockquote>
-<pre class="codehilite"><code class="language-yaml"># proxmox_host role - part 2/3
+<pre><code class="language-yaml"># proxmox_host role - part 2/3
 # =============================================================================
 # EVPN Controller
 # =============================================================================
@@ -309,14 +311,13 @@ evpn_controller_peers:
   when:
     - evpn_controller_created is changed
 </code></pre>
-
 <p>Why do i create EVPN controller via ansible instead of using already mentioned <a href="https://github.com/bpg/terraform-provider-proxmox">opentofu proxmox provider</a>? Because in v0.93.0 as of Jan 2026, there is no controller resource support yet. As it's a rather simple API, this will probably be added in the near future. Another option is to just use GUI.</p>
 <p><a href="https://pve.proxmox.com/pve-docs/chapter-pvesdn.html#pvesdn_controller_plugin_evpn">EVPN Controller</a> is a requirement for SDN EVPN zone, with simple arguments, unique random ASN and list of peers basically where:</p>
 <blockquote>
 <p>Peers - An IP list of all nodes that are part of the EVPN zone. (could also be external nodes or route reflector servers)</p>
 </blockquote>
 <p>Of course for that we use our wireguard internal IP, that is <code>10.2.0.1</code> for wro and <code>10.1.0.1</code> for roz. What if, again, we add new node <code>10.1.0.2</code> into roz cluster? Then we need to update the peers list and update existing controllers. There is no such thing in the above simplified role. Doing it via opentofu would be much more convenient.</p>
-<pre class="codehilite"><code class="language-yaml"># proxmox_host role - part 3/3
+<pre><code class="language-yaml"># proxmox_host role - part 3/3
 # =============================================================================
 # EVPN Exit Node - Required sysctl settings
 # =============================================================================
@@ -344,7 +345,6 @@ evpn_controller_peers:
     - net.ipv4.conf.default.rp_filter
     - net.ipv4.conf.all.rp_filter
 </code></pre>
-
 <p>Last but not least, sysctl modification that will help later. ALL of them are required, maybe except rp_filter settings, but see <a href="https://pve.proxmox.com/pve-docs/chapter-pvesdn.html#_multiple_evpn_exit_nodes">Multiple EVPN Exit Nodes</a>, they encourage doing it right away to allow packet flow between nodes.</p>
 <ul>
 <li><code>net.ipv4.ip_forward=1</code> (setting in Linux controls whether the system can forward IPv4 packets between network interfaces)</li>
@@ -358,7 +358,7 @@ evpn_controller_peers:
 </ul>
 <h2 id="overlay-sdn">Overlay SDN<a class="heading-anchor" href="#overlay-sdn" title="Link to this section">&para;</a></h2>
 <p>Below is the Proxmox SDN setup in roz region. In wro, the only difference is that subnet is obviously part of <code>10.2.x.x</code> and not <code>10.1.x.x</code>, but beside that, the same setup is used.</p>
-<pre class="codehilite"><code class="language-tf">resource &quot;proxmox_virtual_environment_sdn_zone_evpn&quot; &quot;crosssite&quot; {
+<pre><code class="language-bash">resource &quot;proxmox_virtual_environment_sdn_zone_evpn&quot; &quot;crosssite&quot; {
   id         = &quot;crossite&quot;
   controller = &quot;evpnctl&quot;
   vrf_vxlan  = 99999
@@ -417,7 +417,6 @@ resource &quot;proxmox_virtual_environment_sdn_applier&quot; &quot;evpn_applier&
 resource &quot;proxmox_virtual_environment_sdn_applier&quot; &quot;evpn_finalizer&quot; {
 }
 </code></pre>
-
 <p>Clarifications:</p>
 <p><code>proxmox_virtual_environment_sdn_zone_evpn</code>:</p>
 <ul>
@@ -455,7 +454,7 @@ resource &quot;proxmox_virtual_environment_sdn_applier&quot; &quot;evpn_finalize
 <li><strong>snat</strong> true – this is required with this setup. Described in section below why.</li>
 </ul>
 <h2 id="per-site-sdn-subnets-and-vms">Per-site SDN subnets and VMs<a class="heading-anchor" href="#per-site-sdn-subnets-and-vms" title="Link to this section">&para;</a></h2>
-<pre class="codehilite"><code class="language-tf"># vm_sdntest.tf in roz
+<pre><code class="language-bash"># vm_sdntest.tf in roz
 
 locals {
   proxmox_dell_r740_node_name = &quot;proxmox-dell-r740&quot;
@@ -637,10 +636,9 @@ resource &quot;proxmox_virtual_environment_download_file&quot; &quot;dell_r740__
   overwrite    = false
 }
 </code></pre>
-
 <p>This is mainly <a href="https://registry.terraform.io/providers/bpg/proxmox/latest/docs/resources/virtual_environment_vm">proxmox_virtual_environment_vm</a> I use, with firewall rules alongisde.</p>
 <p>Let's focus on the change before/after SDN for network interfaces. For older VMs, there is only eth0 definition on <code>vmbr0</code>:</p>
-<pre class="codehilite"><code class="language-tf">initialization {
+<pre><code class="language-bash">initialization {
   ip_config {
       ipv4 {
         address = &quot;${local.sdntest_ip}/16&quot;
@@ -655,9 +653,8 @@ network_device {
   firewall = true
 }
 </code></pre>
-
 <p>That would give following interfaces generated by cloud init:</p>
-<pre class="codehilite"><code class="language-bash"># /etc/netplan/50-cloud-init.yaml
+<pre><code class="language-bash"># /etc/netplan/50-cloud-init.yaml
 
 network:
     version: 2
@@ -675,9 +672,8 @@ network:
                 - proxmox-dell-r740.internal
             set-name: eth0
 </code></pre>
-
 <p>whereas in the SDN VM it's:</p>
-<pre class="codehilite"><code class="language-tf">initialization {
+<pre><code class="language-bash">initialization {
   ip_config {
     ipv4 {
       address = &quot;${local.sdntest_evpn_ip}/24&quot;
@@ -703,9 +699,8 @@ network_device {
   firewall = true
 }
 </code></pre>
-
 <p>This means eth0 is now the SDN network and <strong>default route for internet is via 10.1.1.1 gateway</strong>. We leave the (optional) vmbr0 management interface, but it's not used for internet anymore.</p>
-<pre class="codehilite"><code class="language-bash">network:
+<pre><code class="language-bash">network:
   version: 2
   ethernets:
     eth0:
@@ -734,21 +729,19 @@ network_device {
         - proxmox-dell-r740.internal
       set-name: &quot;eth1&quot;
 </code></pre>
-
 <p>(Please ignore nameserver 192.168.3.8, I use dnscrypt VM for DNS resolution and this is why such address)</p>
 <p>In fact, this is exactly what we need. ALL traffic must go over the subnet gateway and SDN because this is the place where we can decide whether traffic should go over router to public internet or to the other data center (yes, in fact this is also using public internet, but hidden by wireguard magic and encrypted):</p>
 <p>For example:</p>
-<pre class="codehilite"><code class="language-bash">VM 10.1.1.5 from roz wants to reach 10.2.1.5 from wro
+<pre><code class="language-bash">VM 10.1.1.5 from roz wants to reach 10.2.1.5 from wro
 ├── 10.2.1.5 is NOT in local subnet 10.1.1.0/24
 ├── VM sends packet to default gateway 10.1.1.1 (standard IP routing)
 ├── Gateway (Proxmox EVPN router) has route to 10.2.1.0/24 via BGP-EVPN
 ├── Packet encapsulated in VXLAN, sent to 10.2.0.1 via Wireguard
 └── WRO decapsulates, delivers to VM 10.2.1.5
 </code></pre>
-
 <p>This scenario is not possible when vmbr0 is main interface.</p>
 <p>So for each VM, it must be:</p>
-<pre class="codehilite"><code class="language-bash">+--------------------+
+<pre><code class="language-bash">+--------------------+
 | eth0: vnet (SDN)   | 10.x.1.x/24
 |  - default gw =    | 10.x.1.1
 |    SDN gateway     |
@@ -759,19 +752,17 @@ network_device {
 eth0 overlay + exit-node + SNAT
 eth1 control when overlay is broken, port forwarding from router
 </code></pre>
-
 <h2 id="critical-fixes">Critical fixes<a class="heading-anchor" href="#critical-fixes" title="Link to this section">&para;</a></h2>
 <h3 id="snat">SNAT<a class="heading-anchor" href="#snat" title="Link to this section">&para;</a></h3>
 <p><code>snat=1</code> enabled in <code>proxmox_virtual_environment_sdn_subnet</code>.</p>
 <p>You could theoretically have masquerade and NAT setup for <code>10.1.1.0/24</code> on your router and with some hassle that is going to work, but this is exactly what we want to avoid – having a hardcoded, non-trivial setup anywhere if not needed. With <code>snat</code>, proxmox node is going to have iptables rule for this subnet so it can access internet via <code>vmbr0</code> node interface:</p>
-<pre class="codehilite"><code class="language-bash">$ iptables -t nat -L -n -v | egrep '10\.1\.1\.0/24|MASQUERADE|SNAT'
+<pre><code class="language-bash">$ iptables -t nat -L -n -v | egrep '10\.1\.1\.0/24|MASQUERADE|SNAT'
 
    64  4859 SNAT       all  --  *      vmbr0   10.1.1.0/24          0.0.0.0/0            to:192.168.2.3
     0     0 SNAT       all  --  *      vmbr0   10.1.1.0/24          0.0.0.0/0            to:192.168.2.3
     0     0 SNAT       all  --  *      vmbr0   10.1.1.0/24          0.0.0.0/0            to:192.168.2.3
     0     0 SNAT       all  --  *      vmbr0   10.1.1.0/24          0.0.0.0/0            to:192.168.2.3
 </code></pre>
-
 <p>Small nit pick found: after disabling it with <code>snat=0</code>, iptables rules were still in place for <code>10.1.1.0/24</code>, so Proxmox doesn't clean them up. It's probably a bug, but maybe a feature.</p>
 <h3 id="the-killer-setting-exit_nodes_local_routing">The killer setting: <code>exit_nodes_local_routing</code><a class="heading-anchor" href="#the-killer-setting-exit_nodes_local_routing" title="Link to this section">&para;</a></h3>
 <p>This was the bug-shaped hole.</p>
@@ -829,7 +820,7 @@ eth1 control when overlay is broken, port forwarding from router
 <li>On cluster level, <code>ebtables=true</code> (<code>proxmox_virtual_environment_cluster_firewall</code> ebtables=true)</li>
 <li>On each node, additionally it must be enabled (via GUI for now, no opentofu resource yet) – <code>nftables (tech preview) = yes</code></li>
 </ul>
-<pre class="codehilite"><code class="language-tf">resource &quot;proxmox_virtual_environment_cluster_firewall_security_group&quot; &quot;tf-cluster-security-group-sdn&quot; {
+<pre><code class="language-bash">resource &quot;proxmox_virtual_environment_cluster_firewall_security_group&quot; &quot;tf-cluster-security-group-sdn&quot; {
   name    = &quot;tf-cluster-sg-sdn&quot;
   comment = &quot;Cluster level SDN firewall rules&quot;
 
@@ -886,7 +877,6 @@ eth1 control when overlay is broken, port forwarding from router
   }
 }
 </code></pre>
-
 <p>PVE automatically creates some <a href="https://pve.proxmox.com/pve-docs/chapter-pvesdn.html#pvesdn_firewall_integration">IPSets for every SDN Vnet</a> so this is where "vnetid-all", "vnetid-gateway" come from.</p>
 <p>Clarifications:</p>
 <ul>
@@ -897,7 +887,8 @@ eth1 control when overlay is broken, port forwarding from router
 <li>SDN crosssite_vnet allow forward traffic to 0.0.0.0/0 – this allows public internet access from VMs in subnet.</li>
 </ul>
 <hr>
-<p>Last updated: 2026-01-15</p>
+<p>Updated: 2026-01-15
+Last updated: 2026-10-18</p>
 <p>Content license: CC BY-NC 4.0 — share and adapt with attribution, no commercial use.</p>
 </div>
 <script>
@@ -935,6 +926,24 @@ eth1 control when overlay is broken, port forwarding from router
             }
         }
     });
+</script>
+<script type="module">
+    import hljs from '@highlightjs/core.js';
+    import javascript from '@highlightjs/languages/javascript.min.js';
+    import dockerfile from '@highlightjs/languages/dockerfile.min.js';
+    import python from '@highlightjs/languages/python.min.js';
+    import bash from '@highlightjs/languages/bash.min.js';
+    import yaml from '@highlightjs/languages/yaml.min.js';
+    import diff from '@highlightjs/languages/diff.min.js';
+
+    hljs.registerLanguage('javascript', javascript);
+    hljs.registerLanguage('dockerfile', dockerfile);
+    hljs.registerLanguage('python', python);
+    hljs.registerLanguage('bash', bash);
+    hljs.registerLanguage('yaml', yaml);
+    hljs.registerLanguage('diff', diff);
+
+    hljs.highlightAll();
 </script>
 
   </div>

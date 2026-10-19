@@ -1,0 +1,276 @@
+<h1 id="django-fetch-modes">Django fetch modes<a class="heading-anchor" href="#django-fetch-modes" title="Link to this section">&para;</a></h1>
+<p>Django 6.1 was <a href="https://docs.djangoproject.com/en/6.1/releases/6.1/">released</a> recently (2026.08.05) and introduced <a href="https://docs.djangoproject.com/en/6.1/topics/db/fetch-modes/">fetch modes</a> support.</p>
+<p><strong>My claim in this article is that default options are not useful. But it's very easy to log n+1 query problems.</strong></p>
+<p>Syntax is trivial to be added at <strong>model level</strong> (it SEEMS that could be good to have it on global level, but this could have unforseen side effects on your 10 third party apps and break code in so subtle way that you won't see it easly, example later!)</p>
+<pre><code class="language-python">class BookManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().fetch_mode(...)
+
+
+class Book(models.Model):
+    ...
+
+    objects = BookManager()
+</code></pre>
+<p>Two new available modes (as FETCH_ONE represents Django's behaviour before 6.1) seems cool at first, but they are not really.</p>
+<h2 id="fetch_raise">FETCH_RAISE<a class="heading-anchor" href="#fetch_raise" title="Link to this section">&para;</a></h2>
+<p><code>FETCH_RAISE</code> is in fact killer option, I doubt anybody would dare to use it in production. This is just too much, you WILL end up with 500 errors sooner or later (I would say that it will be sooner, aka next minute after deployment). Basically: "I am 100% sure my app doesn't contain any hidden n+1 bug". Not true, after certain number of features times number of people who work on the project this WILL happen.</p>
+<p>Please don't use it, don't detonate your app.</p>
+<p>Not to mention that trying to adapt it for certain number of tests seems just not doable unless you spend week adapting them (what for, I don't know, who cares if your tests contain certain n+1 problems).</p>
+<h2 id="fetch_peers">FETCH_PEERS<a class="heading-anchor" href="#fetch_peers" title="Link to this section">&para;</a></h2>
+<p>My problems with <code>FETCH_PEERS</code> are following:</p>
+<ul>
+<li>You are <strong>not</strong> going to use it on purpose, since you are very good programmer and would use <code>select_related</code> and <code>prefetch_related</code> instead on your own.</li>
+<li>Then this means automatically that it will <strong>hide some real BUG</strong> in your code by definition (or in best case do nothing).</li>
+<li>So, instead of using <a href="https://pytest-django.readthedocs.io/en/latest/helpers.html#django-assert-num-queries">assert_num_queries</a> (or <code>assertNumQueries</code> at your option) in risky places where bug can happen and in general writting good performant code, you are using hack to save you.</li>
+<li>Not always this will be best option. If you look on <a href="https://github.com/django/django/blob/6.1/django/db/models/fetch_modes.py#L31-L40">actual implementation</a>, this is in fact <code>prefetch_related</code>. There are many cases where <code>select_related</code> would be more natural and just better.</li>
+<li>Even if <code>prefetch_related</code> <strong>should</strong> be quite safe to applicate in various places (as django deduplicate fetched objects) I can imagine and am pretty sure in the wild there will be cases where some (buggy as hell at your option) code will break after adding it.</li>
+</ul>
+<h2 id="fetch_error">FETCH_ERROR???<a class="heading-anchor" href="#fetch_error" title="Link to this section">&para;</a></h2>
+<p>My own thinking is that I don't like either to detonate my applications nor hide (or silently introduce) bugs so both <code>FETCH_RAISE</code> and <code>FETCH_PEERS</code> are non go.</p>
+<p>It's OK for me to flag some problems and I can fix them myself. Logging error or warning – this is the way.</p>
+<p>Thanfully, it's super easy to do (as always in Django :)</p>
+<pre><code class="language-python"># fetch_error_manager.py
+
+import inspect
+import logging
+from typing import Any
+
+from django.conf import settings
+from django.db.models import Manager, Model
+from django.db.models.fetch_modes import FetchOne
+
+log = logging.getLogger(__name__)
+
+
+class FetchError(FetchOne):
+    __slots__ = ()
+
+    track_peers = False
+
+    def fetch(self, fetcher: Any, instance: Model) -&gt; None:
+        klass = instance.__class__.__qualname__
+        field_name = fetcher.field.name
+
+        if not settings.TESTING and not self._is_django_admin_call():
+            log.error(&quot;Unexpected fetch of %s.%s.&quot;, klass, field_name, stack_info=True)
+
+        return super().fetch(fetcher, instance)
+
+    def _is_django_admin_call(self) -&gt; bool:
+        # Walk frame back pointers directly to avoid inspect.stack shadowing issues
+        frame = inspect.currentframe()
+        try:
+            depth = 0
+            while frame and depth &lt; 20:
+                module_name = frame.f_globals.get(&quot;__name__&quot;, &quot;&quot;)
+                if module_name.startswith(&quot;django.contrib.admin&quot;):
+                    return True
+                frame = frame.f_back
+                depth += 1
+        finally:
+            del frame  # Avoid reference cycle retention
+        return False
+
+    def __reduce__(self):
+        return &quot;FETCH_ERROR&quot;
+
+
+FETCH_ERROR = FetchError()
+
+
+class FetchErrorManager(Manager):
+    def get_queryset(self):
+        return super().get_queryset().fetch_mode(FETCH_ERROR)
+</code></pre>
+<p>It can be simple file near to <code>settings.py</code>. Then, <code>FetchErrorManager</code> is to be used as <a href="https://docs.djangoproject.com/en/6.1/topics/db/managers/#custom-managers">custom manager</a> for each model:</p>
+<pre><code class="language-python">...
+from tribal_wars_planer.fetch_error_manager import FetchErrorManager
+...
+
+
+class Outline(models.Model):
+    ...
+
+    objects = FetchErrorManager()
+
+    ...
+
+</code></pre>
+<p>The result? <strong>Every</strong> n+1 is logged (in my case, at error level, in code above – warning). The quite long stack trace is probably something not to be avoided, but maybe it is possible to further improve the <code>FetchErrorManager</code>. In any case it is clear that line that triggered the additional database query is:   </p>
+<pre><code class="language-bash">File &quot;/home/rafsaf/projects/Tribal-Wars-Planer/base/views/outline.py&quot;, line 270, in outline_detail
+    if instance.world.postfix == &quot;Test&quot;:
+</code></pre>
+<p>Full log:</p>
+<pre><code class="language-bash">2026-09-18 17:53:57,180 [ERROR] tribal_wars_planer.fetch_error_manager: Unexpected fetch of Outline.world.
+Stack (most recent call last):
+  File &quot;/home/rafsaf/.local/share/uv/python/cpython-3.14.0-linux-x86_64-gnu/lib/python3.14/threading.py&quot;, line 1043, in _bootstrap
+    self._bootstrap_inner()
+  File &quot;/home/rafsaf/.local/share/uv/python/cpython-3.14.0-linux-x86_64-gnu/lib/python3.14/threading.py&quot;, line 1081, in _bootstrap_inner
+    self._context.run(self.run)
+  File &quot;/home/rafsaf/.local/share/uv/python/cpython-3.14.0-linux-x86_64-gnu/lib/python3.14/threading.py&quot;, line 1023, in run
+    self._target(*self._args, **self._kwargs)
+  File &quot;/home/rafsaf/.local/share/uv/python/cpython-3.14.0-linux-x86_64-gnu/lib/python3.14/socketserver.py&quot;, line 697, in process_request_thread
+    self.finish_request(request, client_address)
+  File &quot;/home/rafsaf/.local/share/uv/python/cpython-3.14.0-linux-x86_64-gnu/lib/python3.14/socketserver.py&quot;, line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File &quot;/home/rafsaf/.local/share/uv/python/cpython-3.14.0-linux-x86_64-gnu/lib/python3.14/socketserver.py&quot;, line 766, in __init__
+    self.handle()
+  File &quot;/home/rafsaf/projects/Tribal-Wars-Planer/.venv/lib/python3.14/site-packages/django/core/servers/basehttp.py&quot;, line 221, in handle
+    self.handle_one_request()
+  File &quot;/home/rafsaf/projects/Tribal-Wars-Planer/.venv/lib/python3.14/site-packages/django/core/servers/basehttp.py&quot;, line 248, in handle_one_request
+    handler.run(self.server.get_app())
+  File &quot;/home/rafsaf/.local/share/uv/python/cpython-3.14.0-linux-x86_64-gnu/lib/python3.14/wsgiref/handlers.py&quot;, line 137, in run
+    self.result = application(self.environ, self.start_response)
+  File &quot;/home/rafsaf/projects/Tribal-Wars-Planer/.venv/lib/python3.14/site-packages/django/contrib/staticfiles/handlers.py&quot;, line 80, in __call__
+    return self.application(environ, start_response)
+  File &quot;/home/rafsaf/projects/Tribal-Wars-Planer/.venv/lib/python3.14/site-packages/django/core/handlers/wsgi.py&quot;, line 124, in __call__
+    response = self.get_response(request)
+  File &quot;/home/rafsaf/projects/Tribal-Wars-Planer/.venv/lib/python3.14/site-packages/django/core/handlers/base.py&quot;, line 142, in get_response
+    response = self._middleware_chain(request)
+  File &quot;/home/rafsaf/projects/Tribal-Wars-Planer/.venv/lib/python3.14/site-packages/django/core/handlers/exception.py&quot;, line 56, in inner
+    response = get_response(request)
+  File &quot;/home/rafsaf/projects/Tribal-Wars-Planer/.venv/lib/python3.14/site-packages/debug_toolbar/middleware.py&quot;, line 152, in __call__
+    response = toolbar.process_request(request)
+  File &quot;/home/rafsaf/projects/Tribal-Wars-Planer/.venv/lib/python3.14/site-packages/debug_toolbar/panels/__init__.py&quot;, line 247, in process_request
+    return self.get_response(request)
+  File &quot;/home/rafsaf/projects/Tribal-Wars-Planer/.venv/lib/python3.14/site-packages/debug_toolbar/panels/__init__.py&quot;, line 247, in process_request
+    return self.get_response(request)
+  File &quot;/home/rafsaf/projects/Tribal-Wars-Planer/.venv/lib/python3.14/site-packages/debug_toolbar/panels/timer.py&quot;, line 72, in process_request
+    return super().process_request(request)
+  File &quot;/home/rafsaf/projects/Tribal-Wars-Planer/.venv/lib/python3.14/site-packages/debug_toolbar/panels/__init__.py&quot;, line 247, in process_request
+    return self.get_response(request)
+  File &quot;/home/rafsaf/projects/Tribal-Wars-Planer/.venv/lib/python3.14/site-packages/debug_toolbar/panels/__init__.py&quot;, line 247, in process_request
+    return self.get_response(request)
+  File &quot;/home/rafsaf/projects/Tribal-Wars-Planer/.venv/lib/python3.14/site-packages/debug_toolbar/panels/headers.py&quot;, line 49, in process_request
+    return super().process_request(request)
+  File &quot;/home/rafsaf/projects/Tribal-Wars-Planer/.venv/lib/python3.14/site-packages/debug_toolbar/panels/__init__.py&quot;, line 247, in process_request
+    return self.get_response(request)
+  File &quot;/home/rafsaf/projects/Tribal-Wars-Planer/.venv/lib/python3.14/site-packages/debug_toolbar/panels/__init__.py&quot;, line 247, in process_request
+    return self.get_response(request)
+  File &quot;/home/rafsaf/projects/Tribal-Wars-Planer/.venv/lib/python3.14/site-packages/debug_toolbar/panels/__init__.py&quot;, line 247, in process_request
+    return self.get_response(request)
+  [Previous line repeated 7 more times]
+  File &quot;/home/rafsaf/projects/Tribal-Wars-Planer/.venv/lib/python3.14/site-packages/django/core/handlers/exception.py&quot;, line 56, in inner
+    response = get_response(request)
+  File &quot;/home/rafsaf/projects/Tribal-Wars-Planer/tribal_wars_planer/middlewares.py&quot;, line 38, in middleware
+    response = get_response(request)
+  File &quot;/home/rafsaf/projects/Tribal-Wars-Planer/.venv/lib/python3.14/site-packages/django/core/handlers/exception.py&quot;, line 56, in inner
+    response = get_response(request)
+  File &quot;/home/rafsaf/projects/Tribal-Wars-Planer/.venv/lib/python3.14/site-packages/django/utils/deprecation.py&quot;, line 441, in __call__
+    response = response or self.get_response(request)
+  File &quot;/home/rafsaf/projects/Tribal-Wars-Planer/.venv/lib/python3.14/site-packages/django/core/handlers/exception.py&quot;, line 56, in inner
+    response = get_response(request)
+  File &quot;/home/rafsaf/projects/Tribal-Wars-Planer/.venv/lib/python3.14/site-packages/django/utils/deprecation.py&quot;, line 441, in __call__
+    response = response or self.get_response(request)
+  File &quot;/home/rafsaf/projects/Tribal-Wars-Planer/.venv/lib/python3.14/site-packages/django/core/handlers/exception.py&quot;, line 56, in inner
+    response = get_response(request)
+  File &quot;/home/rafsaf/projects/Tribal-Wars-Planer/.venv/lib/python3.14/site-packages/django/utils/deprecation.py&quot;, line 441, in __call__
+    response = response or self.get_response(request)
+  File &quot;/home/rafsaf/projects/Tribal-Wars-Planer/.venv/lib/python3.14/site-packages/django/core/handlers/exception.py&quot;, line 56, in inner
+    response = get_response(request)
+  File &quot;/home/rafsaf/projects/Tribal-Wars-Planer/.venv/lib/python3.14/site-packages/django/utils/deprecation.py&quot;, line 441, in __call__
+    response = response or self.get_response(request)
+  File &quot;/home/rafsaf/projects/Tribal-Wars-Planer/.venv/lib/python3.14/site-packages/django/core/handlers/exception.py&quot;, line 56, in inner
+    response = get_response(request)
+  File &quot;/home/rafsaf/projects/Tribal-Wars-Planer/.venv/lib/python3.14/site-packages/django/utils/deprecation.py&quot;, line 441, in __call__
+    response = response or self.get_response(request)
+  File &quot;/home/rafsaf/projects/Tribal-Wars-Planer/.venv/lib/python3.14/site-packages/django/core/handlers/exception.py&quot;, line 56, in inner
+    response = get_response(request)
+  File &quot;/home/rafsaf/projects/Tribal-Wars-Planer/.venv/lib/python3.14/site-packages/django/utils/deprecation.py&quot;, line 441, in __call__
+    response = response or self.get_response(request)
+  File &quot;/home/rafsaf/projects/Tribal-Wars-Planer/.venv/lib/python3.14/site-packages/django/core/handlers/exception.py&quot;, line 56, in inner
+    response = get_response(request)
+  File &quot;/home/rafsaf/projects/Tribal-Wars-Planer/.venv/lib/python3.14/site-packages/django_otp/middleware.py&quot;, line 44, in __call__
+    return self.get_response(request)
+  File &quot;/home/rafsaf/projects/Tribal-Wars-Planer/.venv/lib/python3.14/site-packages/django/core/handlers/exception.py&quot;, line 56, in inner
+    response = get_response(request)
+  File &quot;/home/rafsaf/projects/Tribal-Wars-Planer/.venv/lib/python3.14/site-packages/django/utils/deprecation.py&quot;, line 441, in __call__
+    response = response or self.get_response(request)
+  File &quot;/home/rafsaf/projects/Tribal-Wars-Planer/.venv/lib/python3.14/site-packages/django/core/handlers/exception.py&quot;, line 56, in inner
+    response = get_response(request)
+  File &quot;/home/rafsaf/projects/Tribal-Wars-Planer/.venv/lib/python3.14/site-packages/django/utils/deprecation.py&quot;, line 441, in __call__
+    response = response or self.get_response(request)
+  File &quot;/home/rafsaf/projects/Tribal-Wars-Planer/.venv/lib/python3.14/site-packages/django/core/handlers/exception.py&quot;, line 56, in inner
+    response = get_response(request)
+  File &quot;/home/rafsaf/projects/Tribal-Wars-Planer/tribal_wars_planer/middlewares.py&quot;, line 95, in middleware
+    response = get_response(request)
+  File &quot;/home/rafsaf/projects/Tribal-Wars-Planer/.venv/lib/python3.14/site-packages/django/core/handlers/exception.py&quot;, line 56, in inner
+    response = get_response(request)
+  File &quot;/home/rafsaf/projects/Tribal-Wars-Planer/tribal_wars_planer/middlewares.py&quot;, line 54, in middleware
+    response: HttpResponse = get_response(request)
+  File &quot;/home/rafsaf/projects/Tribal-Wars-Planer/.venv/lib/python3.14/site-packages/django/core/handlers/exception.py&quot;, line 56, in inner
+    response = get_response(request)
+  File &quot;/home/rafsaf/projects/Tribal-Wars-Planer/.venv/lib/python3.14/site-packages/django/core/handlers/base.py&quot;, line 199, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File &quot;/home/rafsaf/projects/Tribal-Wars-Planer/.venv/lib/python3.14/site-packages/django/contrib/auth/decorators.py&quot;, line 60, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File &quot;/home/rafsaf/projects/Tribal-Wars-Planer/base/views/outline.py&quot;, line 270, in outline_detail
+    if instance.world.postfix == &quot;Test&quot;:
+  File &quot;/home/rafsaf/projects/Tribal-Wars-Planer/.venv/lib/python3.14/site-packages/django/db/models/fields/related_descriptors.py&quot;, line 267, in __get__
+    instance._state.fetch_mode.fetch(self, instance)
+  File &quot;/home/rafsaf/projects/Tribal-Wars-Planer/tribal_wars_planer/fetch_error_manager.py&quot;, line 22, in fetch
+    log.error(&quot;Unexpected fetch of %s.%s.&quot;, klass, field_name, stack_info=True)
+</code></pre>
+<h2 id="disclaimer-1-errors-flood">Disclaimer 1 – errors flood<a class="heading-anchor" href="#disclaimer-1-errors-flood" title="Link to this section">&para;</a></h2>
+<p>Dislaimer: it is possible to flood your error/log systems with enough traffic. It is probably not a good idea to launch such code as above when it is possible to get 1000 errors per second. In my case it took few hours to reach the free tier sentry limit.</p>
+<p>Be warned.</p>
+<p><img alt="sentry email" src="sentry-email.png"></p>
+<h2 id="diclaimer-2-be-careful-fixing-n1">Diclaimer 2 – be careful fixing n+1<a class="heading-anchor" href="#diclaimer-2-be-careful-fixing-n1" title="Link to this section">&para;</a></h2>
+<p>Here is <a href="https://github.com/rafsaf/Tribal-Wars-Planer/blob/f8f96d537591b5e7d554e59b57e56bacc6d8cc53/rest_api/views.py#L154-L185">permalink</a> if you need more context, but it's simple endpoint that deletes <code>Target</code> object with related children called <code>WeightModel</code> that have FK to model <code>WeightMaximum</code>. It's real code, written by my jounger self years ago. It is as it is, works fine (well, unless you remove n+1 problem in naive way!).</p>
+<pre><code class="language-python">@api_view([&quot;DELETE&quot;])
+@permission_classes([IsAuthenticated])
+def delete_target(request: Request):
+    &quot;&quot;&quot;
+    For given target id, delete obj.
+    &quot;&quot;&quot;
+    req = TargetDeleteSerializer(data=request.data)  # type: ignore
+    if req.is_valid():
+        target: TargetVertex = get_object_or_404(
+            TargetVertex.objects.select_related(&quot;outline&quot;),
+            pk=req.data.get(&quot;target_id&quot;),
+            outline__owner=request.user,
+        )
+        with transaction.atomic():
+            weights = WeightModel.objects.filter(target=target)
+            # deletes weights related to this target and updates weight state
+            weight_model: WeightModel
+            for weight_model in weights:
+                state: WeightMaximum = weight_model.state
+                state.off_left += weight_model.off
+                state.off_state -= weight_model.off
+                state.nobleman_left += weight_model.nobleman
+                state.nobleman_state -= weight_model.nobleman
+                state.catapult_left += weight_model.catapult
+                state.catapult_state -= weight_model.catapult
+                state.save()
+
+            weights.delete()
+            target.delete()
+
+        return Response(status=status.HTTP_204_NO_CONTENT)
+    return Response(req.errors, status=status.HTTP_400_BAD_REQUEST)
+</code></pre>
+<p>It has 2x query per loop iteration – <code>weight_model.state</code> will fetch related model and <code>state.save()</code> save it after update. My first thought was that maybe I can live with additional <code>save()</code> as those targets has usually up to dozen children and users ralely use this endpoint (not going to go into the details here as it will be boring). Let's simply add <code>select_related</code>:</p>
+<pre><code class="language-diff">with transaction.atomic():
+-   weights = WeightModel.objects.filter(target=target)
++   weights = WeightModel.objects.filter(target=target).select_related(&quot;state&quot;)
+    # deletes weights related to this target and updates weight state
+    weight_model: WeightModel
+    for weight_model in weights:
+        state: WeightMaximum = weight_model.state
+        state.off_left += weight_model.off
+        state.off_state -= weight_model.off
+        state.nobleman_left += weight_model.nobleman
+        state.nobleman_state -= weight_model.nobleman
+        state.catapult_left += weight_model.catapult
+        state.catapult_state -= weight_model.catapult
+        state.save()
+</code></pre>
+<p>Do you see the bug? <a href="https://en.wikipedia.org/wiki/Proof_by_intimidation">The proof is left as an exercise for the reader</a>. Hint after image of cloister taken in Italy.</p>
+<p><img alt="PXL_20261017_113852626.avif" src="./PXL_20261017_113852626.avif"></p>
+<p><small>Chiostro Normanno of Lipary, Italy (private gallery)</small></p>
+<p>Each <code>weight_model</code> modify <code>state</code> parent. If <code>state</code> is the very same parent for two different <code>weight_model</code>, then because they are different model, state will be overriden. In fact n+1 is a reason that this piece of code is working at all.</p>
+<hr>
+<p>Last updated: 2026-10-19</p>
+<p>Content license: CC BY-NC 4.0 — share and adapt with attribution, no commercial use.</p>
