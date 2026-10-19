@@ -47,6 +47,8 @@ It's OK for me to flag some problems and I can fix them myself. Logging error or
 Thanfully, it's super easy to do (as always in Django :)
 
 ```python
+# fetch_error_manager.py
+
 import inspect
 import logging
 from typing import Any
@@ -99,8 +101,153 @@ class FetchErrorManager(Manager):
         return super().get_queryset().fetch_mode(FETCH_ERROR)
 ```
 
+It can be simple file near to `settings.py`. Then, `FetchErrorManager` is to be used as [custom manager](https://docs.djangoproject.com/en/6.1/topics/db/managers/#custom-managers) for each model:
 
-## Be careful fixing n+1
+```python
+...
+from tribal_wars_planer.fetch_error_manager import FetchErrorManager
+...
+
+
+class Outline(models.Model):
+    ...
+
+    objects = FetchErrorManager()
+
+    ...
+
+```
+
+The result? **Every** n+1 is logged (in my case, at error level, in code above – warning). The quite long stack trace is probably something not to be avoided, but maybe it is possible to further improve the `FetchErrorManager`. In any case it is clear that line that triggered the additional database query is:   
+
+```bash
+File "/home/rafsaf/projects/Tribal-Wars-Planer/base/views/outline.py", line 270, in outline_detail
+    if instance.world.postfix == "Test":
+```
+
+Full log:
+
+```bash
+2026-09-18 17:53:57,180 [ERROR] tribal_wars_planer.fetch_error_manager: Unexpected fetch of Outline.world.
+Stack (most recent call last):
+  File "/home/rafsaf/.local/share/uv/python/cpython-3.14.0-linux-x86_64-gnu/lib/python3.14/threading.py", line 1043, in _bootstrap
+    self._bootstrap_inner()
+  File "/home/rafsaf/.local/share/uv/python/cpython-3.14.0-linux-x86_64-gnu/lib/python3.14/threading.py", line 1081, in _bootstrap_inner
+    self._context.run(self.run)
+  File "/home/rafsaf/.local/share/uv/python/cpython-3.14.0-linux-x86_64-gnu/lib/python3.14/threading.py", line 1023, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/rafsaf/.local/share/uv/python/cpython-3.14.0-linux-x86_64-gnu/lib/python3.14/socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/home/rafsaf/.local/share/uv/python/cpython-3.14.0-linux-x86_64-gnu/lib/python3.14/socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "/home/rafsaf/.local/share/uv/python/cpython-3.14.0-linux-x86_64-gnu/lib/python3.14/socketserver.py", line 766, in __init__
+    self.handle()
+  File "/home/rafsaf/projects/Tribal-Wars-Planer/.venv/lib/python3.14/site-packages/django/core/servers/basehttp.py", line 221, in handle
+    self.handle_one_request()
+  File "/home/rafsaf/projects/Tribal-Wars-Planer/.venv/lib/python3.14/site-packages/django/core/servers/basehttp.py", line 248, in handle_one_request
+    handler.run(self.server.get_app())
+  File "/home/rafsaf/.local/share/uv/python/cpython-3.14.0-linux-x86_64-gnu/lib/python3.14/wsgiref/handlers.py", line 137, in run
+    self.result = application(self.environ, self.start_response)
+  File "/home/rafsaf/projects/Tribal-Wars-Planer/.venv/lib/python3.14/site-packages/django/contrib/staticfiles/handlers.py", line 80, in __call__
+    return self.application(environ, start_response)
+  File "/home/rafsaf/projects/Tribal-Wars-Planer/.venv/lib/python3.14/site-packages/django/core/handlers/wsgi.py", line 124, in __call__
+    response = self.get_response(request)
+  File "/home/rafsaf/projects/Tribal-Wars-Planer/.venv/lib/python3.14/site-packages/django/core/handlers/base.py", line 142, in get_response
+    response = self._middleware_chain(request)
+  File "/home/rafsaf/projects/Tribal-Wars-Planer/.venv/lib/python3.14/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/rafsaf/projects/Tribal-Wars-Planer/.venv/lib/python3.14/site-packages/debug_toolbar/middleware.py", line 152, in __call__
+    response = toolbar.process_request(request)
+  File "/home/rafsaf/projects/Tribal-Wars-Planer/.venv/lib/python3.14/site-packages/debug_toolbar/panels/__init__.py", line 247, in process_request
+    return self.get_response(request)
+  File "/home/rafsaf/projects/Tribal-Wars-Planer/.venv/lib/python3.14/site-packages/debug_toolbar/panels/__init__.py", line 247, in process_request
+    return self.get_response(request)
+  File "/home/rafsaf/projects/Tribal-Wars-Planer/.venv/lib/python3.14/site-packages/debug_toolbar/panels/timer.py", line 72, in process_request
+    return super().process_request(request)
+  File "/home/rafsaf/projects/Tribal-Wars-Planer/.venv/lib/python3.14/site-packages/debug_toolbar/panels/__init__.py", line 247, in process_request
+    return self.get_response(request)
+  File "/home/rafsaf/projects/Tribal-Wars-Planer/.venv/lib/python3.14/site-packages/debug_toolbar/panels/__init__.py", line 247, in process_request
+    return self.get_response(request)
+  File "/home/rafsaf/projects/Tribal-Wars-Planer/.venv/lib/python3.14/site-packages/debug_toolbar/panels/headers.py", line 49, in process_request
+    return super().process_request(request)
+  File "/home/rafsaf/projects/Tribal-Wars-Planer/.venv/lib/python3.14/site-packages/debug_toolbar/panels/__init__.py", line 247, in process_request
+    return self.get_response(request)
+  File "/home/rafsaf/projects/Tribal-Wars-Planer/.venv/lib/python3.14/site-packages/debug_toolbar/panels/__init__.py", line 247, in process_request
+    return self.get_response(request)
+  File "/home/rafsaf/projects/Tribal-Wars-Planer/.venv/lib/python3.14/site-packages/debug_toolbar/panels/__init__.py", line 247, in process_request
+    return self.get_response(request)
+  [Previous line repeated 7 more times]
+  File "/home/rafsaf/projects/Tribal-Wars-Planer/.venv/lib/python3.14/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/rafsaf/projects/Tribal-Wars-Planer/tribal_wars_planer/middlewares.py", line 38, in middleware
+    response = get_response(request)
+  File "/home/rafsaf/projects/Tribal-Wars-Planer/.venv/lib/python3.14/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/rafsaf/projects/Tribal-Wars-Planer/.venv/lib/python3.14/site-packages/django/utils/deprecation.py", line 441, in __call__
+    response = response or self.get_response(request)
+  File "/home/rafsaf/projects/Tribal-Wars-Planer/.venv/lib/python3.14/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/rafsaf/projects/Tribal-Wars-Planer/.venv/lib/python3.14/site-packages/django/utils/deprecation.py", line 441, in __call__
+    response = response or self.get_response(request)
+  File "/home/rafsaf/projects/Tribal-Wars-Planer/.venv/lib/python3.14/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/rafsaf/projects/Tribal-Wars-Planer/.venv/lib/python3.14/site-packages/django/utils/deprecation.py", line 441, in __call__
+    response = response or self.get_response(request)
+  File "/home/rafsaf/projects/Tribal-Wars-Planer/.venv/lib/python3.14/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/rafsaf/projects/Tribal-Wars-Planer/.venv/lib/python3.14/site-packages/django/utils/deprecation.py", line 441, in __call__
+    response = response or self.get_response(request)
+  File "/home/rafsaf/projects/Tribal-Wars-Planer/.venv/lib/python3.14/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/rafsaf/projects/Tribal-Wars-Planer/.venv/lib/python3.14/site-packages/django/utils/deprecation.py", line 441, in __call__
+    response = response or self.get_response(request)
+  File "/home/rafsaf/projects/Tribal-Wars-Planer/.venv/lib/python3.14/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/rafsaf/projects/Tribal-Wars-Planer/.venv/lib/python3.14/site-packages/django/utils/deprecation.py", line 441, in __call__
+    response = response or self.get_response(request)
+  File "/home/rafsaf/projects/Tribal-Wars-Planer/.venv/lib/python3.14/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/rafsaf/projects/Tribal-Wars-Planer/.venv/lib/python3.14/site-packages/django_otp/middleware.py", line 44, in __call__
+    return self.get_response(request)
+  File "/home/rafsaf/projects/Tribal-Wars-Planer/.venv/lib/python3.14/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/rafsaf/projects/Tribal-Wars-Planer/.venv/lib/python3.14/site-packages/django/utils/deprecation.py", line 441, in __call__
+    response = response or self.get_response(request)
+  File "/home/rafsaf/projects/Tribal-Wars-Planer/.venv/lib/python3.14/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/rafsaf/projects/Tribal-Wars-Planer/.venv/lib/python3.14/site-packages/django/utils/deprecation.py", line 441, in __call__
+    response = response or self.get_response(request)
+  File "/home/rafsaf/projects/Tribal-Wars-Planer/.venv/lib/python3.14/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/rafsaf/projects/Tribal-Wars-Planer/tribal_wars_planer/middlewares.py", line 95, in middleware
+    response = get_response(request)
+  File "/home/rafsaf/projects/Tribal-Wars-Planer/.venv/lib/python3.14/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/rafsaf/projects/Tribal-Wars-Planer/tribal_wars_planer/middlewares.py", line 54, in middleware
+    response: HttpResponse = get_response(request)
+  File "/home/rafsaf/projects/Tribal-Wars-Planer/.venv/lib/python3.14/site-packages/django/core/handlers/exception.py", line 56, in inner
+    response = get_response(request)
+  File "/home/rafsaf/projects/Tribal-Wars-Planer/.venv/lib/python3.14/site-packages/django/core/handlers/base.py", line 199, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/rafsaf/projects/Tribal-Wars-Planer/.venv/lib/python3.14/site-packages/django/contrib/auth/decorators.py", line 60, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "/home/rafsaf/projects/Tribal-Wars-Planer/base/views/outline.py", line 270, in outline_detail
+    if instance.world.postfix == "Test":
+  File "/home/rafsaf/projects/Tribal-Wars-Planer/.venv/lib/python3.14/site-packages/django/db/models/fields/related_descriptors.py", line 267, in __get__
+    instance._state.fetch_mode.fetch(self, instance)
+  File "/home/rafsaf/projects/Tribal-Wars-Planer/tribal_wars_planer/fetch_error_manager.py", line 22, in fetch
+    log.error("Unexpected fetch of %s.%s.", klass, field_name, stack_info=True)
+```
+
+## Disclaimer 1 – errors flood
+
+Dislaimer: it is possible to flood your error/log systems with enough traffic. It is probably not a good idea to launch such code as above when it is possible to get 1000 errors per second. In my case it took few hours to reach the free tier sentry limit.
+
+Be warned.
+
+![sentry email](sentry-email.png)
+
+## Diclaimer 2 – be careful fixing n+1
 
 Here is [permalink](https://github.com/rafsaf/Tribal-Wars-Planer/blob/f8f96d537591b5e7d554e59b57e56bacc6d8cc53/rest_api/views.py#L154-L185) if you need more context, but it's simple endpoint that deletes `Target` object with related children called `WeightModel` that have FK to model `WeightMaximum`. It's real code, written by my jounger self years ago. It is as it is, works fine (well, unless you remove n+1 problem in naive way!).
 
@@ -158,22 +305,16 @@ with transaction.atomic():
         state.save()
 ```
 
-Do you see the bug? [The proof is left as an exercise for the reader](https://en.wikipedia.org/wiki/Proof_by_intimidation). Hint after nice 2 bug images.
+Do you see the bug? [The proof is left as an exercise for the reader](https://en.wikipedia.org/wiki/Proof_by_intimidation). Hint after image of cloister taken in Italy.
 
+![PXL_20261017_113852626.avif](./PXL_20261017_113852626.avif)
 
+<small>Chiostro Normanno of Lipary, Italy (private gallery)</small>
 
-![ładny-różowy-uśmiechnięty-robak-na-białym-tle-40980137.jpg](./ładny-różowy-uśmiechnięty-robak-na-białym-tle-40980137.jpg)
-
-<small>Attribution: https://www.istockphoto.com</small>
-
-![istockphoto-1994315317-612x612.jpg](./istockphoto-1994315317-612x612.jpg)
-
-<small>Attribution: https://www.istockphoto.com</small>
-
-Hint: each `weight_model` modify `state` parent. What if `state` is the very same parent for two different `weight_model` from queryset? In fact n+1 is a reason that this piece of code is (relatively to be honest, seen better) ok.
+Each `weight_model` modify `state` parent. If `state` is the very same parent for two different `weight_model`, then because they are different model, state will be overriden. In fact n+1 is a reason that this piece of code is working at all.
 
 ---
 
-Last updated: 2026-09-28
+Last updated: 2026-10-19
 
 Content license: CC BY-NC 4.0 — share and adapt with attribution, no commercial use.
